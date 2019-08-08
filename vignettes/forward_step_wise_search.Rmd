@@ -1,0 +1,137 @@
+---
+title: "Forward Step Wise Search"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Forward Stepwise Search}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+### Background
+A common problem in building statistical models is determining which features to include in a model. Mathematical publications provide some suggestions, but there is no consensus. Some examples are the lasso or simply trying all possible combinations of predictors. For large data, both of these require extensive computation time. For the lasso, a good value of lambda must be cross validated and trying all possible combinations of predictors requires building many models. 
+
+With a multithreaded BLAS, forward step wise search provides a computationally light feature selection method. No resampling is needed, and features space is searched in an efficient way. In this vignette, this method will be tested in a variety of situations.
+
+
+### Mathematical Background
+The more parameters a model has, the better it will fit the data. However, if the model is too complex, the worse it will perform on unseen data. AIC strikes a balance between fitting the training data well and keeping the model simple. 
+
+Using AIC, a forward search starts with no features. Then each feature is added. If there are 10 features, there are 10 models models under consideration. For each model, AIC is calculated and the model with the lowest AIC is selected. After the first feature is selected, all remaining 9 features are a considered. Of the 9 features, the one with the lowest AIC is selected, creating a 2 feature model. When adding no more features improves AIC, the procedure stops.
+
+### Easy Problem: Large N And Only A Few Unrelated Variables
+```{r setup}
+library(GlmSimulatoR)
+library(ggplot2)
+library(MASS)
+
+set.seed(1)
+simdata <- simulate_inverse_gaussion(N = 100000, link = "1/mu^2", 
+                                     weights = c(1, 2, 3), unrelated = 3)
+
+#Y looks like an inverse gaussion distribution. 
+ggplot(simdata, aes(x=Y)) +
+  geom_histogram(bins = 30)
+
+scopeArg <- list(
+  lower = Y ~ 1,
+  upper = Y ~ X1 + X2 + X3 + Unrelated1 + Unrelated2 + Unrelated3
+)
+
+startingModel <- glm(Y ~ 1, data = simdata, family = inverse.gaussian(link = "1/mu^2"))
+glmSearch <- stepAIC(startingModel, scopeArg)
+summary(glmSearch)
+
+rm(simdata, scopeArg, glmSearch)
+
+
+```
+
+Looking at the summary, the correct model was found. Forward step wise search worked perfectly!
+
+### Medium Problem: Large N And A Lot Of Unrelated Variables
+```{r}
+set.seed(2)
+simdata <- simulate_inverse_gaussion(N = 100000, link = "1/mu^2", 
+                                     weights = c(1, 2, 3), unrelated = 20)
+
+#Y looks like an inverse gaussion distribution. 
+ggplot(simdata, aes(x=Y)) +
+  geom_histogram(bins = 30)
+
+scopeArg <- list(
+  lower = Y ~ 1,
+  upper = Y ~ X1 + X2 + X3 + Unrelated1 + Unrelated2 + Unrelated3 + Unrelated3 + 
+    Unrelated4 + Unrelated5 + Unrelated6 + Unrelated7 + Unrelated8 + Unrelated9 + 
+    Unrelated10 + Unrelated11 + Unrelated12 + Unrelated13 + Unrelated14 + Unrelated15 + 
+    Unrelated16 + Unrelated17 + Unrelated18 + Unrelated19 + Unrelated20
+)
+
+startingModel <- glm(Y ~ 1, data = simdata, family = inverse.gaussian(link = "1/mu^2"))
+glmSearch <- stepAIC(startingModel, scopeArg)
+summary(glmSearch)
+
+rm(simdata, scopeArg, glmSearch)
+```
+
+Some unrelated variables made it into the final model. At least all related features are in the model. 
+
+### Hard Problem: Small N And Only A Few Unrelated Variables
+```{r}
+set.seed(3)
+simdata <- simulate_inverse_gaussion(N = 1000, link = "1/mu^2", 
+                                     weights = c(1, 2, 3), unrelated = 3)
+
+#Y looks like an inverse gaussion distribution. 
+ggplot(simdata, aes(x=Y)) +
+  geom_histogram(bins = 30)
+
+scopeArg <- list(
+  lower = Y ~ 1,
+  upper = Y ~ X1 + X2 + X3 + Unrelated1 + Unrelated2 + Unrelated3
+)
+
+startingModel <- glm(Y ~ 1, data = simdata, family = inverse.gaussian(link = "1/mu^2"))
+glmSearch <- stepAIC(startingModel, scopeArg)
+summary(glmSearch)
+
+rm(simdata, scopeArg, glmSearch)
+```
+
+The correct model was found. Again, Forward step wise search worked perfectly!
+
+### Very Hard Problem: Small N And A Lot Of Unrelated Variables
+```{r}
+set.seed(4)
+simdata <- simulate_inverse_gaussion(N = 1000, link = "1/mu^2", 
+                                     weights = c(1, 2, 3), unrelated = 20)
+
+#Y looks like an inverse gaussion distribution. 
+ggplot(simdata, aes(x=Y)) +
+  geom_histogram(bins = 30)
+
+scopeArg <- list(
+  lower = Y ~ 1,
+  upper = Y ~ X1 + X2 + X3 + Unrelated1 + Unrelated2 + Unrelated3 + Unrelated3 + 
+    Unrelated4 + Unrelated5 + Unrelated6 + Unrelated7 + Unrelated8 + Unrelated9 + 
+    Unrelated10 + Unrelated11 + Unrelated12 + Unrelated13 + Unrelated14 + Unrelated15 + 
+    Unrelated16 + Unrelated17 + Unrelated18 + Unrelated19 + Unrelated20
+)
+
+startingModel <- glm(Y ~ 1, data = simdata, family = inverse.gaussian(link = "1/mu^2"))
+glmSearch <- stepAIC(startingModel, scopeArg)
+summary(glmSearch)
+
+rm(simdata, scopeArg, glmSearch)
+```
+
+A few unrelated features made it into the model, but at least all true predictors are in the model.
+
+### Summary
+Forward step wise search provides a computationally fast way to select features. When the related features make up half the total possible features, step wise search performed perfectly for both small and large n. When there are a lot of unrelated features, forward step wise finds all related features and erroneously selects a few unrelated.
