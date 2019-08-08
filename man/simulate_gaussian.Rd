@@ -6,7 +6,7 @@
 \alias{simulate_gamma}
 \alias{simulate_poisson}
 \alias{simulate_inverse_gaussion}
-\title{Create ideal data for a glm model.}
+\title{Create ideal data for a generalized linear model.}
 \usage{
 simulate_gaussian(N = 10000, link = defaultLink,
   weights = defaultWeights, unrelated = 0,
@@ -31,34 +31,50 @@ simulate_inverse_gaussion(N = 10000, link = defaultLink,
 \arguments{
 \item{N}{Sample size. (Default: 10000)}
 
-\item{link}{Link function. See \code{\link[stats]{family}} for list of links.}
+\item{link}{Link function. See \code{\link[stats]{family}} for details.}
 
-\item{weights}{Slopes in glm model. See details. simulate_binomial: c(.1, .2) All other: c(1, 2, 3)}
+\item{weights}{Betas in glm model. See details. simulate_binomial: c(.1, .2) All other: c(1, 2, 3)}
 
 \item{unrelated}{Number of unrelated features to return. (Default: 0)}
 
-\item{dispersion}{Dispersion parameter for family where applicable.}
+\item{dispersion}{Dispersion parameter for continuous families. See details.}
 }
 \value{
 A tibble with a response variable and predictors.
 }
 \description{
-Create ideal data for a glm model.
+Create ideal data for a generalized linear model.
 }
 \details{
+The gaussian family accepts the links identity, log and inverse.
+The binomial family accepts the links logit, probit, cauchit,
+(corresponding to logistic, normal and Cauchy CDFs respectively)
+log and cloglog (complementary log-log).
+The gamma family accepts the links inverse, identity and log.
+The poisson family accepts the links log, identity, and sqrt.
+The inverse gaussian family accepts the links 1/mu^2, inverse, identity and log.
+
+Default links are identity for gaussian, logit for binomial, inverse for gamma, log for poisson,
+and 1/mu^2 for inverse gaussian.
+
 The default value for argument weights works well for all link family combinations.
 The functions also validate input and provide helpfull error messages. Mistakes like passing a
 link of "1/mu^2 to the gaussion function will error.
 
 It is possible to pick weights that cause inverse link(X * weights) to be mathematically invalid.
-For example, the log link for binomial regression defines P(Y=1) as exp(X * weights). For P(Y=1) to
-be between zero and one, weights should be small.
+For example, the log link for binomial regression defines P(Y=1) as exp(X * weights). If this happens,
+the function will error with a helpfull message. For P(Y=1) to be between zero and one, weights should be small.
+In general, the log link is the most troublesome to work with. It is recommended to use weights
+in the neighborhood of .1 to .3 for log link.
 
 For inverse gaussion, the inverse of the default link function needs weights*X to be postive.
 
-
 The intercept in the underlying link(Y) = X * weights + intercept is always max(weights). For example,
 simulate_gaussian(link = "inverse", weights = 1:3) the model is (1/Y) = 1*X1 + 2*X2 + 3*X3 + 3.
+
+The all continuous families have a dispersion parameter. For the gaussian family, it is standard deviation.
+Default value is 1. For the gamma family, it is the scale parameter. Default value is .05. For inverse gaussion,
+it is the dispersion parameter. Defalut value 1/3. For the discrete families, this argument is not used.
 }
 \examples{
 library(GlmSimulatoR)
@@ -77,7 +93,7 @@ rm(linearModel, glmModel, simdata)
 # If the effects are multiplicative instead of additive,
 # will my response variable still be normal? Yes
 set.seed(1)
-simdata <- simulate_gaussian(N = 1000, link = "log", weights = .1)
+simdata <- simulate_gaussian(N = 1000, link = "log", weights = c(.1, .2))
 
 ggplot(simdata, aes(x = Y)) +
   geom_histogram(bins = 30)

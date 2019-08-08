@@ -51,6 +51,10 @@ test_that("All links execute", {
   expect_true(all(class(simulate_gaussian(link = "inverse")) == c("tbl_df", "tbl", "data.frame")))
 })
 
+test_that("Dispersion parameter works as expected", {
+  expect_true(simulate_gaussian()$Y %>% sd() < simulate_gaussian(dispersion = 5)$Y %>% sd())
+})
+
 ###############################################
 # Input checking
 ###############################################
@@ -61,4 +65,6 @@ test_that("Confirm input checing works.", {
   expect_error(simulate_gaussian(weights = c()), NULL)
   expect_error(simulate_gaussian(unrelated = -1), NULL)
   expect_error(simulate_gaussian(unrelated = c(10, 20)), NULL)
+  expect_error(simulate_gaussian(dispersion = -1), NULL)
+  expect_error(simulate_gaussian(dispersion = c(10, 20)), NULL)
 })

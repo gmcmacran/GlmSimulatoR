@@ -28,8 +28,9 @@ create_gamma <- function(mu, n, dispersion) {
     msg = "Invalid weight and link combination. Choose a different link or weights."
   )
 
-  return(matrix(stats::rgamma(n, mu * dispersion, dispersion), ncol = 1))
+  return(matrix(stats::rgamma(n, mu / dispersion, scale = dispersion), ncol = 1))
 }
+
 #' @keywords internal
 create_poisson <- function(mu, n, unused) {
   assertthat::assert_that(all(mu >= 0),
@@ -71,6 +72,13 @@ make_simulating_function <- function(validLinks, defaultLink, defaultWeights, ma
       msg = "Argument unrelated must have length 1."
     )
     assertthat::assert_that(unrelated >= 0)
+
+    assertthat::assert_that(assertthat::is.scalar(dispersion) || is.null(dispersion),
+      msg = "Argument dispersion must be a scalar or NULL."
+    )
+    assertthat::assert_that(dispersion > 0 || is.null(dispersion),
+      msg = "Argument dispersion must be greater than 0 or NULL."
+    )
 
     ####################
     # Create inverse link function

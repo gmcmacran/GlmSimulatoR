@@ -61,4 +61,6 @@ test_that("Confirm input checing works.", {
   expect_error(simulate_binomial(weights = c()), NULL)
   expect_error(simulate_binomial(unrelated = -1), NULL)
   expect_error(simulate_binomial(unrelated = c(10, 20)), NULL)
+  expect_error(simulate_binomial(dispersion = -1), NULL)
+  expect_error(simulate_binomial(dispersion = c(10, 20)), NULL)
 })

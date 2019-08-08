@@ -60,4 +60,6 @@ test_that("Confirm input checing works.", {
   expect_error(simulate_poisson(weights = c()), NULL)
   expect_error(simulate_poisson(unrelated = -1), NULL)
   expect_error(simulate_poisson(unrelated = c(10, 20)), NULL)
+  expect_error(simulate_poisson(dispersion = -1), NULL)
+  expect_error(simulate_poisson(dispersion = c(10, 20)), NULL)
 })
