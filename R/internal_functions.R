@@ -25,10 +25,10 @@ create_binomial <- function(mu, n, unused) {
 #' @keywords internal
 create_gamma <- function(mu, n, dispersion) {
   assertthat::assert_that(all(mu > 0),
-                          msg = "Invalid weight and link combination. Choose a different link or weights."
+    msg = "Invalid weight and link combination. Choose a different link or weights."
   )
 
-  return(matrix(stats::rgamma(n, mu*dispersion, dispersion), ncol = 1))
+  return(matrix(stats::rgamma(n, mu * dispersion, dispersion), ncol = 1))
 }
 #' @keywords internal
 create_poisson <- function(mu, n, unused) {
@@ -52,7 +52,7 @@ create_inverse_gaussion <- function(mu, n, dispersion) {
 # Function to return a function that make data perfect for glm model.
 make_simulating_function <- function(validLinks, defaultLink, defaultWeights, make_response, defaultDispersion) {
   f <- function(N = 10000, link = defaultLink, weights = defaultWeights,
-                unrelated = 0, dispersion=defaultDispersion) {
+                  unrelated = 0, dispersion = defaultDispersion) {
 
     ####################
     # Check inputs
