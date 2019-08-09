@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 # Overview
-Compared to the linear model, one advantage of the generalized linear model is it ability to model different relationships between the response variable and the predictors. One challenge is knowing which link to use. In this vignette, we will explore how different relationships affect correlation and this visual appearance of scatter plots.
+Compared to the linear model, one advantage of the generalized linear model is its ability to model different relationships between the response variable and the predictors. One challenge is knowing which link to use. In this vignette, we will explore how different relationships affect correlation and the visual appearance of scatter plots.
 
 # Inverse Link
 
@@ -71,7 +71,7 @@ ggplot(simdata, aes(x=Unrelated1, y=Y)) +
 
 ```
 
-We see the correlation is very strong between Y and X2. This is no surprise considering the above graph. The correlation between Y and X1 is somewhat larger in absolute value than the unrelated variable. However, I would not see this as particularly good news in predicting Y if I did not know the correct answer.
+We see the correlation is very strong between Y and X2. This is no surprise considering the above graph. The correlation between Y and X1 is somewhat larger in absolute value than the unrelated variable. However, I would not see this as particularly good news in predicting Y if I did not know the correct model.
 
 ```{r}
 cor(x=simdata$X1, y = simdata$Y)
@@ -81,7 +81,7 @@ cor(x=simdata$Unrelated1, y = simdata$Y)
 ```
 
 ### Building Models
-Pretending we don't know the correct answer, lets see if we can find correct model. We will try three models. One with just X2, one with X1 and X2, and one with everything. Will the correct model stand out?
+Pretending we don't know the correct answer, lets see if we can find the correct model. We will try three models. One with just X2, one with X1 and X2, and one with everything. Will the correct model stand out?
 
 ```{r}
 glmInverseX2 <- glm(Y ~ X2, data = simdata, family = gaussian(link = "inverse"))
@@ -94,7 +94,7 @@ summary(glmInverseX1X2U1)
 
 ```
 
-Inspecting the 3 summaries, we see a few things. First, the correct models has the lowest AIC! The slope estimates are very close to the true values. Overall, the mathematics behind the glm framework worked very well.
+Inspecting the 3 summaries, we see a few things. First, the correct model has the lowest AIC! The slope estimates are very close to the true values. Overall, the mathematics behind the glm framework worked very well.
 
 # Log Link
 
@@ -146,7 +146,7 @@ ggplot(simdata, aes(x=X2, y=Y)) +
   geom_point()
 ```
 
-The scatter plot between the unrelated variable and Y looks like random noise. Similar to above X1's scatter plot looks more similar to random noise than X2's scatter plot.
+The scatter plot between the unrelated variable and Y looks like random noise.
 ```{r}
 ggplot(simdata, aes(x=Unrelated1, y=Y)) + 
   geom_point()
@@ -163,7 +163,7 @@ cor(x=simdata$Unrelated1, y = simdata$Y)
 ```
 
 ### Building Models
-Pretending we don't know the correct answer, lets see if we can find correct model. For a change we will compare the the link functions for the gaussian family
+Pretending we don't know the correct answer, lets see if we can find the correct model. For a change we will compare the the link functions for the gaussian family.
 
 ```{r}
 glmIdentity <- glm(Y ~ X1 + X2, data = simdata, family = gaussian(link = "identity"))

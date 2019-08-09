@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 
 ### Package Overview
-Often the first problem in understanding the generalized linear model in a practical way is finding good data. Common problems in finding data are a small amount of rows, the response variable does not follow a family in the gm framework, or the data is messy and needs a lot of work before statistical analysis can begin. This package alleviates all of these by allowing you to create the data you want. With data in hand, you can empirically answer any question you have. 
+Often the first problem in understanding the generalized linear model in a practical way is finding good data. Common problems include finding data with a small number of rows, the response variable does not follow a family in the glm framework, or the data is messy and needs a lot of work before statistical analysis can begin. This package alleviates all of these by allowing you to create the data you want. With data in hand, you can empirically answer any question you have. 
 
 The goal of this package is to strike a balance between mathematical flexibility and simplicity of use. You can control the sample size, link function, number of unrelated variables, and dispersion for continuous distributions. Default values are carefully chosen so data can be generated without thinking about mathematical connections between weights, links, and distributions.
 
@@ -39,7 +39,7 @@ rm(glmModel)
 In the above, we see the estimates are close to the weights argument. The mathematics behind the generalized linear model worked well.
 
 
-### Question 2: Is The Model From lm The Same As A Glm Model With Gaussian Family and Identity Link?
+### Question 2: Is The Model From Lm The Same As A Glm Model With Gaussian Family and Identity Link?
 ```{r}
 library(GlmSimulatoR)
 library(ggplot2)

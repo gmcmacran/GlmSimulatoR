@@ -20,7 +20,7 @@ When the response variable is right skewed, many think regression becomes diffic
 
 # Different Shapes Of A Gamma Distribution
 
-This critical step is being able to spot a gamma distribution when you see one. Theatrical skewness is $\frac{2}{scale}$. Note the gamma distribution is always positive.
+The critical step is being able to spot a gamma distribution when you see one. Theatrical skewness is $\frac{2}{scale}$. Note the gamma distribution is always positive.
 
 ```{r setup}
 library(GlmSimulatoR)
@@ -69,6 +69,11 @@ ggplot(temp, aes(x=gamma)) +
 
 ```
 
+```{r, echo=FALSE}
+rm(Gamma, temp)
+```
+
+
 # Building A Models With Very Skewed Data
 To show the generalized linear model can handle skewness, I will build a model that has a very low mean squared error.
 
@@ -89,7 +94,7 @@ mean((simdata$Y - predict(glm, newdata = simdata, type = "response"))^2)
 
 # Different Shapes Of A Inverse Gaussian
 
-Above we saw the gamma take on many different shapes. The inverse gaussian distribution is not as flexible. It tends to maintain it's skewness for a variety of parameters.
+Above we saw the gamma distribution take on many different shapes. The inverse gaussian distribution is not as flexible. It tends to maintain it's skewness for a variety of parameters.
 
 ```{r}
 library(statmod)
@@ -127,7 +132,11 @@ ggplot(temp, aes(x=Invgauss)) +
 
 ```
 
-# Building A Models With Very Skewed Data Using Inverse Gaussian Distribution
+```{r, echo=FALSE}
+rm(Invgauss, temp)
+```
+
+# Building A Model With Very Skewed Data Using Inverse Gaussian Distribution
 Similar to above, I will build a model that has a very low mean squared error.
 
 ```{r}

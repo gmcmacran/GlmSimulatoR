@@ -1,5 +1,5 @@
 ---
-title: "Forward Step Wise Search"
+title: "Forward Stepwise Search"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Forward Stepwise Search}
@@ -17,13 +17,13 @@ knitr::opts_chunk$set(
 ### Background
 A common problem in building statistical models is determining which features to include in a model. Mathematical publications provide some suggestions, but there is no consensus. Some examples are the lasso or simply trying all possible combinations of predictors. For large data, both of these require extensive computation time. For the lasso, a good value of lambda must be cross validated and trying all possible combinations of predictors requires building many models. 
 
-With a multithreaded BLAS, forward step wise search provides a computationally light feature selection method. No resampling is needed, and features space is searched in an efficient way. In this vignette, this method will be tested in a variety of situations.
+With a multithreaded BLAS, forward stepwise search provides a computationally light weight feature selection method. No resampling is needed, and the feature space is searched in an efficient way. In this vignette, this method will be tested in a variety of situations.
 
 
 ### Mathematical Background
 The more parameters a model has, the better it will fit the data. However, if the model is too complex, the worse it will perform on unseen data. AIC strikes a balance between fitting the training data well and keeping the model simple. 
 
-Using AIC, a forward search starts with no features. Then each feature is added. If there are 10 features, there are 10 models models under consideration. For each model, AIC is calculated and the model with the lowest AIC is selected. After the first feature is selected, all remaining 9 features are a considered. Of the 9 features, the one with the lowest AIC is selected, creating a 2 feature model. When adding no more features improves AIC, the procedure stops.
+Using AIC, a forward search starts with no features. Then each feature is considered. If there are 10 features, there are 10 models under consideration. For each model, AIC is calculated and the model with the lowest AIC is selected. After the first feature is selected, all remaining 9 features are considered. Of the 9 features, the one with the lowest AIC is selected, creating a 2 feature model. When adding no more features improve AIC, the procedure stops.
 
 ### Easy Problem: Large N And Only A Few Unrelated Variables
 ```{r setup}
@@ -48,12 +48,12 @@ startingModel <- glm(Y ~ 1, data = simdata, family = inverse.gaussian(link = "1/
 glmSearch <- stepAIC(startingModel, scopeArg)
 summary(glmSearch)
 
-rm(simdata, scopeArg, glmSearch)
+rm(simdata, scopeArg, glmSearch, startingModel)
 
 
 ```
 
-Looking at the summary, the correct model was found. Forward step wise search worked perfectly!
+Looking at the summary, the correct model was found. Forward stepwise search worked perfectly!
 
 ### Medium Problem: Large N And A Lot Of Unrelated Variables
 ```{r}
@@ -77,7 +77,7 @@ startingModel <- glm(Y ~ 1, data = simdata, family = inverse.gaussian(link = "1/
 glmSearch <- stepAIC(startingModel, scopeArg)
 summary(glmSearch)
 
-rm(simdata, scopeArg, glmSearch)
+rm(simdata, scopeArg, glmSearch, startingModel)
 ```
 
 Some unrelated variables made it into the final model. At least all related features are in the model. 
@@ -101,10 +101,10 @@ startingModel <- glm(Y ~ 1, data = simdata, family = inverse.gaussian(link = "1/
 glmSearch <- stepAIC(startingModel, scopeArg)
 summary(glmSearch)
 
-rm(simdata, scopeArg, glmSearch)
+rm(simdata, scopeArg, glmSearch, startingModel)
 ```
 
-The correct model was found. Again, Forward step wise search worked perfectly!
+The correct model was found. Again, Forward stepwise search worked perfectly!
 
 ### Very Hard Problem: Small N And A Lot Of Unrelated Variables
 ```{r}
@@ -128,10 +128,10 @@ startingModel <- glm(Y ~ 1, data = simdata, family = inverse.gaussian(link = "1/
 glmSearch <- stepAIC(startingModel, scopeArg)
 summary(glmSearch)
 
-rm(simdata, scopeArg, glmSearch)
+rm(simdata, scopeArg, glmSearch, startingModel)
 ```
 
 A few unrelated features made it into the model, but at least all true predictors are in the model.
 
 ### Summary
-Forward step wise search provides a computationally fast way to select features. When the related features make up half the total possible features, step wise search performed perfectly for both small and large n. When there are a lot of unrelated features, forward step wise finds all related features and erroneously selects a few unrelated.
+Forward stepwise search provides a computationally fast way to select features. When the related features make up half the total possible features, stepwise search performed perfectly for both small and large n. When there are a lot of unrelated features, forward stepwise finds all related features and erroneously selects a few unrelated variables.
