@@ -28,7 +28,6 @@ You can install the released version of GlmSimulatoR from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
-#Currently not on cran. Will be soon.
 install.packages("GlmSimulatoR")
 ```
 
