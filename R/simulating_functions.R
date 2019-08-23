@@ -141,3 +141,13 @@ simulate_inverse_gaussion <- make_simulating_function(
   make_response = create_inverse_gaussion,
   defaultDispersion = 1 / 3
 )
+
+#' @rdname simulate_gaussian
+#' @export
+simulate_negative_binomial <- make_simulating_function(
+  validLinks = c("log", "identity", "sqrt"),
+  defaultLink = "log",
+  defaultWeights = 1:3,
+  make_response = create_negative_binomial,
+  defaultDispersion = 1
+)

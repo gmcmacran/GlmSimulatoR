@@ -6,6 +6,7 @@
 \alias{simulate_gamma}
 \alias{simulate_poisson}
 \alias{simulate_inverse_gaussion}
+\alias{simulate_negative_binomial}
 \title{Create ideal data for a generalized linear model.}
 \usage{
 simulate_gaussian(N = 10000, link = defaultLink,
@@ -25,6 +26,10 @@ simulate_poisson(N = 10000, link = defaultLink,
   dispersion = defaultDispersion)
 
 simulate_inverse_gaussion(N = 10000, link = defaultLink,
+  weights = defaultWeights, unrelated = 0,
+  dispersion = defaultDispersion)
+
+simulate_negative_binomial(N = 10000, link = defaultLink,
   weights = defaultWeights, unrelated = 0,
   dispersion = defaultDispersion)
 }

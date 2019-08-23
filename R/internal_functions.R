@@ -50,6 +50,15 @@ create_inverse_gaussion <- function(mu, n, dispersion) {
 }
 
 #' @keywords internal
+create_negative_binomial <- function(mu, n, dispersion) {
+  assertthat::assert_that(all(mu > 0),
+    msg = "Invalid weight and link combination. Choose a different link or weights."
+  )
+
+  return(matrix(MASS::rnegbin(n = n, mu = mu, theta = dispersion), ncol = 1))
+}
+
+#' @keywords internal
 # Function to return a function that make data perfect for glm model.
 make_simulating_function <- function(validLinks, defaultLink, defaultWeights, make_response, defaultDispersion) {
   f <- function(N = 10000, link = defaultLink, weights = defaultWeights,
@@ -133,6 +142,11 @@ make_simulating_function <- function(validLinks, defaultLink, defaultWeights, ma
         return(eta^-.5)
       }
     }
+
+    # negative_binomial
+    # log, identity, and sqrt are in gaussian and poisson
+
+
 
     ####################
     # Create predictors
