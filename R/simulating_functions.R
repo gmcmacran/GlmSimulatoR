@@ -127,7 +127,7 @@ simulate_gamma <- make_simulating_function(
 simulate_poisson <- make_simulating_function(
   validLinks = c("log", "identity", "sqrt"),
   defaultLink = "log",
-  defaultWeights = 1:3,
+  defaultWeights = c(.5, 1),
   make_response = create_poisson,
   defaultDispersion = NULL
 )
@@ -147,7 +147,7 @@ simulate_inverse_gaussion <- make_simulating_function(
 simulate_negative_binomial <- make_simulating_function(
   validLinks = c("log", "identity", "sqrt"),
   defaultLink = "log",
-  defaultWeights = 1:3,
+  defaultWeights = c(.5, 1),
   make_response = create_negative_binomial,
   defaultDispersion = 1
 )
