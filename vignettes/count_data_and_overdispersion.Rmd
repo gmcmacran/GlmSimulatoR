@@ -2,7 +2,7 @@
 title: "Count Data And Overdispersion"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Dealing With Right Skewed Data}
+  %\VignetteIndexEntry{Count Data And Overdispersion}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
