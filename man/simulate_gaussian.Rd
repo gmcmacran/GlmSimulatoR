@@ -11,27 +11,27 @@
 \usage{
 simulate_gaussian(N = 10000, link = defaultLink,
   weights = defaultWeights, unrelated = 0,
-  dispersion = defaultDispersion)
+  ancillary = defaultAncillary)
 
 simulate_binomial(N = 10000, link = defaultLink,
   weights = defaultWeights, unrelated = 0,
-  dispersion = defaultDispersion)
+  ancillary = defaultAncillary)
 
 simulate_gamma(N = 10000, link = defaultLink,
   weights = defaultWeights, unrelated = 0,
-  dispersion = defaultDispersion)
+  ancillary = defaultAncillary)
 
 simulate_poisson(N = 10000, link = defaultLink,
   weights = defaultWeights, unrelated = 0,
-  dispersion = defaultDispersion)
+  ancillary = defaultAncillary)
 
 simulate_inverse_gaussion(N = 10000, link = defaultLink,
   weights = defaultWeights, unrelated = 0,
-  dispersion = defaultDispersion)
+  ancillary = defaultAncillary)
 
 simulate_negative_binomial(N = 10000, link = defaultLink,
   weights = defaultWeights, unrelated = 0,
-  dispersion = defaultDispersion)
+  ancillary = defaultAncillary)
 }
 \arguments{
 \item{N}{Sample size. (Default: 10000)}
@@ -42,7 +42,7 @@ simulate_negative_binomial(N = 10000, link = defaultLink,
 
 \item{unrelated}{Number of unrelated features to return. (Default: 0)}
 
-\item{dispersion}{Dispersion parameter for continuous families. See details.}
+\item{ancillary}{Ancillary parameter for continuous families and negative binomial. See details.}
 }
 \value{
 A tibble with a response variable and predictors.
@@ -58,9 +58,10 @@ log and cloglog (complementary log-log).
 The gamma family accepts the links inverse, identity and log.
 The poisson family accepts the links log, identity, and sqrt.
 The inverse gaussian family accepts the links 1/mu^2, inverse, identity and log.
+The negative binomial family accepts the links log, identity, and sqrt using glm.nb in MASS.
 
 Default links are identity for gaussian, logit for binomial, inverse for gamma, log for poisson,
-and 1/mu^2 for inverse gaussian.
+1/mu^2 for inverse gaussian and log for negative binomial.
 
 The default value for argument weights works well for all link family combinations.
 The functions also validate input and provide helpfull error messages. Mistakes like passing a
@@ -77,9 +78,10 @@ For inverse gaussion, the inverse of the default link function needs weights*X t
 The intercept in the underlying link(Y) = X * weights + intercept is always max(weights). For example,
 simulate_gaussian(link = "inverse", weights = 1:3) the model is (1/Y) = 1*X1 + 2*X2 + 3*X3 + 3.
 
-The all continuous families have a dispersion parameter. For the gaussian family, it is standard deviation.
+The continuous families have an ancillary parameter. For the gaussian family, it is standard deviation.
 Default value is 1. For the gamma family, it is the scale parameter. Default value is .05. For inverse gaussion,
-it is the dispersion parameter. Defalut value 1/3. For the discrete families, this argument is not used.
+it is the dispersion parameter. Defalut value 1/3. For negative binomial is is theta. Default value 1. Not used
+in binomial and poisson.
 }
 \examples{
 library(GlmSimulatoR)

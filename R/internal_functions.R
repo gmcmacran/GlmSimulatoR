@@ -6,8 +6,8 @@ create_predictor <- function(weight, n) {
 
 #' @keywords internal
 # Functions to receive mu and return response variable for glm distributions
-create_gaussian <- function(mu, n, dispersion) {
-  return(matrix(stats::rnorm(n, mu, dispersion), ncol = 1))
+create_gaussian <- function(mu, n, ancillary) {
+  return(matrix(stats::rnorm(n, mu, ancillary), ncol = 1))
 }
 
 #' @keywords internal
@@ -23,12 +23,12 @@ create_binomial <- function(mu, n, unused) {
 }
 
 #' @keywords internal
-create_gamma <- function(mu, n, dispersion) {
+create_gamma <- function(mu, n, ancillary) {
   assertthat::assert_that(all(mu > 0),
     msg = "Invalid weight and link combination. Choose a different link or weights."
   )
 
-  return(matrix(stats::rgamma(n, mu / dispersion, scale = dispersion), ncol = 1))
+  return(matrix(stats::rgamma(n, mu / ancillary, scale = ancillary), ncol = 1))
 }
 
 #' @keywords internal
@@ -41,28 +41,28 @@ create_poisson <- function(mu, n, unused) {
 }
 
 #' @keywords internal
-create_inverse_gaussion <- function(mu, n, dispersion) {
+create_inverse_gaussion <- function(mu, n, ancillary) {
   assertthat::assert_that(all(mu > 0),
     msg = "Invalid weight and link combination. Choose a different link or weights."
   )
 
-  return(matrix(statmod::rinvgauss(n = n, mean = mu, dispersion = dispersion), ncol = 1))
+  return(matrix(statmod::rinvgauss(n = n, mean = mu, dispersion = ancillary), ncol = 1))
 }
 
 #' @keywords internal
-create_negative_binomial <- function(mu, n, dispersion) {
+create_negative_binomial <- function(mu, n, ancillary) {
   assertthat::assert_that(all(mu > 0),
     msg = "Invalid weight and link combination. Choose a different link or weights."
   )
 
-  return(matrix(MASS::rnegbin(n = n, mu = mu, theta = dispersion), ncol = 1))
+  return(matrix(MASS::rnegbin(n = n, mu = mu, theta = ancillary), ncol = 1))
 }
 
 #' @keywords internal
 # Function to return a function that make data perfect for glm model.
-make_simulating_function <- function(validLinks, defaultLink, defaultWeights, make_response, defaultDispersion) {
+make_simulating_function <- function(validLinks, defaultLink, defaultWeights, make_response, defaultAncillary) {
   f <- function(N = 10000, link = defaultLink, weights = defaultWeights,
-                  unrelated = 0, dispersion = defaultDispersion) {
+                  unrelated = 0, ancillary = defaultAncillary) {
 
     ####################
     # Check inputs
@@ -82,11 +82,11 @@ make_simulating_function <- function(validLinks, defaultLink, defaultWeights, ma
     )
     assertthat::assert_that(unrelated >= 0)
 
-    assertthat::assert_that(assertthat::is.scalar(dispersion) || is.null(dispersion),
-      msg = "Argument dispersion must be a scalar or NULL."
+    assertthat::assert_that(assertthat::is.scalar(ancillary) || is.null(ancillary),
+      msg = "Argument ancillary must be a scalar or NULL."
     )
-    assertthat::assert_that(dispersion > 0 || is.null(dispersion),
-      msg = "Argument dispersion must be greater than 0 or NULL."
+    assertthat::assert_that(ancillary > 0 || is.null(ancillary),
+      msg = "Argument ancillary must be greater than 0 or NULL."
     )
 
     ####################
@@ -166,7 +166,7 @@ make_simulating_function <- function(validLinks, defaultLink, defaultWeights, ma
     ####################
     B <- matrix(weights, ncol = 1)
     Mu <- inv_link(X %*% B + max(B))
-    Y <- make_response(Mu, N, dispersion)
+    Y <- make_response(Mu, N, ancillary)
     colnames(Y) <- "Y"
 
     ####################

@@ -166,7 +166,7 @@ Lets create data where the flexibility of the negative binomial is needed and co
 ```{r Negative Binomial glm, echo=TRUE}
 
 set.seed(1)
-simdata <- simulate_negative_binomial(N = 10000, weights = c(.5, 1), dispersion = 5) #dispersion is theta.
+simdata <- simulate_negative_binomial(N = 10000, weights = c(.5, 1), ancillary = 5) #ancillary is theta.
 
 #Response looks like a negative binomial distribution.
 ggplot(simdata, aes(x=Y)) + 

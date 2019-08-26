@@ -81,7 +81,7 @@ To show the generalized linear model can handle skewness, I will build a model t
 #Make data
 set.seed(1)
 simdata <- simulate_gamma(N = 10000, link = "inverse", 
-                          weights = c(1, 2, 3), dispersion = .05)
+                          weights = c(1, 2, 3), ancillary = .05)
 #Confirm Y~gamma
 ggplot(simdata, aes(x = Y)) + 
   geom_histogram(bins = 30)
@@ -143,7 +143,7 @@ Similar to above, I will build a model that has a very low mean squared error.
 #Make data
 set.seed(1)
 simdata <- simulate_inverse_gaussion(N = 10000, link = "inverse", 
-                          weights = c(1, 2, 3), dispersion = 10)
+                          weights = c(1, 2, 3), ancillary = 10)
 #Confirm Y is right skewed
 ggplot(simdata, aes(x = Y)) + 
   geom_histogram(bins = 30)

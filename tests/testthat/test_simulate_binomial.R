@@ -51,6 +51,10 @@ test_that("All links execute", {
   expect_true(all(class(simulate_binomial(link = "cloglog", weights = .1)) == c("tbl_df", "tbl", "data.frame")))
 })
 
+test_that("Ancillary parameter function works if ancillary is provided", {
+  expect_true(simulate_binomial(ancillary = 10) %>% nrow() > 0)
+})
+
 ###############################################
 # Input checking
 ###############################################
@@ -61,6 +65,6 @@ test_that("Confirm input checing works.", {
   expect_error(simulate_binomial(weights = c()), NULL)
   expect_error(simulate_binomial(unrelated = -1), NULL)
   expect_error(simulate_binomial(unrelated = c(10, 20)), NULL)
-  expect_error(simulate_binomial(dispersion = -1), NULL)
-  expect_error(simulate_binomial(dispersion = c(10, 20)), NULL)
+  expect_error(simulate_binomial(ancillary = -1), NULL)
+  expect_error(simulate_binomial(ancillary = c(10, 20)), NULL)
 })

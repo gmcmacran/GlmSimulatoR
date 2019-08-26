@@ -51,8 +51,8 @@ test_that("All links execute", {
   expect_true(all(class(simulate_gamma(link = "log")) == c("tbl_df", "tbl", "data.frame")))
 })
 
-test_that("Dispersion parameter works as expected", {
-  expect_true(simulate_gamma(dispersion = .25)$Y %>% sd() < simulate_gamma(dispersion = 1)$Y %>% sd())
+test_that("Ancillary parameter works as expected", {
+  expect_true(simulate_gamma(ancillary = .25)$Y %>% sd() < simulate_gamma(ancillary = 1)$Y %>% sd())
 })
 
 ###############################################
@@ -65,6 +65,6 @@ test_that("Confirm input checing works.", {
   expect_error(simulate_gamma(weights = c()), NULL)
   expect_error(simulate_gamma(unrelated = -1), NULL)
   expect_error(simulate_gamma(unrelated = c(10, 20)), NULL)
-  expect_error(simulate_gamma(dispersion = -1), NULL)
-  expect_error(simulate_gamma(dispersion = c(10, 20)), NULL)
+  expect_error(simulate_gamma(ancillary = -1), NULL)
+  expect_error(simulate_gamma(ancillary = c(10, 20)), NULL)
 })
