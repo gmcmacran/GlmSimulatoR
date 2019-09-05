@@ -2,7 +2,7 @@
 title: "Forward Stepwise Search"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Forward Stepwise Search}
+  %\VignetteIndexEntry{Forward_Stepwise_Search}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

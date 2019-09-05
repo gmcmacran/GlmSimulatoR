@@ -2,7 +2,7 @@
 title: "Count Data And Overdispersion"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Count Data And Overdispersion}
+  %\VignetteIndexEntry{Count_Data_And_Overdispersion}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -21,7 +21,7 @@ For count response variables, the glm framework has two options. The poisson fam
 
 First lets get an idea of how the poisson family looks. If lambda is near 1, the poisson family is right skewed. As lambda increases, the poisson family becomes more gaussian. 
 
-```{r Poisson Histogram, echo=TRUE}
+```{r PoissonHistogram, echo=TRUE}
 library(stats)
 library(MASS)
 library(dplyr, warn.conflicts= FALSE)
@@ -53,7 +53,7 @@ ggplot(poissonDF, aes(x=poisson)) +
 
 ```
 
-```{r echo=FALSE}
+```{r, echo=FALSE}
 rm(poisson, poissonDF)
 
 ```
@@ -62,7 +62,7 @@ rm(poisson, poissonDF)
 ## GLM Poisson
 The below histogram looks similar to the above histograms. Also, the Maximum Likelihood Estimation in the GLM framework was able to estimate the slopes well. 
 
-```{r Poisson glm, echo=TRUE}
+```{r PoissonGlm, echo=TRUE, results='markup'}
 
 set.seed(1)
 simdata <- simulate_poisson(N = 10000, weights = c(.5, 1))
@@ -76,14 +76,14 @@ summary(glmPoisson)
 
 ```
 
-```{r echo=FALSE}
+```{r, echo=FALSE}
 rm(simdata, glmPoisson)
 ```
 
 ## Poisson Mean Variance Relationship
 One important characteristic of the poisson family is $\mu$ equals $\sigma^2$. We see the sample statistics are nearly equal for different values of lambda.
 
-```{r Poisson mu sigma, echo=TRUE}
+```{r PoissonMuSigma, echo=TRUE, results='markup'}
 
 set.seed(1)
 
@@ -103,7 +103,7 @@ mean(poisson)
 var(poisson)
 ```
 
-```{r echo=FALSE}
+```{r, echo=FALSE}
 rm(poisson)
 ```
 
@@ -115,7 +115,7 @@ When the response variable is a count, but $\mu$ does not equal $\sigma^2$, the 
 ## Getting Familiar With The Negative Binomial Family
 When $\theta$ is large, $\mu + \mu^2/\theta$ is roughly equal to $\mu$ . Therefore the negative binomial will be similar to poisson distribution.
 
-```{r Poisson Negative Binomial 1, echo=TRUE}
+```{r PoissonNegativeBinomial1, echo=TRUE}
 set.seed(1)
 
 poisson <- rpois(n = 10000, lambda = 1)
@@ -132,7 +132,7 @@ ggplot(negBinDF, aes(x=negBin)) +
 
 ```
 
-```{r echo=FALSE}
+```{r, echo=FALSE}
 rm(poisson, poissonDF, negBin, negBinDF)
 ```
 
@@ -140,7 +140,7 @@ rm(poisson, poissonDF, negBin, negBinDF)
 If $\theta$ is small, $\mu + \mu^2/\theta$ does not approximately equal $\mu$. The negative binomial will look different than poisson distribution. Note the difference in scale on the x axis and y axis.
 
 
-```{r Poisson Negative Binomial 2, echo=TRUE}
+```{r PoissonNegativeBinomial2, echo=TRUE}
 set.seed(1)
 
 poisson <- rpois(n = 10000, lambda = 1)
@@ -156,14 +156,14 @@ ggplot(negBinDF, aes(x=negBin)) +
   geom_histogram(bins = 100)
 ```
 
-```{r echo=FALSE}
+```{r, echo=FALSE}
 rm(poisson, poissonDF, negBin, negBinDF)
 ```
 
 ## GLM Negative Binomial
 Lets create data where the flexibility of the negative binomial is needed and compare the poisson estimates to the negative binomial estimates. 
 
-```{r Negative Binomial glm, echo=TRUE}
+```{r NegativeBinomialGlm, echo=TRUE, results='markup'}
 
 set.seed(1)
 simdata <- simulate_negative_binomial(N = 10000, weights = c(.5, 1), ancillary = 5) #ancillary is theta.
@@ -181,7 +181,7 @@ summary(glmNB)
 
 ```
 
-```{r echo=FALSE}
+```{r, echo=FALSE}
 rm(simdata, glmPoisson, glmNB)
 ```
 The estimated slopes are very similar. However, the standard errors are not. The fact $\mu$ does not equal $\sigma^2$ has caused a major under estimation of standard errors for the poisson GLM. For poisson models, it is important to look at residual deviance divided by the degrees of freedom. When this quotient is larger than 1, the negative binomial should be considered. In the above the quotient was 6.33 (63327 / 9997) for the poisson glm.

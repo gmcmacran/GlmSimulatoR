@@ -2,7 +2,7 @@
 title: "Dealing With Right Skewed Data"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Dealing With Right Skewed Data}
+  %\VignetteIndexEntry{Dealing_With_Right_Skewed_Data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
