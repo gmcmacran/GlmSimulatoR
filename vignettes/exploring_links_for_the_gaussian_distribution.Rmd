@@ -94,7 +94,7 @@ summary(glmInverseX1X2U1)
 
 ```
 
-Inspecting the 3 summaries, we see a few things. First, the correct model has the lowest AIC! The slope estimates are very close to the true values. Overall, the mathematics behind the glm framework worked very well.
+Inspecting the 3 summaries, we see a few things. First, the correct model has the lowest AIC! Second, the slope estimates are very close to the true values. Overall, the mathematics behind the glm framework worked very well.
 
 # Log Link
 
