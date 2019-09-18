@@ -59,7 +59,23 @@ create_negative_binomial <- function(mu, n, ancillary) {
 }
 
 #' @keywords internal
-# Function to return a function that make data perfect for glm model.
+create_tweedie <- function(mu, n, ancillary) {
+  assertthat::assert_that(all(mu > 0),
+    msg = "Invalid weight and link combination. Choose a different link or weights."
+  )
+  assertthat::assert_that(ancillary >= 1,
+    msg = "Invalid ancillary. Should be in [1,2]."
+  )
+  assertthat::assert_that(ancillary <= 2,
+    msg = "Invalid ancillary. Should be in [1,2]."
+  )
+
+  matrix(tweedie::rtweedie(n = n, mu = as.vector(mu), xi = ancillary, phi = 1), ncol = 1, nrow = n)
+}
+
+#' @keywords internal
+#' A function factory
+# Function to return a function that makes data perfect for glm model.
 make_simulating_function <- function(validLinks, defaultLink, defaultWeights, make_response, defaultAncillary) {
   f <- function(N = 10000, link = defaultLink, weights = defaultWeights,
                   unrelated = 0, ancillary = defaultAncillary) {

@@ -7,6 +7,7 @@
 \alias{simulate_poisson}
 \alias{simulate_inverse_gaussion}
 \alias{simulate_negative_binomial}
+\alias{simulate_tweedie}
 \title{Create ideal data for a generalized linear model.}
 \usage{
 simulate_gaussian(N = 10000, link = defaultLink,
@@ -30,6 +31,10 @@ simulate_inverse_gaussion(N = 10000, link = defaultLink,
   ancillary = defaultAncillary)
 
 simulate_negative_binomial(N = 10000, link = defaultLink,
+  weights = defaultWeights, unrelated = 0,
+  ancillary = defaultAncillary)
+
+simulate_tweedie(N = 10000, link = defaultLink,
   weights = defaultWeights, unrelated = 0,
   ancillary = defaultAncillary)
 }
@@ -59,9 +64,10 @@ The gamma family accepts the links inverse, identity and log.
 The poisson family accepts the links log, identity, and sqrt.
 The inverse gaussian family accepts the links 1/mu^2, inverse, identity and log.
 The negative binomial family accepts the links log, identity, and sqrt using glm.nb in MASS.
+The tweedie family accepts the links log, identity, sqrt and inverse.
 
 Default links are identity for gaussian, logit for binomial, inverse for gamma, log for poisson,
-1/mu^2 for inverse gaussian and log for negative binomial.
+1/mu^2 for inverse gaussian, log for negative binomial and log for tweedie.
 
 The default value for argument weights works well for all link family combinations.
 The functions also validate input and provide helpfull error messages. Mistakes like passing a
@@ -80,8 +86,8 @@ simulate_gaussian(link = "inverse", weights = 1:3) the model is (1/Y) = 1*X1 + 2
 
 The continuous families have an ancillary parameter. For the gaussian family, it is standard deviation.
 Default value is 1. For the gamma family, it is the scale parameter. Default value is .05. For inverse gaussion,
-it is the dispersion parameter. Defalut value 1/3. For negative binomial is is theta. Default value 1. Not used
-in binomial and poisson.
+it is the dispersion parameter. Defalut value 1/3. For negative binomial is is theta. Default value 1. For
+tweedie, it is p. Default value 1.15. Not used in binomial and poisson.
 }
 \examples{
 library(GlmSimulatoR)

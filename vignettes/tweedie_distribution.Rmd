@@ -1,0 +1,88 @@
+---
+title: "Tweedie Distribution"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tweedie_Distribution}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+The tweedie distribution is a relatively new comer to generalized linear model framework. It has three parameters, $\mu$, $\sigma^2$, $\rho$, and has a number of unique characteristics. Many other distributions are special cases of the tweedie distribution.
+
+* Distributions
+  + $\rho$ = 0 gaussian
+  + $\rho$ = 1 poisson
+  + $\rho$ = 2 gamma
+  + $\rho$ = 3 inverse gaussian
+
+The probability density function cannot be evaluated directly. Instead special algorithms must be created to calculate the density. Interested statisticians should read Evaluation of Tweedie exponential dispersion model densities by Fourier inversion. The author created the R package tweedie; which GlmSimulator relies upon.
+
+Due to computational demands associated with the tweedie distribution and software available in R, this package focuses on tweedie distributions with $\rho$ in [1, 2]. 
+
+## Use Case
+
+Imagine you have a car insurance company's data. They either deny a claim and pay $0.00 out, or they pay a large amount. This "either zero or large" situation is what the tweedie distribution is good at modeling.  
+
+Lets get an idea of how the tweedie distribution looks.
+
+```{r pictures}
+library(GlmSimulatoR)
+library(ggplot2)
+set.seed(1)
+
+simdata <- simulate_tweedie(weight = .02, ancillary = 1.10)
+ggplot(simdata, aes(x = Y)) + 
+  geom_histogram(bins = 30)
+
+simdata <- simulate_tweedie(weight = .02, ancillary = 1.30)
+ggplot(simdata, aes(x = Y)) + 
+  geom_histogram(bins = 30)
+
+simdata <- simulate_tweedie(weight = .02, ancillary = 1.50)
+ggplot(simdata, aes(x = Y)) + 
+  geom_histogram(bins = 30)
+
+simdata <- simulate_tweedie(weight = .02, ancillary = 1.70)
+ggplot(simdata, aes(x = Y)) + 
+  geom_histogram(bins = 30)
+
+simdata <- simulate_tweedie(weight = .02, ancillary = 1.90)
+ggplot(simdata, aes(x = Y)) + 
+  geom_histogram(bins = 30)
+
+rm(simdata)
+```
+
+When $\rho$ is near one, zero has a high probability. As $\rho$ gets closer to two, the probability gets smaller and the overall shape approaches a gamma distribution.
+
+
+## Building a glm model.
+
+To test out R's special glm function for the tweedie distribution, lets generate data and see how close our estimates are. We will be using the cplm R package.
+
+
+```{r model, echo=TRUE}
+library(cplm, quietly = TRUE)
+set.seed(1)
+
+simdata <- simulate_tweedie(weight = .20, ancillary = 1.10)
+
+ggplot(simdata, aes(x = Y)) + 
+  geom_histogram(bins = 30)
+```
+
+Pretending Y is measured in thousands of dollars, we are in an "either zero or large" situation.
+
+```{r model2, echo=TRUE}
+glmModel <- cpglm(Y ~ X1, data =simdata, link = "log")
+summary(glmModel)
+
+```
+
+The estimated index parameter is very close to $\rho$, and the estimated slope is close to $\beta$. Overall the function worked very well.

@@ -15,9 +15,10 @@
 #' The poisson family accepts the links log, identity, and sqrt.
 #' The inverse gaussian family accepts the links 1/mu^2, inverse, identity and log.
 #' The negative binomial family accepts the links log, identity, and sqrt using glm.nb in MASS.
+#' The tweedie family accepts the links log, identity, sqrt and inverse.
 #'
 #' Default links are identity for gaussian, logit for binomial, inverse for gamma, log for poisson,
-#' 1/mu^2 for inverse gaussian and log for negative binomial.
+#' 1/mu^2 for inverse gaussian, log for negative binomial and log for tweedie.
 #'
 #' The default value for argument weights works well for all link family combinations.
 #' The functions also validate input and provide helpfull error messages. Mistakes like passing a
@@ -36,8 +37,8 @@
 #'
 #' The continuous families have an ancillary parameter. For the gaussian family, it is standard deviation.
 #' Default value is 1. For the gamma family, it is the scale parameter. Default value is .05. For inverse gaussion,
-#' it is the dispersion parameter. Defalut value 1/3. For negative binomial is is theta. Default value 1. Not used
-#' in binomial and poisson.
+#' it is the dispersion parameter. Defalut value 1/3. For negative binomial is is theta. Default value 1. For
+#' tweedie, it is p. Default value 1.15. Not used in binomial and poisson.
 #'
 #'
 #' @examples
@@ -152,4 +153,14 @@ simulate_negative_binomial <- make_simulating_function(
   defaultWeights = c(.5, 1),
   make_response = create_negative_binomial,
   defaultAncillary = 1
+)
+
+#' @rdname simulate_gaussian
+#' @export
+simulate_tweedie <- make_simulating_function(
+  validLinks = c("log", "identity", "sqrt", "inverse"),
+  defaultLink = "log",
+  defaultWeights = c(.02),
+  make_response = create_tweedie,
+  defaultAncillary = 1.15
 )

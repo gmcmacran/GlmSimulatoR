@@ -21,7 +21,9 @@ Imports:
     magrittr,
     rlang,
     ggplot2,
-    MASS
+    MASS,
+    tweedie,
+    cplm
 RoxygenNote: 6.1.1
 Suggests: 
     testthat,
