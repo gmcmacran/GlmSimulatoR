@@ -23,11 +23,11 @@ The tweedie distribution is a relatively new comer to generalized linear model f
 
 The probability density function cannot be evaluated directly. Instead special algorithms must be created to calculate the density. Interested statisticians should read Evaluation of Tweedie exponential dispersion model densities by Fourier inversion. The author created the R package tweedie; which GlmSimulator relies upon.
 
-Due to computational demands associated with the tweedie distribution and software available in R, this package focuses on tweedie distributions with $\rho$ in [1, 2]. 
+Due to computational demands associated with the tweedie distribution and software available in R, this package focuses on tweedie distributions with $\rho$ in [1, 2] and $\sigma^2$ equal to 1.
 
 ## Building a glm model.
 
-To test out R's special glm function for the tweedie distribution, lets generate data and see how close our estimates are. We will be using the cplm R package.
+To test out R's special glm function for the tweedie distribution, lets generate data and see how close our estimates are. We will be using the cplm package.
 
 
 ```{r model, echo=TRUE}
@@ -42,7 +42,7 @@ ggplot(simdata, aes(x = Y)) +
   geom_histogram(bins = 30)
 ```
 
-Pretending Y is measured in thousands of dollars, we are in an "either zero or large" situation.
+The response variable is usually zero, but sometimes it is large. This is what makes the tweedie distribution unique.
 
 ```{r model2, echo=TRUE}
 glmModel <- cpglm(Y ~ X1, data =simdata, link = "log")
