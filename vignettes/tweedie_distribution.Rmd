@@ -25,53 +25,18 @@ The probability density function cannot be evaluated directly. Instead special a
 
 Due to computational demands associated with the tweedie distribution and software available in R, this package focuses on tweedie distributions with $\rho$ in [1, 2]. 
 
-## Use Case
-
-Imagine you have a car insurance company's data. They either deny a claim and pay $0.00 out, or they pay a large amount. This "either zero or large" situation is what the tweedie distribution is good at modeling.  
-
-Lets get an idea of how the tweedie distribution looks.
-
-```{r pictures}
-library(GlmSimulatoR)
-library(ggplot2)
-set.seed(1)
-
-simdata <- simulate_tweedie(weight = .02, ancillary = 1.10)
-ggplot(simdata, aes(x = Y)) + 
-  geom_histogram(bins = 30)
-
-simdata <- simulate_tweedie(weight = .02, ancillary = 1.30)
-ggplot(simdata, aes(x = Y)) + 
-  geom_histogram(bins = 30)
-
-simdata <- simulate_tweedie(weight = .02, ancillary = 1.50)
-ggplot(simdata, aes(x = Y)) + 
-  geom_histogram(bins = 30)
-
-simdata <- simulate_tweedie(weight = .02, ancillary = 1.70)
-ggplot(simdata, aes(x = Y)) + 
-  geom_histogram(bins = 30)
-
-simdata <- simulate_tweedie(weight = .02, ancillary = 1.90)
-ggplot(simdata, aes(x = Y)) + 
-  geom_histogram(bins = 30)
-
-rm(simdata)
-```
-
-When $\rho$ is near one, zero has a high probability. As $\rho$ gets closer to two, the probability gets smaller and the overall shape approaches a gamma distribution.
-
-
 ## Building a glm model.
 
 To test out R's special glm function for the tweedie distribution, lets generate data and see how close our estimates are. We will be using the cplm R package.
 
 
 ```{r model, echo=TRUE}
+library(GlmSimulatoR)
+library(ggplot2)
 library(cplm, quietly = TRUE)
 set.seed(1)
 
-simdata <- simulate_tweedie(weight = .20, ancillary = 1.10)
+simdata <- simulate_tweedie(weight = 1, ancillary = 1.10, link = "log")
 
 ggplot(simdata, aes(x = Y)) + 
   geom_histogram(bins = 30)
@@ -85,4 +50,4 @@ summary(glmModel)
 
 ```
 
-The estimated index parameter is very close to $\rho$, and the estimated slope is close to $\beta$. Overall the function worked very well.
+The estimated index parameter is very close to $\rho$, and the estimated slope is some what close to $\beta$. Overall the function worked well.
