@@ -25,7 +25,7 @@ The probability density function cannot be evaluated directly. Instead special a
 
 Due to computational demands associated with the tweedie distribution and software available in R, this package focuses on tweedie distributions with $\rho$ in [1, 2] and $\sigma^2$ equal to 1.
 
-## Building a glm model.
+## Building a glm model
 
 To test out R's special glm function for the tweedie distribution, lets generate data and see how close our estimates are. We will be using the cplm package.
 
@@ -36,13 +36,13 @@ library(ggplot2)
 library(cplm, quietly = TRUE)
 set.seed(1)
 
-simdata <- simulate_tweedie(weight = 1, ancillary = 1.10, link = "log")
+simdata <- simulate_tweedie(weight = .2, ancillary = 1.15, link = "log")
 
 ggplot(simdata, aes(x = Y)) + 
   geom_histogram(bins = 30)
 ```
 
-The response variable is usually zero, but sometimes it is large. This is what makes the tweedie distribution unique.
+The response variable is usually zero, but sometimes it is positive. This is what makes the tweedie distribution unique.
 
 ```{r model2, echo=TRUE}
 glmModel <- cpglm(Y ~ X1, data =simdata, link = "log")
@@ -50,4 +50,4 @@ summary(glmModel)
 
 ```
 
-The estimated index parameter is very close to $\rho$, and the estimated slope is some what close to $\beta$. Overall the function worked well.
+The estimated index parameter is very close to $\rho$, and the estimated slope is close to $\beta$. Overall the function worked well.
