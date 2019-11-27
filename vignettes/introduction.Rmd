@@ -20,7 +20,8 @@ Often the first problem in understanding the generalized linear model in a pract
 
 The goal of this package is to strike a balance between mathematical flexibility and simplicity of use. You can control the sample size, link function, number of unrelated variables, and ancillary parameter when applicable. Default values are carefully chosen so data can be generated without thinking about mathematical connections between weights, links, and distributions.
 
-Below will demonstrate how to use this package to answer questions about the glm framework.
+### Getting Familiar With The Package
+All functions return a tibble. The only thing that changes between functions is the distribution of Y. In simulate gaussian, Y follows a gaussian distribution. In simulate_gamma, Y follows a gamma distribution. Overall, think of these functions as helpers that create data. With this data, you can test questions and get familiar with the generalized linear model.
 
 ### Question 1: Is A Sample Size Of 200 Enough To Get Close Estimates Of The True Weights?
 ```{r setup}
