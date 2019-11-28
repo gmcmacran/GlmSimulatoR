@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
 # GlmSimulatoR
 
 <!-- badges: start -->
+[![Travis build status](https://travis-ci.org/gmcmacran/GlmSimulatoR?branch=master)](https://travis-ci.org/gmcmacran/GlmSimulatoR)
 <!-- badges: end -->
 
 Often the first problem in understanding the generalized linear model in a practical way is finding good data. Common problems include finding data with a small number of rows, the response variable does not follow a family in the glm framework, or the data is messy and needs a lot of work before statistical analysis can begin. This package alleviates all of these by allowing you to create the data you want. With data in hand, you can empirically answer any question you have. 

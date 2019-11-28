@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![Travis build
+status](https://travis-ci.org/gmcmacran/GlmSimulatoR?branch=master)](https://travis-ci.org/gmcmacran/GlmSimulatoR)
 <!-- badges: end -->
 
 Often the first problem in understanding the generalized linear model in
