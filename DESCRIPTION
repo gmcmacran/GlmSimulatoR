@@ -1,6 +1,6 @@
 Package: GlmSimulatoR
 Type: Package
-Title: Creates Ideal Data For Generalized Linear Models
+Title: Creates Ideal Data for Generalized Linear Models
 Version: 0.2
 Author: Greg McMahan
 Maintainer: Greg McMahan <gmcmacran@gmail.com>
