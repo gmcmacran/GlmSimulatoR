@@ -41,7 +41,7 @@ create_poisson <- function(mu, n, unused) {
 }
 
 #' @keywords internal
-create_inverse_gaussion <- function(mu, n, ancillary) {
+create_inverse_gaussian <- function(mu, n, ancillary) {
   assertthat::assert_that(all(mu > 0),
     msg = "Invalid weight and link combination. Choose a different link or weights."
   )

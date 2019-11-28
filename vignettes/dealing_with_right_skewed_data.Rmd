@@ -142,7 +142,7 @@ Similar to above, I will build a model that has a very low mean squared error.
 ```{r}
 #Make data
 set.seed(1)
-simdata <- simulate_inverse_gaussion(N = 10000, link = "inverse", 
+simdata <- simulate_inverse_gaussian(N = 10000, link = "inverse", 
                           weights = c(1, 2, 3), ancillary = 10)
 #Confirm Y is right skewed
 ggplot(simdata, aes(x = Y)) + 

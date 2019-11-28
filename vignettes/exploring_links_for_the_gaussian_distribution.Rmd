@@ -179,5 +179,5 @@ summary(glmLog)
 Again, the correct model has the lowest AIC and the estimated weights are very close to the true values.
 
 # Summary
-We have explored different links for the gaussian distribution, but the gaussian distribution is **not** a special case. Everything that was done here could be done for any distribution in the glm framework. Once you understand one distribution, you are very far along in understanding the other distributions. The glm framework can handle categorical response variables (binomial), integer response variables (poisson), and right skewed response variables (gamma and inverse gaussion).
+We have explored different links for the gaussian distribution, but the gaussian distribution is **not** a special case. Everything that was done here could be done for any distribution in the glm framework. Once you understand one distribution, you are very far along in understanding the other distributions. The glm framework can handle categorical response variables (binomial), integer response variables (poisson), and right skewed response variables (gamma and inverse gaussian).
 

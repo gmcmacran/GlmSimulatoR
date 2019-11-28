@@ -5,7 +5,7 @@
 \alias{simulate_binomial}
 \alias{simulate_gamma}
 \alias{simulate_poisson}
-\alias{simulate_inverse_gaussion}
+\alias{simulate_inverse_gaussian}
 \alias{simulate_negative_binomial}
 \alias{simulate_tweedie}
 \title{Create ideal data for a generalized linear model.}
@@ -26,7 +26,7 @@ simulate_poisson(N = 10000, link = defaultLink,
   weights = defaultWeights, unrelated = 0,
   ancillary = defaultAncillary)
 
-simulate_inverse_gaussion(N = 10000, link = defaultLink,
+simulate_inverse_gaussian(N = 10000, link = defaultLink,
   weights = defaultWeights, unrelated = 0,
   ancillary = defaultAncillary)
 
@@ -70,23 +70,23 @@ Default links are identity for gaussian, logit for binomial, inverse for gamma, 
 1/mu^2 for inverse gaussian, log for negative binomial and log for tweedie.
 
 The default value for argument weights works well for all link family combinations.
-The functions also validate input and provide helpfull error messages. Mistakes like passing a
-link of "1/mu^2 to the gaussion function will error.
+The functions also validate input and provide helpful error messages. Mistakes like passing a
+link of "1/mu^2 to the  function will error.
 
 It is possible to pick weights that cause inverse link(X * weights) to be mathematically invalid.
 For example, the log link for binomial regression defines P(Y=1) as exp(X * weights). If this happens,
-the function will error with a helpfull message. For P(Y=1) to be between zero and one, weights should be small.
+the function will error with a helpful message. For P(Y=1) to be between zero and one, weights should be small.
 In general, the log link is the most troublesome to work with. It is recommended to use weights
 in the neighborhood of .1 to .3 for log link.
 
-For inverse gaussion, the inverse of the default link function needs weights*X to be postive.
+For inverse , the inverse of the default link function needs weights*X to be positive.
 
 The intercept in the underlying link(Y) = X * weights + intercept is always max(weights). For example,
 simulate_gaussian(link = "inverse", weights = 1:3) the model is (1/Y) = 1*X1 + 2*X2 + 3*X3 + 3.
 
 The continuous families have an ancillary parameter. For the gaussian family, it is standard deviation.
-Default value is 1. For the gamma family, it is the scale parameter. Default value is .05. For inverse gaussion,
-it is the dispersion parameter. Defalut value 1/3. For negative binomial is is theta. Default value 1. For
+Default value is 1. For the gamma family, it is the scale parameter. Default value is .05. For inverse ,
+it is the dispersion parameter. Default value 1/3. For negative binomial is is theta. Default value 1. For
 tweedie, it is p. Default value 1.15. Not used in binomial and poisson.
 }
 \examples{

@@ -32,10 +32,10 @@ library(ggplot2)
 library(MASS)
 
 set.seed(1)
-simdata <- simulate_inverse_gaussion(N = 100000, link = "1/mu^2", 
+simdata <- simulate_inverse_gaussian(N = 100000, link = "1/mu^2", 
                                      weights = c(1, 2, 3), unrelated = 3)
 
-#Y looks like an inverse gaussion distribution. 
+#Y looks like an inverse gaussian distribution. 
 ggplot(simdata, aes(x=Y)) +
   geom_histogram(bins = 30)
 
@@ -58,10 +58,10 @@ Looking at the summary, the correct model was found. Forward stepwise search wor
 ### Medium Problem: Large N And A Lot Of Unrelated Variables
 ```{r}
 set.seed(2)
-simdata <- simulate_inverse_gaussion(N = 100000, link = "1/mu^2", 
+simdata <- simulate_inverse_gaussian(N = 100000, link = "1/mu^2", 
                                      weights = c(1, 2, 3), unrelated = 20)
 
-#Y looks like an inverse gaussion distribution. 
+#Y looks like an inverse gaussian distribution. 
 ggplot(simdata, aes(x=Y)) +
   geom_histogram(bins = 30)
 
@@ -85,10 +85,10 @@ Some unrelated variables made it into the final model. At least all related feat
 ### Hard Problem: Small N And Only A Few Unrelated Variables
 ```{r}
 set.seed(3)
-simdata <- simulate_inverse_gaussion(N = 1000, link = "1/mu^2", 
+simdata <- simulate_inverse_gaussian(N = 1000, link = "1/mu^2", 
                                      weights = c(1, 2, 3), unrelated = 3)
 
-#Y looks like an inverse gaussion distribution. 
+#Y looks like an inverse gaussian distribution. 
 ggplot(simdata, aes(x=Y)) +
   geom_histogram(bins = 30)
 
@@ -109,10 +109,10 @@ The correct model was found. Again, Forward stepwise search worked perfectly!
 ### Very Hard Problem: Small N And A Lot Of Unrelated Variables
 ```{r}
 set.seed(4)
-simdata <- simulate_inverse_gaussion(N = 1000, link = "1/mu^2", 
+simdata <- simulate_inverse_gaussian(N = 1000, link = "1/mu^2", 
                                      weights = c(1, 2, 3), unrelated = 20)
 
-#Y looks like an inverse gaussion distribution. 
+#Y looks like an inverse gaussian distribution. 
 ggplot(simdata, aes(x=Y)) +
   geom_histogram(bins = 30)
 

@@ -21,7 +21,7 @@ The tweedie distribution is a relatively new comer to generalized linear model f
   + $\rho$ = 2 gamma
   + $\rho$ = 3 inverse gaussian
 
-The probability density function cannot be evaluated directly. Instead special algorithms must be created to calculate the density. Interested statisticians should read [Evaluation of Tweedie exponential dispersion model densities by Fourier inversion](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.449.2161&rep=rep1&type=pdf). The author created the R package tweedie; which GlmSimulator relies upon.
+The probability density function cannot be evaluated directly. Instead special algorithms must be created to calculate the density. Interested statisticians should read [Evaluation of Tweedie exponential dispersion model densities by Fourier inversion](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.449.2161&rep=rep1&type=pdf). The author created the R package tweedie; which GlmSimulatoR relies upon.
 
 Due to computational demands associated with the tweedie distribution and software available in R, this package focuses on tweedie distributions with $\rho$ in [1, 2] and $\sigma^2$ equal to 1.
 
