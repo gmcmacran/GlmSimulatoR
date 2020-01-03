@@ -78,7 +78,7 @@ create_tweedie <- function(mu, n, ancillary) {
 # Function to return a function that makes data perfect for glm model.
 make_simulating_function <- function(validLinks, defaultLink, defaultWeights, make_response, defaultAncillary) {
   f <- function(N = 10000, link = defaultLink, weights = defaultWeights,
-                  unrelated = 0, ancillary = defaultAncillary) {
+                unrelated = 0, ancillary = defaultAncillary) {
 
     ####################
     # Check inputs
