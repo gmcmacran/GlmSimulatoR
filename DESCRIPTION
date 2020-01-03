@@ -24,7 +24,7 @@ Imports:
     MASS,
     tweedie,
     cplm
-RoxygenNote: 7.0.1
+RoxygenNote: 6.1.1
 Suggests: 
     testthat,
     knitr,
