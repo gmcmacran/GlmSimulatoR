@@ -1,8 +1,8 @@
 ---
-title: "Forward Stepwise Search"
+title: "Stepwise Search"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Forward_Stepwise_Search}
+  %\VignetteIndexEntry{Stepwise_Search}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,17 +15,23 @@ knitr::opts_chunk$set(
 ```
 
 ### Background
-A common problem in building statistical models is determining which features to include in a model. Mathematical publications provide some suggestions, but there is no consensus. Some examples are the lasso or simply trying all possible combinations of predictors. For large data, both of these require extensive computation time. For the lasso, a good value of lambda must be cross validated and trying all possible combinations of predictors requires building many models. 
+A common problem in building statistical models is determining which features to include in a model. Mathematical publications provide some suggestions, but there is no consensus. Some examples are the lasso or simply trying all possible combinations of predictors. For large data, both of these could require extensive computation time.
 
-With a multithreaded BLAS, forward stepwise search provides a computationally light weight feature selection method. No resampling is needed, and the feature space is searched in an efficient way. In this vignette, this method will be tested in a variety of situations.
-
+With a multithreaded BLAS, stepwise search provides a computationally light weight feature selection method. No resampling is needed because AIC is used and the feature space is searched in an efficient way. In this vignette, this method will be tested in a variety of situations.
 
 ### Mathematical Background
-The more parameters a model has, the better it will fit the data. However, if the model is too complex, the worse it will perform on unseen data. AIC strikes a balance between fitting the training data well and keeping the model simple. 
+The more parameters a model has, the better it will fit the data. If the model is too complex, the worse it will perform on unseen data. AIC strikes a balance between fitting the training data well and keeping the model simple. 
 
-Using AIC, a forward search starts with no features. Then each feature is considered. If there are 10 features, there are 10 models under consideration. For each model, AIC is calculated and the model with the lowest AIC is selected. After the first feature is selected, all remaining 9 features are considered. Of the 9 features, the one with the lowest AIC is selected, creating a 2 feature model. When adding no more features improve AIC, the procedure stops.
 
-### Easy Problem: Large N And Only A Few Unrelated Variables
+Using AIC, a search starts with no features. $$g(Y) = \beta_0$$
+Then each feature is considered. If there are 10 features, there are 10 models under consideration. For each model, AIC is calculated and the model with the lowest AIC is selected. In this case, X1 was selected. $$g(Y) = \beta_1X_1 + \beta_0$$
+
+
+After the first feature is selected, all remaining 9 features are considered. Of the 9 features, the one with the lowest AIC is selected, creating a 2 feature model. In this round, X3 was selected.  $$g(Y) = \beta_3X_3 + \beta_1X_1 + \beta_0$$
+
+When adding more features does not improve AIC, the procedure stops.
+
+### Easy Problem: Large N And Half The Variables Are Unrelated
 ```{r setup}
 library(GlmSimulatoR)
 library(ggplot2)
@@ -53,9 +59,9 @@ rm(simdata, scopeArg, glmSearch, startingModel)
 
 ```
 
-Looking at the summary, the correct model was found. Forward stepwise search worked perfectly!
+Looking at the summary, the correct model was found. Stepwise search worked perfectly!
 
-### Medium Problem: Large N And A Lot Of Unrelated Variables
+### Medium Problem: Large N And Most Variables Are Unrelated
 ```{r}
 set.seed(2)
 simdata <- simulate_inverse_gaussian(N = 100000, link = "1/mu^2", 
@@ -82,7 +88,7 @@ rm(simdata, scopeArg, glmSearch, startingModel)
 
 Some unrelated variables made it into the final model. At least all related features are in the model. 
 
-### Hard Problem: Small N And Only A Few Unrelated Variables
+### Hard Problem: Small N And Half The Variables Are Unrelated
 ```{r}
 set.seed(3)
 simdata <- simulate_inverse_gaussian(N = 1000, link = "1/mu^2", 
@@ -104,9 +110,9 @@ summary(glmSearch)
 rm(simdata, scopeArg, glmSearch, startingModel)
 ```
 
-The correct model was found. Again, Forward stepwise search worked perfectly!
+The correct model was found. Again, stepwise search worked perfectly!
 
-### Very Hard Problem: Small N And A Lot Of Unrelated Variables
+### Very Hard Problem: Small N And Most Variables Are Unrelated
 ```{r}
 set.seed(4)
 simdata <- simulate_inverse_gaussian(N = 1000, link = "1/mu^2", 
@@ -131,7 +137,7 @@ summary(glmSearch)
 rm(simdata, scopeArg, glmSearch, startingModel)
 ```
 
-A few unrelated features made it into the model, but at least all true predictors are in the model.
+A few unrelated features made it into the model, but at least all true predictors were selected.
 
 ### Summary
-Forward stepwise search provides a computationally fast way to select features. When the related features make up half the total possible features, stepwise search performed perfectly for both small and large n. When there are a lot of unrelated features, forward stepwise finds all related features and erroneously selects a few unrelated variables.
+Stepwise search provides a computationally fast way to select features. When the related features made up half the total possible features, stepwise search performed perfectly for both small and large n. When there were a lot of unrelated features, stepwise found all related features and erroneously selected a few unrelated variables.
