@@ -83,7 +83,7 @@ simulate_gaussian(link = "inverse", weights = 1:3) the model is (1/Y) = 1*X1 + 2
 The continuous families have an ancillary parameter. For the gaussian family, it is standard deviation.
 Default value is 1. For the gamma family, it is the scale parameter. Default value is .05. For inverse gaussian,
 it is the dispersion parameter. Default value 1/3. For negative binomial it is theta. Default value 1. For
-tweedie, it is p. Default value 1.15. Not used in binomial and poisson.
+tweedie, it is rho. Default value 1.15. Not used in binomial and poisson.
 }
 \examples{
 library(GlmSimulatoR)
@@ -109,7 +109,6 @@ ggplot(simdata, aes(x = Y)) +
 rm(simdata)
 
 # Is AIC lower for the correct link? For ten thousand data points, depends on seed!
-# For larger N, AIC is lower.
 set.seed(1)
 simdata <- simulate_gaussian(N = 10000, link = "inverse", weights = 1)
 glmCorrectLink <- glm(Y ~ X1, data = simdata, family = gaussian(link = "inverse"))
@@ -119,7 +118,7 @@ summary(glmWrongLink)$aic
 rm(simdata, glmCorrectLink, glmWrongLink)
 
 
-# Does a forward stepwise search find the correct model for logistic regression? Yes
+# Does a stepwise search find the correct model for logistic regression? Yes
 # 3 related variables. 3 unrelated variables.
 set.seed(1)
 simdata <- simulate_binomial(N = 10000, link = "logit", weights = c(.3, .4, .5), unrelated = 3)
