@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-The tweedie distribution is a relatively new comer to generalized linear model framework. It has three parameters, $\mu$, $\sigma^2$, $\rho$, and has a number of unique characteristics. Many other distributions are special cases of the tweedie distribution.
+The tweedie distribution is a new comer to generalized linear model framework. It has three parameters, $\mu$, $\sigma^2$, $\rho$, and has a number of unique characteristics. Many other distributions are special cases of the tweedie distribution.
 
 * Distributions
   + $\rho$ = 0 gaussian
@@ -50,4 +50,4 @@ summary(glmModel)
 
 ```
 
-The estimated index parameter is very close to $\rho$, and the estimated slope is close to $\beta$. Overall the function worked well.
+The estimated index parameter is very close to $\rho$, and the estimated weights are close to $\beta$. Overall the function worked well.

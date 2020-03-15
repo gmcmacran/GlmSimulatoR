@@ -75,7 +75,7 @@ rm(Gamma, temp)
 
 
 # Building A Models With Very Skewed Data
-To show the generalized linear model can handle skewness, I will build a model that has a very low mean squared error.
+To show the generalized linear model can handle skewness, lets make some data and train a model.
 
 ```{r}
 #Make data
@@ -137,7 +137,7 @@ rm(Invgauss, temp)
 ```
 
 # Building A Model With Very Skewed Data Using Inverse Gaussian Distribution
-Similar to above, I will build a model that has a very low mean squared error.
+Similar to above, lets create data and train a model.
 
 ```{r}
 #Make data

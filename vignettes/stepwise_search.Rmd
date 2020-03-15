@@ -37,6 +37,7 @@ library(GlmSimulatoR)
 library(ggplot2)
 library(MASS)
 
+#Creating data to work with
 set.seed(1)
 simdata <- simulate_inverse_gaussian(N = 100000, link = "1/mu^2", 
                                      weights = c(1, 2, 3), unrelated = 3)
@@ -45,13 +46,16 @@ simdata <- simulate_inverse_gaussian(N = 100000, link = "1/mu^2",
 ggplot(simdata, aes(x=Y)) +
   geom_histogram(bins = 30)
 
+#Setting the simplest model and the most complex model.
 scopeArg <- list(
   lower = Y ~ 1,
   upper = Y ~ X1 + X2 + X3 + Unrelated1 + Unrelated2 + Unrelated3
 )
 
+#Run search
 startingModel <- glm(Y ~ 1, data = simdata, family = inverse.gaussian(link = "1/mu^2"))
 glmSearch <- stepAIC(startingModel, scopeArg)
+
 summary(glmSearch)
 
 rm(simdata, scopeArg, glmSearch, startingModel)
@@ -63,6 +67,7 @@ Looking at the summary, the correct model was found. Stepwise search worked perf
 
 ### Medium Problem: Large N And Most Variables Are Unrelated
 ```{r}
+#Creating data to work with
 set.seed(2)
 simdata <- simulate_inverse_gaussian(N = 100000, link = "1/mu^2", 
                                      weights = c(1, 2, 3), unrelated = 20)
@@ -71,6 +76,7 @@ simdata <- simulate_inverse_gaussian(N = 100000, link = "1/mu^2",
 ggplot(simdata, aes(x=Y)) +
   geom_histogram(bins = 30)
 
+#Setting the simplest model and the most complex model.
 scopeArg <- list(
   lower = Y ~ 1,
   upper = Y ~ X1 + X2 + X3 + Unrelated1 + Unrelated2 + Unrelated3 + Unrelated3 + 
@@ -79,8 +85,10 @@ scopeArg <- list(
     Unrelated16 + Unrelated17 + Unrelated18 + Unrelated19 + Unrelated20
 )
 
+#Run search
 startingModel <- glm(Y ~ 1, data = simdata, family = inverse.gaussian(link = "1/mu^2"))
 glmSearch <- stepAIC(startingModel, scopeArg)
+
 summary(glmSearch)
 
 rm(simdata, scopeArg, glmSearch, startingModel)
@@ -90,6 +98,7 @@ Some unrelated variables made it into the final model. At least all related feat
 
 ### Hard Problem: Small N And Half The Variables Are Unrelated
 ```{r}
+#Creating data to work with
 set.seed(3)
 simdata <- simulate_inverse_gaussian(N = 1000, link = "1/mu^2", 
                                      weights = c(1, 2, 3), unrelated = 3)
@@ -98,13 +107,16 @@ simdata <- simulate_inverse_gaussian(N = 1000, link = "1/mu^2",
 ggplot(simdata, aes(x=Y)) +
   geom_histogram(bins = 30)
 
+#Setting the simplest model and the most complex model.
 scopeArg <- list(
   lower = Y ~ 1,
   upper = Y ~ X1 + X2 + X3 + Unrelated1 + Unrelated2 + Unrelated3
 )
 
+#Run search
 startingModel <- glm(Y ~ 1, data = simdata, family = inverse.gaussian(link = "1/mu^2"))
 glmSearch <- stepAIC(startingModel, scopeArg)
+
 summary(glmSearch)
 
 rm(simdata, scopeArg, glmSearch, startingModel)
@@ -114,6 +126,7 @@ The correct model was found. Again, stepwise search worked perfectly!
 
 ### Very Hard Problem: Small N And Most Variables Are Unrelated
 ```{r}
+#Creating data to work with
 set.seed(4)
 simdata <- simulate_inverse_gaussian(N = 1000, link = "1/mu^2", 
                                      weights = c(1, 2, 3), unrelated = 20)
@@ -122,6 +135,7 @@ simdata <- simulate_inverse_gaussian(N = 1000, link = "1/mu^2",
 ggplot(simdata, aes(x=Y)) +
   geom_histogram(bins = 30)
 
+#Setting the simplest model and the most complex model.
 scopeArg <- list(
   lower = Y ~ 1,
   upper = Y ~ X1 + X2 + X3 + Unrelated1 + Unrelated2 + Unrelated3 + Unrelated3 + 
@@ -130,8 +144,10 @@ scopeArg <- list(
     Unrelated16 + Unrelated17 + Unrelated18 + Unrelated19 + Unrelated20
 )
 
+#Run search
 startingModel <- glm(Y ~ 1, data = simdata, family = inverse.gaussian(link = "1/mu^2"))
 glmSearch <- stepAIC(startingModel, scopeArg)
+
 summary(glmSearch)
 
 rm(simdata, scopeArg, glmSearch, startingModel)
@@ -140,4 +156,4 @@ rm(simdata, scopeArg, glmSearch, startingModel)
 A few unrelated features made it into the model, but at least all true predictors were selected.
 
 ### Summary
-Stepwise search provides a computationally fast way to select features. When the related features made up half the total possible features, stepwise search performed perfectly for both small and large n. When there were a lot of unrelated features, stepwise found all related features and erroneously selected a few unrelated variables.
+Stepwise search provides a computationally fast way to select features. When half the features were unrelated, the search found the correct model for both small and large n. When the majority of features were unrelated, stepwise found all related features and erroneously selected a few unrelated variables.

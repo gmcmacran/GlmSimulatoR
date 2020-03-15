@@ -81,20 +81,20 @@ cor(x=simdata$Unrelated1, y = simdata$Y)
 ```
 
 ### Building Models
-Pretending we don't know the correct answer, lets see if we can find the correct model. We will try three models. One with just X2, one with X1 and X2, and one with everything. Will the correct model stand out?
+Pretending the correct model is unknown, lets try to find it. We will try three models. One with just X2, one with X1 and X2, and one with everything. Will the correct model stand out?
 
 ```{r}
 glmInverseX2 <- glm(Y ~ X2, data = simdata, family = gaussian(link = "inverse"))
 glmInverseX1X2<- glm(Y ~ X1 + X2, data = simdata, family = gaussian(link = "inverse"))
 glmInverseX1X2U1<- glm(Y ~ X1 + X2 + Unrelated1, data = simdata, family = gaussian(link = "inverse"))
 
-summary(glmInverseX2)
-summary(glmInverseX1X2)
-summary(glmInverseX1X2U1)
+summary(glmInverseX2)$aic
+summary(glmInverseX1X2)$aic
+summary(glmInverseX1X2U1)$aic
 
 ```
 
-Inspecting the 3 summaries, we see a few things. First, the correct model has the lowest AIC! Second, the slope estimates are very close to the true values. Overall, the mathematics behind the glm framework worked very well.
+The correct model has the lowest AIC.
 
 # Log Link
 
@@ -163,21 +163,21 @@ cor(x=simdata$Unrelated1, y = simdata$Y)
 ```
 
 ### Building Models
-Pretending we don't know the correct answer, lets see if we can find the correct model. For a change we will compare the the link functions for the gaussian family.
+Pretending the correct model is unknown again, lets try to find it. For a change we will compare the the link functions for the gaussian family.
 
 ```{r}
 glmIdentity <- glm(Y ~ X1 + X2, data = simdata, family = gaussian(link = "identity"))
 glmInverse<- glm(Y ~ X1 + X2, data = simdata, family = gaussian(link = "inverse"))
 glmLog<- glm(Y ~ X1 + X2, data = simdata, family = gaussian(link = "log"))
 
-summary(glmIdentity)
-summary(glmInverse)
-summary(glmLog)
+summary(glmIdentity)$aic
+summary(glmInverse)$aic
+summary(glmLog)$aic
 
 ```
 
-Again, the correct model has the lowest AIC and the estimated weights are very close to the true values.
+Again, the correct model has the lowest AIC.
 
 # Summary
-We have explored different links for the gaussian distribution, but the gaussian distribution is **not** a special case. Everything that was done here could be done for any distribution in the glm framework. Once you understand one distribution, you are very far along in understanding the other distributions. The glm framework can handle categorical response variables (binomial), integer response variables (poisson), and right skewed response variables (gamma and inverse gaussian).
+We have explored different links for the gaussian distribution, but the gaussian distribution is **not** a special case. Everything that was done here could be done for any distribution in the glm framework. Once you understand one distribution, you are very far along in understanding the other distributions. The glm framework can handle categorical response variables (binomial), integer response variables (poisson, negative binomial) right skewed response variables (gamma, inverse gaussian, tweedie) and symmetrical response variables (gaussian).
 
