@@ -38,19 +38,20 @@ And the development version from [GitHub](https://github.com/) with:
 # install.packages("devtools")
 devtools::install_github("gmcmacran/GlmSimulatoR")
 ```
-## Example
+## Example: Do glm and lm Estimate The Same Weights?
 
 ```{r example}
 library(GlmSimulatoR)
 
-#Do glm and lm estimate the same weights? Yes
 set.seed(1)
 simdata <- simulate_gaussian() #GlmSimulatoR function
 linearModel <- lm(Y ~ X1 + X2 + X3, data = simdata)
 glmModel <- glm(Y ~ X1 + X2 + X3, data = simdata, family = gaussian(link = "identity"))
-summary(linearModel)
-summary(glmModel)
+summary(linearModel)$coefficients
+summary(glmModel)$coefficients
 rm(linearModel, glmModel, simdata)
 ```
+
+In the summary, the weights and standard errors are the same.
 
 ## See Vignettes For More Examples
