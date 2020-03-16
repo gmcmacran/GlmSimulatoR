@@ -19,7 +19,7 @@ For count response variables, the glm framework has two options. The poisson fam
 
 ## Getting Familiar With The Poisson Family
 
-First lets get an idea of how the poisson family looks. If lambda is near 1, the poisson family is right skewed. As lambda increases, the poisson family becomes more gaussian. 
+First lets get an idea of how the poisson family looks. If lambda is near 1, the poisson family is right skewed. As lambda increases, the poisson family becomes more symmetrical. 
 
 ```{r PoissonHistogram, echo=TRUE}
 library(stats)
@@ -60,7 +60,7 @@ rm(poisson, poissonDF)
 
 
 ## GLM Poisson
-The below histogram looks similar to the above histograms. Also, the Maximum Likelihood Estimation in the GLM framework was able to estimate the slopes well. 
+Lets create data and train a model. 
 
 ```{r PoissonGlm, echo=TRUE, results='markup'}
 
@@ -75,7 +75,6 @@ glmPoisson <- glm(Y ~ X1 + X2, data = simdata, family = poisson(link = "log"))
 summary(glmPoisson)
 
 ```
-
 ```{r, echo=FALSE}
 rm(simdata, glmPoisson)
 ```
@@ -137,7 +136,7 @@ rm(poisson, poissonDF, negBin, negBinDF)
 ```
 
 
-If $\theta$ is small, $\mu + \mu^2/\theta$ does not approximately equal $\mu$. The negative binomial will look different than poisson distribution. Note the difference in scale on the x axis and y axis.
+If $\theta$ is small, $\mu + \mu^2/\theta$ does not approximately equal $\mu$. The negative binomial will look different than the poisson distribution. Note the difference in scale on the x axis and y axis.
 
 
 ```{r PoissonNegativeBinomial2, echo=TRUE}
