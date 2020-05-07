@@ -105,7 +105,7 @@ simulate_binomial <- make_simulating_function(
   validLinks = c("logit", "probit", "cauchit", "log", "cloglog", "loglog", "logc", "identity"),
   defaultLink = "logit",
   defaultWeights = c(.1, .2),
-  make_response = create_binomial,
+  make_response = GlmSimulatoR:::create_binomial,
   defaultAncillary = NULL
 )
 
@@ -115,7 +115,7 @@ simulate_gamma <- make_simulating_function(
   validLinks = c("inverse", "identity", "log"),
   defaultLink = "inverse",
   defaultWeights = 1:3,
-  make_response = create_gamma,
+  make_response = GlmSimulatoR:::create_gamma,
   defaultAncillary = .05
 )
 
@@ -125,7 +125,7 @@ simulate_poisson <- make_simulating_function(
   validLinks = c("log", "identity", "sqrt"),
   defaultLink = "log",
   defaultWeights = c(.5, 1),
-  make_response = create_poisson,
+  make_response = GlmSimulatoR:::create_poisson,
   defaultAncillary = NULL
 )
 
@@ -135,7 +135,7 @@ simulate_inverse_gaussian <- make_simulating_function(
   validLinks = c("1/mu^2", "inverse", "identity", "log"),
   defaultLink = "1/mu^2",
   defaultWeights = 1:3,
-  make_response = create_inverse_gaussian,
+  make_response = GlmSimulatoR:::create_inverse_gaussian,
   defaultAncillary = 1 / 3
 )
 
@@ -145,7 +145,7 @@ simulate_negative_binomial <- make_simulating_function(
   validLinks = c("log", "identity", "sqrt"),
   defaultLink = "log",
   defaultWeights = c(.5, 1),
-  make_response = create_negative_binomial,
+  make_response = GlmSimulatoR:::create_negative_binomial,
   defaultAncillary = 1
 )
 
@@ -155,6 +155,6 @@ simulate_tweedie <- make_simulating_function(
   validLinks = c("log", "identity", "sqrt", "inverse"),
   defaultLink = "log",
   defaultWeights = c(.02),
-  make_response = create_tweedie,
+  make_response = GlmSimulatoR:::create_tweedie,
   defaultAncillary = 1.15
 )
