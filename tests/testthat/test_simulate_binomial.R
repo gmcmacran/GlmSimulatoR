@@ -50,7 +50,7 @@ test_that("All links execute", {
   expect_true(all(class(simulate_binomial(link = "log", weights = -.01)) == c("tbl_df", "tbl", "data.frame")))
   expect_true(all(class(simulate_binomial(link = "cloglog", weights = .1)) == c("tbl_df", "tbl", "data.frame")))
   expect_true(all(class(simulate_binomial(link = "loglog", weights = .1)) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_binomial(link = "logc", weights = .1)) == c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_binomial(link = "logc", weights = -.1)) == c("tbl_df", "tbl", "data.frame")))
   expect_true(all(class(simulate_binomial(link = "identity", weights = .1)) == c("tbl_df", "tbl", "data.frame")))
 })
 
