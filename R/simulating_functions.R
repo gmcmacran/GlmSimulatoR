@@ -102,7 +102,7 @@ simulate_gaussian <- make_simulating_function(
 #' @rdname simulate_gaussian
 #' @export
 simulate_binomial <- make_simulating_function(
-  validLinks = c("logit", "probit", "cauchit", "log", "cloglog"),
+  validLinks = c("logit", "probit", "cauchit", "log", "cloglog", "loglog", "logc", "identity"),
   defaultLink = "logit",
   defaultWeights = c(.1, .2),
   make_response = create_binomial,

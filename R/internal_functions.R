@@ -140,6 +140,15 @@ make_simulating_function <- function(validLinks, defaultLink, defaultWeights, ma
       inv_link <- function(eta) {
         return(1 - exp(-exp(eta)))
       }
+    } else if (link == "loglog") {
+      inv_link <- function(eta) {
+        return(exp(-exp(-eta)))
+      }
+    } else if (link == "logc") {
+      inv_link <- function(eta) {
+        return(1 - exp(eta))
+      }
+
 
       # gamma
       # inverse, identity, and log are in gaussian section
