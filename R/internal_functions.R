@@ -176,12 +176,12 @@ make_simulating_function <- function(validLinks, defaultLink, defaultWeights, ma
     ####################
     # Create predictors
     ####################
-    X <- purrr::map_dfc(weights, create_predictor, n = N) %>%
+    X <- purrr::map_dfc(weights, GlmSimulatoR:::create_predictor, n = N) %>%
       as.matrix()
     colnames(X) <- stringr::str_c(rep("X", length(weights)), 1:length(weights))
 
     if (unrelated > 0) {
-      useless <- purrr::map_dfc(1:unrelated, create_predictor, n = N) %>%
+      useless <- purrr::map_dfc(1:unrelated, GlmSimulatoR:::create_predictor, n = N) %>%
         as.matrix()
       colnames(useless) <- stringr::str_c(rep("Unrelated", length(unrelated)), 1:unrelated)
     }
