@@ -12,14 +12,14 @@
 #' For example, the log link for binomial regression defines P(Y=1) as exp(X * weights) which can be above one.
 #' If this happens, the function will error with a helpful message.
 #'
-#' The intercept in the underlying link(Y) = X * weights + intercept is always max(weights). For example,
-#' simulate_gaussian(link = "inverse", weights = 1:3) the model is (1/Y) = 1*X1 + 2*X2 + 3*X3 + 3.
+#' The intercept in the underlying link(Y) = X * weights + intercept is always max(weights). In
+#' simulate_gaussian(link = "inverse", weights = 1:3), the model is (1/Y) = 1*X1 + 2*X2 + 3*X3 + 3.
 #'
 #'
 #'  links
 #'  \itemize{
 #'   \item gaussian: identity, log, inverse
-#'   \item binomial: logit, probit, cuachit, loglog, cloglog, log, logc
+#'   \item binomial: logit, probit, cuachit, loglog, cloglog, log, logc, identity
 #'   \item gamma: inverse, identity, log
 #'   \item poisson: log, identity, sqrt
 #'   \item inverse gaussian: 1/mu^2, inverse, identity, log
