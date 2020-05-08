@@ -101,7 +101,7 @@ make_simulating_function <- function(validLinks, defaultLink, defaultWeights, ma
 
     assertthat::assert_that(assertthat::is.string(link))
     assertthat::assert_that(link %in% validLinks,
-      msg = "Argument link was not a valid link. See help(family) for valid links."
+      msg = "Argument link was not a valid link. See documentation for valid links."
     )
 
     assertthat::assert_that(is.numeric(weights))
