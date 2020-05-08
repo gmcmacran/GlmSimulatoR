@@ -77,8 +77,22 @@ create_tweedie <- function(mu, n, ancillary) {
 #' A function factory
 # Function to return a function that makes data perfect for glm model.
 make_simulating_function <- function(validLinks, defaultLink, defaultWeights, make_response, defaultAncillary) {
-  f <- function(N = 10000, link = defaultLink, weights = defaultWeights,
-                  unrelated = 0, ancillary = defaultAncillary) {
+  force(validLinks)
+  force(defaultLink)
+  force(defaultWeights)
+  force(make_response)
+  force(defaultAncillary)
+
+  # ancillary is only meaningful for some glm famalies
+  # For poisson and binomial it is not needed from a math perspective
+  # Code still accepts the parameter and just does nothing with it.
+  # Want to hide the argument from user in this case.
+  # So setting a dummy value and deleting argument from f.
+  if (is.null(defaultAncillary)) {
+    ancillary <- 1
+  }
+
+  f <- function(N = 10000, link, weights, unrelated = 0, ancillary) {
 
     ####################
     # Check inputs
@@ -209,4 +223,11 @@ make_simulating_function <- function(validLinks, defaultLink, defaultWeights, ma
 
     return(data)
   }
+
+  # Set default values
+  formals(f)$link <- defaultLink
+  formals(f)$weights <- defaultWeights
+  formals(f)$ancillary <- defaultAncillary
+
+  return(f)
 }
