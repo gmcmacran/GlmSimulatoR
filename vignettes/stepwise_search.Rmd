@@ -14,14 +14,10 @@ knitr::opts_chunk$set(
 )
 ```
 
-### Background
-A common problem in building statistical models is determining which features to include in a model. Mathematical publications provide some suggestions, but there is no consensus. Some examples are the lasso or simply trying all possible combinations of predictors. For large data, both of these could require extensive computation time.
-
-With a multithreaded BLAS, stepwise search provides a computationally light weight feature selection method. No resampling is needed because AIC is used and the feature space is searched in an efficient way. In this vignette, this method will be tested in a variety of situations.
-
 ### Mathematical Background
-The more parameters a model has, the better it will fit the data. If the model is too complex, the worse it will perform on unseen data. AIC strikes a balance between fitting the training data well and keeping the model simple. 
+A common problem in building statistical models is determining which features to include in a model. Mathematical publications provide some suggestions, but there is no consensus. Some examples are the lasso or simply trying all possible combinations of predictors. Another option is stepwise search.
 
+The more parameters a model has, the better it will fit the data. If the model is too complex, the worse it will perform on unseen data. AIC strikes a balance between fitting the training data well and keeping the model simple. 
 
 Using AIC, a search starts with no features. $$g(Y) = \beta_0$$
 Then each feature is considered. If there are 10 features, there are 10 models under consideration. For each model, AIC is calculated and the model with the lowest AIC is selected. In this case, X1 was selected. $$g(Y) = \beta_1X_1 + \beta_0$$

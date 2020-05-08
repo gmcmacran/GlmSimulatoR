@@ -113,7 +113,7 @@ Splitting up the exponent, we get
 $$
 Y = \exp (\beta_2X_2) * \exp (\beta_1X_1) * \exp (\beta_0)
 $$
-Thus the relationship between Y and **X** is multiplicative, not additive for the log link.
+Thus the relationship between Y and **X** is not additive for the log link.
 
 ### Exploring Data
 First, lets generate some data. 

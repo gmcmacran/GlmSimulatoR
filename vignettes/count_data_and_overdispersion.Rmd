@@ -75,6 +75,9 @@ glmPoisson <- glm(Y ~ X1 + X2, data = simdata, family = poisson(link = "log"))
 summary(glmPoisson)
 
 ```
+
+The estimated weights are close the the weights argument in simulate_poisson. The model estimates are accurate.
+
 ```{r, echo=FALSE}
 rm(simdata, glmPoisson)
 ```

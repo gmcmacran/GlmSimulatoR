@@ -50,4 +50,4 @@ summary(glmModel)
 
 ```
 
-The estimated index parameter is very close to $\rho$, and the estimated weights are close to $\beta$. Overall the function worked well.
+The estimated index parameter is very close to $\rho$ (the ancillary argument), and the estimated weights are close to $\beta$ (the weight argument). Overall the function worked well.
