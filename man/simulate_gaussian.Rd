@@ -60,7 +60,7 @@ simulate_gaussian(link = "inverse", weights = 1:3), the model is (1/Y) = 1*X1 + 
  links
  \itemize{
   \item gaussian: identity, log, inverse
-  \item binomial: logit, probit, cuachit, loglog, cloglog, log, logc, identity
+  \item binomial: logit, probit, cauchit, loglog, cloglog, log, logc, identity
   \item gamma: inverse, identity, log
   \item poisson: log, identity, sqrt
   \item inverse gaussian: 1/mu^2, inverse, identity, log
