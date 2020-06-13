@@ -23,11 +23,22 @@ The goal of this package is to strike a balance between mathematical flexibility
 ### Getting Familiar With The Package
 All functions return a tibble. The only thing that changes between functions is the distribution of Y. In simulate gaussian, Y follows a gaussian distribution. In simulate_gamma, Y follows a gamma distribution. Think of these functions as helpers that create data. With this data, you can test questions and get familiar with the generalized linear model.
 
-### Question 1: Is A Sample Size Of 200 Enough To Get Close Estimates Of The True Weights?
-```{r setup}
+### Example 1: Create Textbook Data for Linear Model
+
+```{r example1}
 library(GlmSimulatoR)
 library(ggplot2)
 
+set.seed(1)
+simdata <- simulate_gaussian(N = 100, weights = 1, xrange = 10, ancillary = 1) #GlmSimulatoR function
+ggplot(simdata, aes(x = X1, y = Y)) + 
+  geom_point()
+
+rm(simdata)
+```
+
+### Question 1: Is A Sample Size Of 200 Enough To Get Close Estimates Of The True Weights?
+```{r setup}
 set.seed(1)
 simdata <- simulate_gaussian(N = 200, weights = c(1, 2, 3))
 

@@ -1,7 +1,7 @@
 #' @keywords internal
 # Helper function to make X
-create_predictor <- function(weight, n) {
-  return(stats::runif(n, 1, 2))
+create_predictor <- function(weight, n, xrange) {
+  return(stats::runif(n, 1, xrange + 1))
 }
 
 #' @keywords internal
@@ -76,10 +76,11 @@ create_tweedie <- function(mu, n, ancillary) {
 #' @keywords internal
 #' A function factory
 # Function to return a function that makes data perfect for glm model.
-make_simulating_function <- function(validLinks, defaultLink, defaultWeights, make_response, defaultAncillary) {
+make_simulating_function <- function(validLinks, defaultLink, defaultWeights, defaultRange, make_response, defaultAncillary) {
   force(validLinks)
   force(defaultLink)
   force(defaultWeights)
+  force(defaultRange)
   force(make_response)
   force(defaultAncillary)
 
@@ -92,7 +93,7 @@ make_simulating_function <- function(validLinks, defaultLink, defaultWeights, ma
     ancillary <- 1
   }
 
-  f <- function(N = 10000, link, weights, unrelated = 0, ancillary) {
+  f <- function(N = 10000, link, weights, xrange, unrelated = 0, ancillary) {
 
     ####################
     # Check inputs
@@ -106,6 +107,9 @@ make_simulating_function <- function(validLinks, defaultLink, defaultWeights, ma
 
     assertthat::assert_that(is.numeric(weights))
     assertthat::assert_that(length(weights) > 0)
+
+    assertthat::assert_that(assertthat::is.number(xrange))
+    assertthat::assert_that(xrange >= 0)
 
     assertthat::assert_that(length(unrelated) == 1,
       msg = "Argument unrelated must have length 1."
@@ -190,12 +194,12 @@ make_simulating_function <- function(validLinks, defaultLink, defaultWeights, ma
     ####################
     # Create predictors
     ####################
-    X <- purrr::map_dfc(weights, create_predictor, n = N) %>%
+    X <- purrr::map_dfc(weights, create_predictor, n = N, xrange = xrange) %>%
       as.matrix()
     colnames(X) <- stringr::str_c(rep("X", length(weights)), 1:length(weights))
 
     if (unrelated > 0) {
-      useless <- purrr::map_dfc(1:unrelated, create_predictor, n = N) %>%
+      useless <- purrr::map_dfc(1:unrelated, create_predictor, n = N, xrange = xrange) %>%
         as.matrix()
       colnames(useless) <- stringr::str_c(rep("Unrelated", length(unrelated)), 1:unrelated)
     }
@@ -227,6 +231,7 @@ make_simulating_function <- function(validLinks, defaultLink, defaultWeights, ma
   # Set default values
   formals(f)$link <- defaultLink
   formals(f)$weights <- defaultWeights
+  formals(f)$xrange <- defaultRange
   formals(f)$ancillary <- defaultAncillary
 
   return(f)

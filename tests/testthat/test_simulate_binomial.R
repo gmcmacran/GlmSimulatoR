@@ -31,6 +31,21 @@ test_that("Returns the correct number of predictors.", {
   expect_equal(ncol(simulate_binomial(weights = 1:4)), 5)
 })
 
+test_that("Returns the correct range for x.", {
+  expect_true(max(simulate_binomial(weights = .1, xrange = 0)[,2]) <= 1)
+  expect_true(min(simulate_binomial(weights = .1, xrange = 0)[,2]) >= 1)
+  expect_true(max(simulate_binomial(weights = .1, xrange = 2)[,2]) <= 3)
+  expect_true(min(simulate_binomial(weights = .1, xrange = 2)[,2]) >= 1)
+  expect_true(max(simulate_binomial(weights = .1, xrange = 3)[,2]) <= 4)
+  expect_true(min(simulate_binomial(weights = .1, xrange = 3)[,2]) >= 1)
+  expect_true(max(simulate_binomial(weights = c(.1,.2), xrange = 0)[,3]) <= 1)
+  expect_true(min(simulate_binomial(weights = c(.1,.2), xrange = 0)[,3]) >= 1)
+  expect_true(max(simulate_binomial(weights = c(.1,.2), xrange = 2)[,3]) <= 3)
+  expect_true(min(simulate_binomial(weights = c(.1,.2), xrange = 2)[,3]) >= 1)
+  expect_true(max(simulate_binomial(weights = c(.1,.2), xrange = 3)[,3]) <= 4)
+  expect_true(min(simulate_binomial(weights = c(.1,.2), xrange = 3)[,3]) >= 1)
+})
+
 test_that("Returns the correct number of unrelated variables.", {
   expect_equal(ncol(simulate_binomial(weights = 1, unrelated = 0)), 2)
   expect_equal(ncol(simulate_binomial(weights = 1, unrelated = 1)), 3)
@@ -62,6 +77,10 @@ test_that("Confirm input checing works.", {
   expect_error(simulate_binomial(N = c(100, 200)), NULL)
   expect_error(simulate_binomial(link = "sqrt"), NULL)
   expect_error(simulate_binomial(weights = c()), NULL)
+  expect_error(simulate_binomial(xrange = "asdf"), NULL)
+  expect_error(simulate_binomial(xrange = c()), NULL)
+  expect_error(simulate_binomial(xrange = c(1,2)), NULL)
+  expect_error(simulate_binomial(xrange = -1), NULL)
   expect_error(simulate_binomial(unrelated = -1), NULL)
   expect_error(simulate_binomial(unrelated = c(10, 20)), NULL)
 })

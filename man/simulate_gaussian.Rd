@@ -11,32 +11,34 @@
 \title{Create ideal data for a generalized linear model.}
 \usage{
 simulate_gaussian(N = 10000, link = "identity", weights = 1:3,
-  unrelated = 0, ancillary = 1)
+  xrange = 1, unrelated = 0, ancillary = 1)
 
 simulate_binomial(N = 10000, link = "logit", weights = c(0.1, 0.2),
-  unrelated = 0)
+  xrange = 1, unrelated = 0)
 
 simulate_gamma(N = 10000, link = "inverse", weights = 1:3,
-  unrelated = 0, ancillary = 0.05)
+  xrange = 1, unrelated = 0, ancillary = 0.05)
 
 simulate_poisson(N = 10000, link = "log", weights = c(0.5, 1),
-  unrelated = 0)
+  xrange = 1, unrelated = 0)
 
 simulate_inverse_gaussian(N = 10000, link = "1/mu^2", weights = 1:3,
-  unrelated = 0, ancillary = 0.3333)
+  xrange = 1, unrelated = 0, ancillary = 0.3333)
 
 simulate_negative_binomial(N = 10000, link = "log", weights = c(0.5,
-  1), unrelated = 0, ancillary = 1)
+  1), xrange = 1, unrelated = 0, ancillary = 1)
 
 simulate_tweedie(N = 10000, link = "log", weights = 0.02,
-  unrelated = 0, ancillary = 1.15)
+  xrange = 1, unrelated = 0, ancillary = 1.15)
 }
 \arguments{
 \item{N}{Sample size. (Default: 10000)}
 
 \item{link}{Link function. See \code{\link[stats]{family}} for details.}
 
-\item{weights}{Betas in glm model. See details. simulate_binomial: c(.1, .2) All other: c(1, 2, 3)}
+\item{weights}{Betas in glm model.}
+
+\item{xrange}{range of x variables.}
 
 \item{unrelated}{Number of unrelated features to return. (Default: 0)}
 
@@ -95,8 +97,8 @@ summary(linearModel)
 summary(glmModel)
 rm(linearModel, glmModel, simdata)
 
-# If the effects are multiplicative instead of additive,
-# will my response variable still be normal? Yes
+# If the link is not identity, will the response
+# variable still be normal? Yes
 set.seed(1)
 simdata <- simulate_gaussian(N = 1000, link = "log", weights = c(.1, .2))
 
