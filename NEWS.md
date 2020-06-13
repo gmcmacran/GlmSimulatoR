@@ -1,3 +1,7 @@
+# GlmSimulatoR v 0.2.3
+  Add xrange argument so ranges of predictors
+  can be adjusted.
+
 # GlmSimulatoR v 0.2.2
 	Adding loglgog, logc, and identity links
 	to simulate_binomial.
