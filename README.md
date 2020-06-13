@@ -44,7 +44,26 @@ And the development version from [GitHub](https://github.com/) with:
 devtools::install_github("gmcmacran/GlmSimulatoR")
 ```
 
-## Example: Do glm and lm Estimate The Same Weights?
+## Example 1: Create Textbook Data for Linear Model
+
+``` r
+library(GlmSimulatoR)
+library(ggplot2)
+
+set.seed(1)
+simdata <- simulate_gaussian(N = 100, weights = 1, xrange = 10, ancillary = 1) #GlmSimulatoR function
+ggplot(simdata, aes(x = X1, y = Y)) + 
+  geom_point()
+```
+
+<img src="man/figures/README-example1-1.png" width="100%" />
+
+``` r
+
+rm(simdata)
+```
+
+## Example 2: Do glm and lm Estimate The Same Weights?
 
 ``` r
 library(GlmSimulatoR)
