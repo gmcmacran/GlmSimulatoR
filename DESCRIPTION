@@ -19,15 +19,15 @@ Imports:
     dplyr,
     statmod,
     magrittr,
-    rlang,
-    ggplot2,
     MASS,
-    tweedie,
-    cplm
+    tweedie
 RoxygenNote: 6.1.1
 Suggests: 
     testthat,
     knitr,
     rmarkdown,
-    covr
+    covr,
+    cplm,
+    ggplot2,
+    rlang
 VignetteBuilder: knitr
