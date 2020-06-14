@@ -20,7 +20,9 @@ Imports:
     statmod,
     magrittr,
     MASS,
-    tweedie
+    tweedie,
+    ggplot2,
+    cplm
 RoxygenNote: 6.1.1
 Suggests: 
     testthat,
