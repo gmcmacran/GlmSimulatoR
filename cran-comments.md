@@ -2,7 +2,6 @@
 * local windows 10 R 3.5.3
 * ubuntu 14.04 (on travis-ci)
 * win-builder (devel and release)
-* Fedora Linux, R-devel, clang, gfortran (rhub)
 * Debian Linux, R-release, GCC (rhub)
 
 ## R CMD check results
