@@ -57,7 +57,7 @@ rm(simdata)
 ```{r example2}
 library(GlmSimulatoR)
 
-set.seed(1)
+set.seed(2)
 simdata <- simulate_gaussian() #GlmSimulatoR function
 linearModel <- lm(Y ~ X1 + X2 + X3, data = simdata)
 glmModel <- glm(Y ~ X1 + X2 + X3, data = simdata, family = gaussian(link = "identity"))

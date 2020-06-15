@@ -68,22 +68,22 @@ rm(simdata)
 ``` r
 library(GlmSimulatoR)
 
-set.seed(1)
+set.seed(2)
 simdata <- simulate_gaussian() #GlmSimulatoR function
 linearModel <- lm(Y ~ X1 + X2 + X3, data = simdata)
 glmModel <- glm(Y ~ X1 + X2 + X3, data = simdata, family = gaussian(link = "identity"))
 summary(linearModel)$coefficients
 #>              Estimate Std. Error  t value      Pr(>|t|)
-#> (Intercept) 3.0610462 0.08961157 34.15905 5.565886e-242
-#> X1          0.9994106 0.03428367 29.15122 2.238522e-179
-#> X2          1.9892954 0.03455924 57.56189  0.000000e+00
-#> X3          2.9838318 0.03470746 85.97092  0.000000e+00
+#> (Intercept) 2.9121432 0.09159228 31.79464 2.042126e-211
+#> X1          0.9821122 0.03471228 28.29294 1.784922e-169
+#> X2          2.0393412 0.03456867 58.99392  0.000000e+00
+#> X3          3.0431138 0.03487595 87.25536  0.000000e+00
 summary(glmModel)$coefficients
 #>              Estimate Std. Error  t value      Pr(>|t|)
-#> (Intercept) 3.0610462 0.08961157 34.15905 5.565886e-242
-#> X1          0.9994106 0.03428367 29.15122 2.238522e-179
-#> X2          1.9892954 0.03455924 57.56189  0.000000e+00
-#> X3          2.9838318 0.03470746 85.97092  0.000000e+00
+#> (Intercept) 2.9121432 0.09159228 31.79464 2.042126e-211
+#> X1          0.9821122 0.03471228 28.29294 1.784922e-169
+#> X2          2.0393412 0.03456867 58.99392  0.000000e+00
+#> X3          3.0431138 0.03487595 87.25536  0.000000e+00
 rm(linearModel, glmModel, simdata)
 ```
 
