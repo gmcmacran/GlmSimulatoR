@@ -45,7 +45,7 @@
 #' library(GlmSimulatoR)
 #' library(ggplot2)
 #' library(MASS)
-#' 
+#'
 #' # Do glm and lm estimate the same weights? Yes
 #' set.seed(1)
 #' simdata <- simulate_gaussian()
@@ -54,16 +54,16 @@
 #' summary(linearModel)
 #' summary(glmModel)
 #' rm(linearModel, glmModel, simdata)
-#' 
+#'
 #' # If the link is not identity, will the response
 #' # variable still be normal? Yes
 #' set.seed(1)
 #' simdata <- simulate_gaussian(N = 1000, link = "log", weights = c(.1, .2))
-#' 
+#'
 #' ggplot(simdata, aes(x = Y)) +
 #'   geom_histogram(bins = 30)
 #' rm(simdata)
-#' 
+#'
 #' # Is AIC lower for the correct link? For ten thousand data points, depends on seed!
 #' set.seed(1)
 #' simdata <- simulate_gaussian(N = 10000, link = "inverse", weights = 1)
@@ -72,23 +72,23 @@
 #' summary(glmCorrectLink)$aic
 #' summary(glmWrongLink)$aic
 #' rm(simdata, glmCorrectLink, glmWrongLink)
-#' 
-#' 
+#'
+#'
 #' # Does a stepwise search find the correct model for logistic regression? Yes
 #' # 3 related variables. 3 unrelated variables.
 #' set.seed(1)
 #' simdata <- simulate_binomial(N = 10000, link = "logit", weights = c(.3, .4, .5), unrelated = 3)
-#' 
+#'
 #' scopeArg <- list(
 #'   lower = Y ~ 1,
 #'   upper = Y ~ X1 + X2 + X3 + Unrelated1 + Unrelated2 + Unrelated3
 #' )
-#' 
+#'
 #' startingModel <- glm(Y ~ 1, data = simdata, family = binomial(link = "logit"))
 #' glmModel <- stepAIC(startingModel, scopeArg)
 #' summary(glmModel)
 #' rm(simdata, scopeArg, startingModel, glmModel)
-#' 
+#'
 #' # When the resposne is a gamma distribution, what does a scatter plot between X and Y look like?
 #' set.seed(1)
 #' simdata <- simulate_gamma(weights = 1)

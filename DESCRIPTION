@@ -23,7 +23,7 @@ Imports:
     tweedie,
     ggplot2,
     cplm
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
 Suggests: 
     testthat,
     knitr,
