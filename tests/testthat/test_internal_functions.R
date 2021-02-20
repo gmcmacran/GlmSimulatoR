@@ -1,4 +1,4 @@
-context("simulate_gaussian")
+context("make_simulating_function")
 library(GlmSimulatoR)
 
 ###############################################
