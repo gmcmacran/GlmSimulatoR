@@ -5,10 +5,10 @@
 
 <!-- badges: start -->
 
-[![Travis build
-status](https://travis-ci.org/gmcmacran/GlmSimulatoR.svg?branch=master)](https://travis-ci.org/gmcmacran/GlmSimulatoR)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/GlmSimulatoR)](https://cran.r-project.org/package=GlmSimulatoR)
+[![R build
+status](https://github.com/gmcmacran/GlmSimulatoR/workflows/R-CMD-check/badge.svg)](https://github.com/gmcmacran/GlmSimulatoR/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/gmcmacran/GlmSimulatoR/branch/master/graph/badge.svg)](https://codecov.io/gh/gmcmacran/GlmSimulatoR?branch=master)
 <!-- badges: end -->
@@ -28,23 +28,7 @@ applicable. Default values are carefully chosen so data can be generated
 without thinking about mathematical connections between weights, links,
 and distributions.
 
-## Installation
-
-You can install the released version of GlmSimulatoR from
-[CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("GlmSimulatoR")
-```
-
-And the development version from [GitHub](https://github.com/) with:
-
-``` r
-# install.packages("devtools")
-devtools::install_github("gmcmacran/GlmSimulatoR")
-```
-
-## Example 1: Create Textbook Data for Linear Model
+## Example 1: Create ideal data for linear model
 
 ``` r
 library(GlmSimulatoR)
@@ -52,6 +36,8 @@ library(ggplot2)
 
 set.seed(1)
 simdata <- simulate_gaussian(N = 100, weights = 1, xrange = 10, ancillary = 1) #GlmSimulatoR function
+#> New names:
+#> * NA -> ...1
 ggplot(simdata, aes(x = X1, y = Y)) + 
   geom_point()
 ```
@@ -63,13 +49,17 @@ ggplot(simdata, aes(x = X1, y = Y)) +
 rm(simdata)
 ```
 
-## Example 2: Do glm and lm Estimate The Same Weights?
+## Example 2: Do glm and lm estimate the same weights?
 
 ``` r
 library(GlmSimulatoR)
 
 set.seed(2)
 simdata <- simulate_gaussian() #GlmSimulatoR function
+#> New names:
+#> * NA -> ...1
+#> * NA -> ...2
+#> * NA -> ...3
 linearModel <- lm(Y ~ X1 + X2 + X3, data = simdata)
 glmModel <- glm(Y ~ X1 + X2 + X3, data = simdata, family = gaussian(link = "identity"))
 summary(linearModel)$coefficients

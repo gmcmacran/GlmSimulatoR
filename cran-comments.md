@@ -1,8 +1,8 @@
 ## Test environments
-* local windows 10 R 3.5.3
-* ubuntu 14.04 (on travis-ci)
-* win-builder (devel and release)
-* Debian Linux, R-release, GCC (rhub)
+* R Release on windows (github actions)
+* R Release on macOS (github actions)
+* R Release on ubuntu (github actions)
+* R devel on ubuntu (github actions)
 
 ## R CMD check results
 

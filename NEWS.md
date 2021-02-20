@@ -1,3 +1,6 @@
+# GlmSimulatoR v 0.2.4
+  Moving from travisCI to github actions.
+  
 # GlmSimulatoR v 0.2.3
   Add xrange argument so ranges of predictors
   can be adjusted.
