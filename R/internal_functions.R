@@ -188,11 +188,11 @@ make_simulating_function <- function(validLinks, defaultLink, defaultWeights, de
     ####################
     # Create predictors
     ####################
-    X <- matrix(stats::runif(N*length(weights), 1, xrange + 1), nrow = N, ncol = length(weights))
+    X <- matrix(stats::runif(N * length(weights), 1, xrange + 1), nrow = N, ncol = length(weights))
     colnames(X) <- stringr::str_c(rep("X", length(weights)), 1:length(weights))
 
     if (unrelated > 0) {
-      useless <- matrix(stats::runif(N*unrelated, 1, xrange + 1), nrow = N, ncol = unrelated)
+      useless <- matrix(stats::runif(N * unrelated, 1, xrange + 1), nrow = N, ncol = unrelated)
       colnames(useless) <- stringr::str_c(rep("Unrelated", length(unrelated)), 1:unrelated)
     }
 
