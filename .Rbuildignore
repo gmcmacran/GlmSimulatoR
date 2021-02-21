@@ -3,6 +3,5 @@
 ^LICENSE\.md$
 ^revdep$
 ^README\.Rmd$
-^codecov\.yml$
 ^cran-comments\.md$
 ^\.github$
