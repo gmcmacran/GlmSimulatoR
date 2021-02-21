@@ -6,6 +6,7 @@ set.seed(1)
 # Run code
 ###############################################
 default <- simulate_gamma()
+
 test_that("Run default. Check structure.", {
   expect_true(all(class(default) == c("tbl_df", "tbl", "data.frame")))
   expect_true(nrow(default) == 10000)
@@ -18,6 +19,17 @@ test_that("Run default. Check structure.", {
   expect_true(max(default$X3) <= 2)
 })
 rm(default)
+
+temp <- simulate_gamma(N = 10000, link = "identity")
+
+model <- glm(formula = Y ~ X1 + X2 + X3, data = temp, family = Gamma(link = "identity"))
+params <- c(1, 2, 3)
+params <- c(max(params), params)
+
+test_that("Check weights", {
+  expect_true(all(max(abs(model$coefficients - params)) <= .2))
+})
+rm(temp, model, params)
 
 test_that("Returns the correct number of rows.", {
   expect_equal(nrow(simulate_gamma(N = 10)), 10)

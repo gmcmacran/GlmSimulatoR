@@ -1,5 +1,6 @@
 context("simulate_negative_binomial")
 library(GlmSimulatoR)
+library(MASS)
 set.seed(1)
 
 ###############################################
@@ -16,6 +17,17 @@ test_that("Run default. Check structure.", {
   expect_true(max(default$X2) <= 2)
 })
 rm(default)
+
+temp <- simulate_negative_binomial(N = 10000, link = "identity")
+
+model <- glm.nb(formula = Y ~ X1 + X2, data = temp, link = "identity")
+params <- c(0.5, 1)
+params <- c(max(params), params)
+
+test_that("Check weights", {
+  expect_true(all(max(abs(model$coefficients - params)) <= .5))
+})
+rm(temp, model, params)
 
 test_that("Returns the correct number of rows.", {
   expect_equal(nrow(simulate_negative_binomial(N = 10)), 10)

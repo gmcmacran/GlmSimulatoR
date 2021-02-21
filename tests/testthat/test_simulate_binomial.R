@@ -6,6 +6,7 @@ set.seed(1)
 # Run code
 ###############################################
 default <- simulate_binomial()
+
 test_that("Run default. Check structure.", {
   expect_true(all(class(default) == c("tbl_df", "tbl", "data.frame")))
   expect_true(nrow(default) == 10000)
@@ -16,6 +17,17 @@ test_that("Run default. Check structure.", {
   expect_true(max(default$X2) <= 2)
 })
 rm(default)
+
+temp <- simulate_binomial(N = 10000)
+
+model <- glm(formula = Y ~ X1 + X2, data = temp, family = binomial())
+params <- c(0.1, 0.2)
+params <- c(max(params), params)
+
+test_that("Check weights", {
+  expect_true(all(max(abs(model$coefficients - params)) <= .2))
+})
+rm(temp, model, params)
 
 test_that("Returns the correct number of rows.", {
   expect_equal(nrow(simulate_binomial(N = 10)), 10)
