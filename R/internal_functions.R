@@ -1,10 +1,4 @@
 #' @keywords internal
-# Helper function to make X
-create_predictor <- function(weight, n, xrange) {
-  return(stats::runif(n, 1, xrange + 1))
-}
-
-#' @keywords internal
 # Functions to receive mu and return response variable for glm distributions
 create_gaussian <- function(mu, n, ancillary) {
   return(matrix(stats::rnorm(n, mu, ancillary), ncol = 1))
@@ -194,13 +188,11 @@ make_simulating_function <- function(validLinks, defaultLink, defaultWeights, de
     ####################
     # Create predictors
     ####################
-    X <- purrr::map_dfc(weights, create_predictor, n = N, xrange = xrange) %>%
-      as.matrix()
+    X <- matrix(stats::runif(N * length(weights), 1, xrange + 1), nrow = N, ncol = length(weights))
     colnames(X) <- stringr::str_c(rep("X", length(weights)), 1:length(weights))
 
     if (unrelated > 0) {
-      useless <- purrr::map_dfc(1:unrelated, create_predictor, n = N, xrange = xrange) %>%
-        as.matrix()
+      useless <- matrix(stats::runif(N * unrelated, 1, xrange + 1), nrow = N, ncol = unrelated)
       colnames(useless) <- stringr::str_c(rep("Unrelated", length(unrelated)), 1:unrelated)
     }
 

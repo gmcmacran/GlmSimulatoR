@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 # GlmSimulatoR
-
+ 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/GlmSimulatoR)](https://cran.r-project.org/package=GlmSimulatoR)
 [![R build status](https://github.com/gmcmacran/GlmSimulatoR/workflows/R-CMD-check/badge.svg)](https://github.com/gmcmacran/GlmSimulatoR/actions)

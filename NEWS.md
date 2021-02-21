@@ -1,5 +1,7 @@
 # GlmSimulatoR v 0.2.4
   Moving from travisCI to github actions.
+  Updating code coverage
+  Removing printed message from dplyr
   
 # GlmSimulatoR v 0.2.3
   Add xrange argument so ranges of predictors
