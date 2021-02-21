@@ -6,6 +6,11 @@ set.seed(1)
 # Run code
 ###############################################
 default <- simulate_inverse_gaussian()
+
+model <- glm(formula = Y ~ X1 + X2 + X3, data = default, family = inverse.gaussian())
+params <- c(1, 2, 3)
+params <- c(max(params), params)
+
 test_that("Run default. Check structure.", {
   expect_true(all(class(default) == c("tbl_df", "tbl", "data.frame")))
   expect_true(nrow(default) == 10000)
@@ -16,8 +21,9 @@ test_that("Run default. Check structure.", {
   expect_true(max(default$X2) <= 2)
   expect_true(min(default$X3) >= 1)
   expect_true(max(default$X3) <= 2)
+  expect_true(all(max(abs(model$coefficients - params)) <= .5))
 })
-rm(default)
+rm(default, model, params)
 
 test_that("Returns the correct number of rows.", {
   expect_equal(nrow(simulate_inverse_gaussian(N = 10)), 10)
