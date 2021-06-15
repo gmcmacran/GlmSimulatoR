@@ -9,7 +9,4 @@
 0 errors | 0 warnings | 0 notes
 
 ## Updates
-  Moving from travisCI to github actions.
-  Updating code coverage.
-  Removing printed message from dplyr.
-  Adding a few more tests.
+  Rewording readme
