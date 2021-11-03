@@ -20,27 +20,26 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/gmcmacran/GlmSimulatoR/branch/master/graph/badge.svg)](https://codecov.io/gh/gmcmacran/GlmSimulatoR?branch=master)
 <!-- badges: end -->
 
-Often the first problem in understanding statistical models is finding good data. This package alleviates this by enabling you to create the data you need. With data in hand, you can answer questions. Is the estimated weight close to the true value? Does step wise search pick the correct variables? At what n does the sampling distribution normalize?
+Often the first problem in understanding statistical models is finding good data. This package alleviates this by creating data perfect for generalized linear models. 
 
-## What does ideal data for the linear model look like?
+With data in hand, you can focus on questions about models instead of questions about data. Are the estimated weights close to the true values? Does step wise search pick the correct variables? At what n does the sampling distribution of weights normalize?
 
-To answer this question, a simulated data set where Y follows a normal distribution is made.
+## Package Overview
+All functions return a tibble. The only thing that changes is the distribution of Y. In simulate_gaussian, Y follows a Gaussian distribution. In simulate_gamma, Y follows a gamma distribution. Common and novel distributions are implemented. For each distribution, all links are implemented.
 
-```{r example1}
+## Is a sample size of 200 enough to get close estimates of the true weights?
+
+```{r setup}
 library(GlmSimulatoR)
-library(ggplot2)
 
 set.seed(1)
-simdata <- simulate_gaussian(N = 100, weights = 2, xrange = 10, ancillary = 1) #GlmSimulatoR function
-simdata %>% 
-  print()
+simdata <- simulate_gaussian(N = 200, weights = c(1, 2, 3))
+
+model <- lm(Y ~ X1 + X2 + X3, data = simdata)
+summary(model)$coefficients
+
 ```
 
-Then the data set is visualized.
+The estimates are close to the weights argument. The mathematics behind the generalized linear model worked well.
 
-```{r example1P2 }
-ggplot(simdata, aes(x = X1, y = Y)) + 
-  geom_point()
-```
-
-Voila The answer is found. See vignettes for more examples.
+See vignettes for more examples.

@@ -14,47 +14,40 @@ coverage](https://codecov.io/gh/gmcmacran/GlmSimulatoR/branch/master/graph/badge
 <!-- badges: end -->
 
 Often the first problem in understanding statistical models is finding
-good data. This package alleviates this by enabling you to create the
-data you need. With data in hand, you can answer questions. Is the
-estimated weight close to the true value? Does step wise search pick the
-correct variables? At what n does the sampling distribution normalize?
+good data. This package alleviates this by creating data perfect for
+generalized linear models.
 
-## What does ideal data for the linear model look like?
+With data in hand, you can focus on questions about models instead of
+questions about data. Are the estimated weights close to the true
+values? Does step wise search pick the correct variables? At what n does
+the sampling distribution of weights normalize?
 
-To answer this question, a simulated data set where Y follows a normal
-distribution is made.
+## Package Overview
+
+All functions return a tibble. The only thing that changes is the
+distribution of Y. In simulate\_gaussian, Y follows a Gaussian
+distribution. In simulate\_gamma, Y follows a gamma distribution. Common
+and novel distributions are implemented. For each distribution, all
+links are implemented.
+
+## Is a sample size of 200 enough to get close estimates of the true weights?
 
 ``` r
 library(GlmSimulatoR)
-library(ggplot2)
 
 set.seed(1)
-simdata <- simulate_gaussian(N = 100, weights = 2, xrange = 10, ancillary = 1) #GlmSimulatoR function
-simdata %>% 
-  print()
-#> # A tibble: 100 x 2
-#>        Y    X1
-#>    <dbl> <dbl>
-#>  1  9.71  3.66
-#>  2 10.8   4.72
-#>  3 15.8   6.73
-#>  4 21.0  10.1 
-#>  5  9.47  3.02
-#>  6 23.9   9.98
-#>  7 22.5  10.4 
-#>  8 16.2   7.61
-#>  9 17.2   7.29
-#> 10  5.10  1.62
-#> # ... with 90 more rows
+simdata <- simulate_gaussian(N = 200, weights = c(1, 2, 3))
+
+model <- lm(Y ~ X1 + X2 + X3, data = simdata)
+summary(model)$coefficients
+#>              Estimate Std. Error   t value     Pr(>|t|)
+#> (Intercept) 2.9138043  0.7011699  4.155633 4.843103e-05
+#> X1          0.9833586  0.2868396  3.428253 7.403616e-04
+#> X2          1.7882468  0.2701817  6.618683 3.386406e-10
+#> X3          3.2822020  0.2640478 12.430334 1.550439e-26
 ```
 
-Then the data set is visualized.
+The estimates are close to the weights argument. The mathematics behind
+the generalized linear model worked well.
 
-``` r
-ggplot(simdata, aes(x = X1, y = Y)) + 
-  geom_point()
-```
-
-<img src="man/figures/README-example1P2-1.png" width="100%" />
-
-Voila The answer is found. See vignettes for more examples.
+See vignettes for more examples.

@@ -1,5 +1,6 @@
 # GlmSimulatoR v 0.2.5
-  Updating readme
+  Improving vignettes
+  Improving test coverage
   
 # GlmSimulatoR v 0.2.4
   Moving from travisCI to github actions.

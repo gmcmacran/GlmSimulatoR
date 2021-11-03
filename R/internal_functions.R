@@ -1,6 +1,10 @@
 #' @keywords internal
 # Functions to receive mu and return response variable for glm distributions
 create_gaussian <- function(mu, n, ancillary) {
+  assertthat::assert_that(ancillary > 0,
+    msg = "Invalid ancillary. Should be positive."
+  )
+
   return(matrix(stats::rnorm(n, mu, ancillary), ncol = 1))
 }
 
@@ -64,7 +68,7 @@ create_tweedie <- function(mu, n, ancillary) {
     msg = "Invalid ancillary. Should be in [1,2]."
   )
 
-  matrix(tweedie::rtweedie(n = n, mu = as.vector(mu), xi = ancillary, phi = 1), ncol = 1, nrow = n)
+  return(matrix(tweedie::rtweedie(n = n, mu = as.vector(mu), xi = ancillary, phi = 1), ncol = 1, nrow = n))
 }
 
 #' @keywords internal
