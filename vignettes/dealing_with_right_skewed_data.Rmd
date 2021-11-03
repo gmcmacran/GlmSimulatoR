@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 # Introduction
 When the response variable is right skewed, many think regression becomes difficult. Skewed data is generally thought of as problematic. However the glm framework provides two options for dealing with right skewed response variables. For the gamma and inverse gaussian distributions, a right skewed response variable is actually helpful.
 
-# Different Shapes Of A Gamma Distribution
+# Different shapes of a gamma distribution
 
 The critical step is being able to spot a gamma distribution when you see one. Theatrical skewness is $\frac{2}{\sqrt(shape)}$. If shape is small, the gamma distribution is right skewed. If shape increases, the gamma becomes more symmetrical
 
@@ -72,8 +72,8 @@ rm(Gamma, temp)
 ```
 
 
-# Building A Models With Very Skewed Data
-To show the generalized linear model can handle skewness, lets make some data and train a model. Then calculate mean squared error.
+# Building models with very skewed data
+To show the generalized linear model can handle skewness, lets make some data and train a model and calculate mean squared error.
 
 ```{r}
 #Make data
@@ -85,68 +85,6 @@ ggplot(simdata, aes(x = Y)) +
   geom_histogram(bins = 30)
 
 glm <- glm(Y ~  X1 + X2 + X3, data = simdata, family = Gamma("inverse"))
-
-#Mean Squared Error
-mean((simdata$Y - predict(glm, newdata = simdata, type = "response"))^2)
-```
-
-# Different Shapes Of A Inverse Gaussian
-
-Above we saw the gamma distribution take on many different shapes. The inverse gaussian distribution is not as flexible. It tends to maintain it's skewness for a variety of parameters.
-
-```{r}
-library(statmod)
-
-set.seed(1)
-Invgauss <- rinvgauss(1000, mean = 1, shape = .2)
-temp <- tibble(Invgauss = Invgauss)
-ggplot(temp, aes(x=Invgauss)) + 
-  geom_histogram(bins = 30)
-
-Invgauss <- rinvgauss(1000, mean = 1, shape = 1)
-temp <- tibble(Invgauss = Invgauss)
-ggplot(temp, aes(x=Invgauss)) + 
-  geom_histogram(bins = 30)
-
-Invgauss <- rinvgauss(1000, mean = 1, shape = 3)
-temp <- tibble(Invgauss = Invgauss)
-ggplot(temp, aes(x=Invgauss)) + 
-  geom_histogram(bins = 30)
-
-Invgauss <- rinvgauss(1000, mean = 10, shape = .2)
-temp <- tibble(Invgauss = Invgauss)
-ggplot(temp, aes(x=Invgauss)) + 
-  geom_histogram(bins = 30)
-
-Invgauss <- rinvgauss(1000, mean = 10, shape = 10)
-temp <- tibble(Invgauss = Invgauss)
-ggplot(temp, aes(x=Invgauss)) + 
-  geom_histogram(bins = 30)
-
-Invgauss <- rinvgauss(1000, mean = 10, shape = 100)
-temp <- tibble(Invgauss = Invgauss)
-ggplot(temp, aes(x=Invgauss)) + 
-  geom_histogram(bins = 30)
-
-```
-
-```{r, echo=FALSE}
-rm(Invgauss, temp)
-```
-
-# Building A Model With Very Skewed Data Using Inverse Gaussian Distribution
-Similar to above, lets create data and train a model.Then calculate mean squared error.
-
-```{r}
-#Make data
-set.seed(1)
-simdata <- simulate_inverse_gaussian(N = 10000, link = "inverse", 
-                          weights = c(1, 2, 3), ancillary = 10)
-#Confirm Y is right skewed
-ggplot(simdata, aes(x = Y)) + 
-  geom_histogram(bins = 30)
-
-glm <- glm(Y ~  X1 + X2 + X3, data = simdata, family = inverse.gaussian(link = "inverse"))
 
 #Mean Squared Error
 mean((simdata$Y - predict(glm, newdata = simdata, type = "response"))^2)
