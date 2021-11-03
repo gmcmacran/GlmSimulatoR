@@ -48,9 +48,6 @@ test_that("Confirm functions return a matrix with correct dimensions", {
 
 test_that("Confirm gaussia input checking works", {
   expect_error(GlmSimulatoR:::create_gaussian(matrix(c(-.1, .2, .3), ncol = 1), 3, -1))
-
-  expect_error(GlmSimulatoR:::create_tweedie(matrix(c(.1, .2, .3), ncol = 1), 3, .5))
-  expect_error(GlmSimulatoR:::create_tweedie(matrix(c(.1, .2, .3), ncol = 1), 3, 2.5))
 })
 
 test_that("Confirm binomial input checking works", {
