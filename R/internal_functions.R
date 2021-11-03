@@ -2,7 +2,7 @@
 # Functions to receive mu and return response variable for glm distributions
 create_gaussian <- function(mu, n, ancillary) {
   assertthat::assert_that(ancillary > 0,
-                          msg = "Invalid ancillary. Should be positive."
+    msg = "Invalid ancillary. Should be positive."
   )
 
   return(matrix(stats::rnorm(n, mu, ancillary), ncol = 1))
