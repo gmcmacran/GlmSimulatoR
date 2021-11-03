@@ -1,13 +1,11 @@
 Package: GlmSimulatoR
 Type: Package
 Title: Creates Ideal Data for Generalized Linear Models
-Version: 0.2.5
+Version: 0.2.6
 Author: Greg McMahan
 Maintainer: Greg McMahan <gmcmacran@gmail.com>
-Description: Have you ever struggled to find "good data" for a generalized linear model? Would you like
-    to test how quickly statistics converge to parameters, or learn how picking different
-    link functions affects model performance? This package creates ideal data for both common
-    and novel generalized linear models so your questions can be empirically answered.
+Description: This package creates ideal data for all distributions in the
+    generalized linear model framework.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

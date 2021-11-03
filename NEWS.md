@@ -1,3 +1,6 @@
+# GlmSimulatoR v 0.2.6
+  Improving vignettes
+  
 # GlmSimulatoR v 0.2.5
   Updating readme
   
