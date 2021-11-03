@@ -6,9 +6,7 @@
 \alias{GlmSimulatoR-package}
 \title{GlmSimulatoR: Creates Ideal Data for Generalized Linear Models}
 \description{
-Have you ever struggled to find "good data" for a generalized linear model? Would you like
-    to test how quickly statistics converge to parameters, or learn how picking different
-    link functions affects model performance? This package creates ideal data for both common
-    and novel generalized linear models so your questions can be empirically answered.
+This package creates ideal data for all distributions in the
+    generalized linear model framework.
 }
 \keyword{internal}
