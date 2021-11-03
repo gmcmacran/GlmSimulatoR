@@ -14,12 +14,12 @@ knitr::opts_chunk$set(echo = T,
 
 ## Overview
 
-For count response variables, the glm framework has two options. The poisson family and the negative binomial family. In this vignette, we will consider both and learn when to use one or the other.
+For count response variables, the glm framework has two options. The Poisson family and the negative binomial family. In this vignette, we will consider both and learn when to use one or the other.
 
 
-## Getting Familiar With The Poisson Family
+## Getting familiar with the Poisson family
 
-First lets get an idea of how the poisson family looks. If lambda is near 1, the poisson family is right skewed. As lambda increases, the poisson family becomes more symmetrical. 
+First lets get an idea of how the Poisson family looks. If lambda is near 1, the Poisson family is right skewed. As lambda increases, the Poisson family becomes more symmetrical. 
 
 ```{r PoissonHistogram, echo=TRUE}
 library(stats)
@@ -82,8 +82,8 @@ The estimated weights are close the the weights argument in simulate_poisson. Th
 rm(simdata, glmPoisson)
 ```
 
-## Poisson Mean Variance Relationship
-One important characteristic of the poisson family is $\mu$ equals $\sigma^2$. We see the sample statistics are nearly equal for different values of lambda.
+## Poisson mean variance relationship
+One important characteristic of the Poisson family is $\mu$ equals $\sigma^2$. We see the sample statistics are nearly equal for different values of lambda.
 
 ```{r PoissonMuSigma, echo=TRUE, results='markup'}
 
@@ -109,13 +109,13 @@ var(poisson)
 rm(poisson)
 ```
 
-## Poisson Vs Negative Binomial
-For modeling, the main difference between poisson and the negative binomial is the extra parameter. The mean variance relationship is $\sigma^2$ equals $\mu + \mu^2/\theta$ for the negative binomial. Through $\theta$ many relationships are possible. 
+## Poisson vs Negative Binomial
+For modeling, the main difference between Poisson and the negative binomial is the extra parameter. The mean variance relationship is $\sigma^2$ equals $\mu + \mu^2/\theta$ for the negative binomial. Through $\theta$ many relationships are possible. 
 
-When the response variable is a count, but $\mu$ does not equal $\sigma^2$, the poisson distribution is not applicable. Overdispersion can be detected by dividing the residual deviance by the degrees of freedom. If this quotient is much greater than one, the negative binomial distribution should be used. There is no hard cut off of "much larger than one", but a rule of thumb is 1.10 or greater is considered large.
+When the response variable is a count, but $\mu$ does not equal $\sigma^2$, the Poisson distribution is not applicable. Over dispersion can be detected by dividing the residual deviance by the degrees of freedom. If this quotient is much greater than one, the negative binomial distribution should be used. There is no hard cut off of "much larger than one", but a rule of thumb is 1.10 or greater is considered large.
 
-## Getting Familiar With The Negative Binomial Family
-When $\theta$ is large, $\mu + \mu^2/\theta$ is roughly equal to $\mu$ . Therefore the negative binomial will be similar to poisson distribution.
+## Getting familiar with the negative binomial family
+When $\theta$ is large, $\mu + \mu^2/\theta$ is roughly equal to $\mu$ . Therefore the negative binomial will be similar to Poisson distribution.
 
 ```{r PoissonNegativeBinomial1, echo=TRUE}
 set.seed(1)
@@ -139,7 +139,7 @@ rm(poisson, poissonDF, negBin, negBinDF)
 ```
 
 
-If $\theta$ is small, $\mu + \mu^2/\theta$ does not approximately equal $\mu$. The negative binomial will look different than the poisson distribution. Note the difference in scale on the x axis and y axis.
+If $\theta$ is small, $\mu + \mu^2/\theta$ does not approximately equal $\mu$. The negative binomial will look different than the Poisson distribution. Note the difference in scale on the x axis and y axis.
 
 
 ```{r PoissonNegativeBinomial2, echo=TRUE}
@@ -163,7 +163,7 @@ rm(poisson, poissonDF, negBin, negBinDF)
 ```
 
 ## GLM Negative Binomial
-Lets create data where the flexibility of the negative binomial is needed and compare the poisson estimates to the negative binomial estimates. 
+Lets create data where the flexibility of the negative binomial is needed and compare the Poisson estimates to the negative binomial estimates. 
 
 ```{r NegativeBinomialGlm, echo=TRUE, results='markup'}
 
@@ -186,4 +186,4 @@ summary(glmNB)
 ```{r, echo=FALSE}
 rm(simdata, glmPoisson, glmNB)
 ```
-The estimated slopes are very similar. However, the standard errors are not. The fact $\mu$ does not equal $\sigma^2$ has caused a major under estimation of standard errors for the poisson GLM. For poisson models, it is important to look at residual deviance divided by the degrees of freedom. When this quotient is larger than 1, the negative binomial should be considered. In the above the quotient was 6.33 (63327 / 9997) for the poisson glm.
+The estimated slopes are very similar. However, the standard errors are not. The fact $\mu$ does not equal $\sigma^2$ has caused a major under estimation of standard errors for the Poisson GLM. For Poisson models, it is important to look at residual deviance divided by the degrees of freedom. When this quotient is larger than 1, the negative binomial should be considered. In the above the quotient was 6.33 (63327 / 9997) for the Poisson glm. For these data, the negative binomial model is more appropriate.
