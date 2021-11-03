@@ -10,3 +10,4 @@
 
 ## Updates
   Improving vignettes
+  Improving coverage
