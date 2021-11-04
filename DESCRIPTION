@@ -4,15 +4,13 @@ Title: Creates Ideal Data for Generalized Linear Models
 Version: 0.2.5
 Author: Greg McMahan
 Maintainer: Greg McMahan <gmcmacran@gmail.com>
-Description: This package creates ideal data for all distributions in the
-    generalized linear model framework.
+Description: Creates ideal data for all distributions in the generalized
+    linear model framework.
 License: GPL-3
 Encoding: UTF-8
-LazyData: true
 Imports: 
     assertthat,
     stats,
-    purrr,
     stringr,
     dplyr,
     statmod,

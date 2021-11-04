@@ -10,7 +10,7 @@ status](https://www.r-pkg.org/badges/version/GlmSimulatoR)](https://cran.r-proje
 [![R build
 status](https://github.com/gmcmacran/GlmSimulatoR/workflows/R-CMD-check/badge.svg)](https://github.com/gmcmacran/GlmSimulatoR/actions)
 [![Codecov test
-coverage](https://codecov.io/gh/gmcmacran/GlmSimulatoR/branch/master/graph/badge.svg)](https://codecov.io/gh/gmcmacran/GlmSimulatoR?branch=master)
+coverage](https://codecov.io/gh/gmcmacran/GlmSimulatoR/branch/master/graph/badge.svg)](https://app.codecov.io/gh/gmcmacran/GlmSimulatoR?branch=master)
 <!-- badges: end -->
 
 Often the first problem in understanding statistical models is finding
@@ -25,8 +25,8 @@ the sampling distribution of weights normalize?
 ## Package Overview
 
 All functions return a tibble. The only thing that changes is the
-distribution of Y. In simulate\_gaussian, Y follows a Gaussian
-distribution. In simulate\_gamma, Y follows a gamma distribution. Common
+distribution of Y. In simulate_gaussian, Y follows a Gaussian
+distribution. In simulate_gamma, Y follows a gamma distribution. Common
 and novel distributions are implemented. For each distribution, all
 links are implemented.
 
