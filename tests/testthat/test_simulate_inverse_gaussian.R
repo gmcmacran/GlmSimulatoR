@@ -1,4 +1,3 @@
-context("simulate_inverse_gaussian")
 library(GlmSimulatoR)
 set.seed(1)
 

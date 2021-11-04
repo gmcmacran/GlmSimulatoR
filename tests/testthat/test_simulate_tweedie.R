@@ -1,4 +1,3 @@
-context("simulate_tweedie")
 library(GlmSimulatoR)
 library(cplm, quietly = TRUE)
 set.seed(1)

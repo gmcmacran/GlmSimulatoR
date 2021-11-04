@@ -21,8 +21,9 @@ Imports:
     cplm
 RoxygenNote: 7.1.1
 Suggests: 
-    testthat,
+    testthat (>= 3.0.0),
     knitr,
     rmarkdown,
     covr
 VignetteBuilder: knitr
+Config/testthat/edition: 3

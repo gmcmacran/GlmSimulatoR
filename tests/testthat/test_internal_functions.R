@@ -1,5 +1,5 @@
-context("make_simulating_function")
 library(GlmSimulatoR)
+set.seed(1)
 
 ###############################################
 # Test make_simulating_function
