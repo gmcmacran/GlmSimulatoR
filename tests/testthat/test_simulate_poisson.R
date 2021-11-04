@@ -1,4 +1,3 @@
-context("simulate_poisson")
 library(GlmSimulatoR)
 set.seed(1)
 

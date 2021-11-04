@@ -1,4 +1,3 @@
-context("simulate_negative_binomial")
 library(GlmSimulatoR)
 library(MASS)
 set.seed(1)

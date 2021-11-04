@@ -1,4 +1,3 @@
-context("simulate_gamma")
 library(GlmSimulatoR)
 set.seed(1)
 

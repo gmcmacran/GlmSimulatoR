@@ -1,4 +1,3 @@
-context("simulate_binomial")
 library(GlmSimulatoR)
 set.seed(1)
 
