@@ -6,7 +6,10 @@ set.seed(1)
 ###############################################
 default <- simulate_inverse_gaussian()
 
-model <- glm(formula = Y ~ X1 + X2 + X3, data = default, family = inverse.gaussian())
+model <- glm(
+  formula = Y ~ X1 + X2 + X3, data = default,
+  family = inverse.gaussian()
+)
 params <- c(1, 2, 3)
 params <- c(max(params), params)
 
@@ -45,12 +48,23 @@ test_that("Returns the correct range for x.", {
   expect_true(min(simulate_inverse_gaussian(weights = 1, xrange = 2)[, 2]) >= 1)
   expect_true(max(simulate_inverse_gaussian(weights = 1, xrange = 3)[, 2]) <= 4)
   expect_true(min(simulate_inverse_gaussian(weights = 1, xrange = 3)[, 2]) >= 1)
-  expect_true(max(simulate_inverse_gaussian(weights = c(1, 2), xrange = 0)[, 3]) <= 1)
-  expect_true(min(simulate_inverse_gaussian(weights = c(1, 2), xrange = 0)[, 3]) >= 1)
-  expect_true(max(simulate_inverse_gaussian(weights = c(1, 2), xrange = 2)[, 3]) <= 3)
-  expect_true(min(simulate_inverse_gaussian(weights = c(1, 2), xrange = 2)[, 3]) >= 1)
-  expect_true(max(simulate_inverse_gaussian(weights = c(1, 2), xrange = 3)[, 3]) <= 4)
-  expect_true(min(simulate_inverse_gaussian(weights = c(1, 2), xrange = 3)[, 3]) >= 1)
+  expect_true(
+    max(simulate_inverse_gaussian(weights = c(1, 2), xrange = 0)[, 3]) <= 1
+  )
+  expect_true(
+    min(simulate_inverse_gaussian(weights = c(1, 2), xrange = 0)[, 3]) >= 1
+  )
+  expect_true(
+    max(simulate_inverse_gaussian(weights = c(1, 2), xrange = 2)[, 3]) <= 3
+  )
+  expect_true(
+    min(simulate_inverse_gaussian(weights = c(1, 2), xrange = 2)[, 3]) >= 1
+  )
+  expect_true(
+    max(simulate_inverse_gaussian(weights = c(1, 2), xrange = 3)[, 3]) <= 4
+  )
+  expect_true
+  (min(simulate_inverse_gaussian(weights = c(1, 2), xrange = 3)[, 3]) >= 1)
 })
 
 test_that("Returns the correct number of unrelated variables.", {
@@ -66,14 +80,19 @@ test_that("Returns the correct number of unrelated variables.", {
 })
 
 test_that("All links execute", {
-  expect_true(all(class(simulate_inverse_gaussian(link = "1/mu^2")) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_inverse_gaussian(link = "inverse")) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_inverse_gaussian(link = "identity")) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_inverse_gaussian(link = "log")) == c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_inverse_gaussian(link = "1/mu^2")) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_inverse_gaussian(link = "inverse")) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_inverse_gaussian(link = "identity")) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_inverse_gaussian(link = "log")) ==
+    c("tbl_df", "tbl", "data.frame")))
 })
 
 test_that("Ancillary parameter works as expected", {
-  expect_true(simulate_inverse_gaussian()$Y %>% sd() < simulate_inverse_gaussian(ancillary = 5)$Y %>% sd())
+  expect_true(simulate_inverse_gaussian()$Y %>% sd() <
+    simulate_inverse_gaussian(ancillary = 5)$Y %>% sd())
 })
 
 ###############################################

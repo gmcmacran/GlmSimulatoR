@@ -41,57 +41,65 @@ library(ggplot2)
 library(stats)
 
 set.seed(1)
-simdata <- simulate_gaussian(N = 1000, weights = c(1, 3), link = "inverse", 
-                             unrelated = 1, ancillary = .005)
+simdata <- simulate_gaussian(
+  N = 1000, weights = c(1, 3), link = "inverse",
+  unrelated = 1, ancillary = .005
+)
 ```
 
 Next, lets do some basic data exploration. We see the response is gaussian.
 ```{r}
-ggplot(simdata, aes(x=Y)) + 
+ggplot(simdata, aes(x = Y)) +
   geom_histogram(bins = 30)
 ```
 
 
 The connection between Y and X1 is not obvious. There is only a slight downward trend. One might see it as unrelated. 
 ```{r}
-ggplot(simdata, aes(x=X1, y=Y)) + 
+ggplot(simdata, aes(x = X1, y = Y)) +
   geom_point()
 ```
 
 There is a connection between Y and X2. No surprise as the true weight is three.
 ```{r}
-ggplot(simdata, aes(x=X2, y=Y)) + 
+ggplot(simdata, aes(x = X2, y = Y)) +
   geom_point()
 ```
 
 The scatter plot between the unrelated variable and Y looks like random noise. It is interesting to note the scatter plot for X1 looks more similar to this one than X2's scatter plot despite being included in the model.
 ```{r}
-ggplot(simdata, aes(x=Unrelated1, y=Y)) + 
+ggplot(simdata, aes(x = Unrelated1, y = Y)) +
   geom_point()
-
 ```
 
 We see the correlation is very strong between Y and X2. This is no surprise considering the above graph. The correlation between Y and X1 is somewhat larger in absolute value than the unrelated variable. However, I would not see this as particularly good news in predicting Y if I did not know the correct model.
 
 ```{r}
-cor(x=simdata$X1, y = simdata$Y)
-cor(x=simdata$X2, y = simdata$Y)
-cor(x=simdata$Unrelated1, y = simdata$Y)
-
+cor(x = simdata$X1, y = simdata$Y)
+cor(x = simdata$X2, y = simdata$Y)
+cor(x = simdata$Unrelated1, y = simdata$Y)
 ```
 
 ### Building Models
 Pretending the correct model is unknown, lets try to find it. We will try three models. One with just X2, one with X1 and X2, and one with everything. Will the correct model stand out?
 
 ```{r}
-glmInverseX2 <- glm(Y ~ X2, data = simdata, family = gaussian(link = "inverse"))
-glmInverseX1X2<- glm(Y ~ X1 + X2, data = simdata, family = gaussian(link = "inverse"))
-glmInverseX1X2U1<- glm(Y ~ X1 + X2 + Unrelated1, data = simdata, family = gaussian(link = "inverse"))
+glm_inverse_x2 <- glm(Y ~ X2,
+  data = simdata,
+  family = gaussian(link = "inverse")
+)
+glm_inverse_x1_x2 <- glm(Y ~ X1 + X2,
+  data = simdata,
+  family = gaussian(link = "inverse")
+)
+glm_inverse_x1x2u1 <- glm(Y ~ X1 + X2 + Unrelated1,
+  data = simdata,
+  family = gaussian(link = "inverse")
+)
 
-summary(glmInverseX2)$aic
-summary(glmInverseX1X2)$aic
-summary(glmInverseX1X2U1)$aic
-
+summary(glm_inverse_x2)$aic
+summary(glm_inverse_x1_x2)$aic
+summary(glm_inverse_x1x2u1)$aic
 ```
 
 The correct model has the lowest AIC.
@@ -123,57 +131,65 @@ library(ggplot2)
 library(stats)
 
 set.seed(1)
-simdata <- simulate_gaussian(N = 1000, weights = c(.3, .8), link = "log", 
-                             unrelated = 1, ancillary = 1)
+simdata <- simulate_gaussian(
+  N = 1000, weights = c(.3, .8), link = "log",
+  unrelated = 1, ancillary = 1
+)
 ```
 
 We see the response is somewhat gaussian.
 ```{r}
-ggplot(simdata, aes(x=Y)) + 
+ggplot(simdata, aes(x = Y)) +
   geom_histogram(bins = 30)
 ```
 
 
 The connection between Y and X1 is not obvious...
 ```{r}
-ggplot(simdata, aes(x=X1, y=Y)) + 
+ggplot(simdata, aes(x = X1, y = Y)) +
   geom_point()
 ```
 
 There is a connection between Y and X2. No surprise as the true weight is .8 on the log scale.
 ```{r}
-ggplot(simdata, aes(x=X2, y=Y)) + 
+ggplot(simdata, aes(x = X2, y = Y)) +
   geom_point()
 ```
 
 The scatter plot between the unrelated variable and Y looks like random noise.
 ```{r}
-ggplot(simdata, aes(x=Unrelated1, y=Y)) + 
+ggplot(simdata, aes(x = Unrelated1, y = Y)) +
   geom_point()
-
 ```
 
 Again X2's correlation is large. X1 is in the gray area. The unrelated variable's correlation is near zero.
 
 ```{r}
-cor(x=simdata$X1, y = simdata$Y)
-cor(x=simdata$X2, y = simdata$Y)
-cor(x=simdata$Unrelated1, y = simdata$Y)
-
+cor(x = simdata$X1, y = simdata$Y)
+cor(x = simdata$X2, y = simdata$Y)
+cor(x = simdata$Unrelated1, y = simdata$Y)
 ```
 
 ### Building Models
 Pretending the correct model is unknown again, lets try to find it. For a change we will compare the the link functions for the gaussian family.
 
 ```{r}
-glmIdentity <- glm(Y ~ X1 + X2, data = simdata, family = gaussian(link = "identity"))
-glmInverse<- glm(Y ~ X1 + X2, data = simdata, family = gaussian(link = "inverse"))
-glmLog<- glm(Y ~ X1 + X2, data = simdata, family = gaussian(link = "log"))
+glm_identity <- glm(Y ~ X1 + X2,
+  data = simdata,
+  family = gaussian(link = "identity")
+)
+glm_inverse <- glm(Y ~ X1 + X2,
+  data = simdata,
+  family = gaussian(link = "inverse")
+)
+glm_log <- glm(Y ~ X1 + X2,
+  data = simdata,
+  family = gaussian(link = "log")
+)
 
-summary(glmIdentity)$aic
-summary(glmInverse)$aic
-summary(glmLog)$aic
-
+summary(glm_identity)$aic
+summary(glm_inverse)$aic
+summary(glm_log)$aic
 ```
 
 Again, the correct model has the lowest AIC.

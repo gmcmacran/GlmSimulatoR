@@ -21,7 +21,10 @@ rm(default)
 
 temp <- simulate_gamma(N = 10000, link = "identity")
 
-model <- glm(formula = Y ~ X1 + X2 + X3, data = temp, family = Gamma(link = "identity"))
+model <- glm(
+  formula = Y ~ X1 + X2 + X3, data = temp,
+  family = Gamma(link = "identity")
+)
 params <- c(1, 2, 3)
 params <- c(max(params), params)
 
@@ -72,13 +75,17 @@ test_that("Returns the correct number of unrelated variables.", {
 })
 
 test_that("All links execute", {
-  expect_true(all(class(simulate_gamma(link = "inverse")) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_gamma(link = "identity")) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_gamma(link = "log")) == c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_gamma(link = "inverse")) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_gamma(link = "identity")) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_gamma(link = "log")) ==
+    c("tbl_df", "tbl", "data.frame")))
 })
 
 test_that("Ancillary parameter works as expected", {
-  expect_true(simulate_gamma(ancillary = .25)$Y %>% sd() < simulate_gamma(ancillary = 1)$Y %>% sd())
+  expect_true(simulate_gamma(ancillary = .25)$Y %>% sd() <
+    simulate_gamma(ancillary = 1)$Y %>% sd())
 })
 
 ###############################################

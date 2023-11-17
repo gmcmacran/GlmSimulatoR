@@ -92,7 +92,6 @@ make_simulating_function <- function(validLinks, defaultLink, defaultWeights, de
   }
 
   f <- function(N = 10000, link, weights, xrange, unrelated = 0, ancillary) {
-
     ####################
     # Check inputs
     ####################

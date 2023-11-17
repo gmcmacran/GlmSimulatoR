@@ -63,9 +63,12 @@ test_that("Returns the correct number of unrelated variables.", {
 })
 
 test_that("All links execute", {
-  expect_true(all(class(simulate_poisson(link = "log")) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_poisson(link = "identity")) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_poisson(link = "sqrt")) == c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_poisson(link = "log")) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_poisson(link = "identity")) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_poisson(link = "sqrt")) ==
+    c("tbl_df", "tbl", "data.frame")))
 })
 
 ###############################################

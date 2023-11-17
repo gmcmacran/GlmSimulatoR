@@ -8,8 +8,10 @@ vignette: >
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = T,
-                      results = "hide")
+knitr::opts_chunk$set(
+  echo = TRUE,
+  results = "hide"
+)
 ```
 
 ## Overview
@@ -24,38 +26,36 @@ First lets get an idea of how the Poisson family looks. If lambda is near 1, the
 ```{r PoissonHistogram, echo=TRUE}
 library(stats)
 library(MASS)
-library(dplyr, warn.conflicts= FALSE)
+library(dplyr, warn.conflicts = FALSE)
 library(ggplot2)
 library(GlmSimulatoR)
 
 set.seed(1)
 
-#lambda = 1
+# lambda 1
 poisson <- rpois(n = 10000, lambda = 1)
-poissonDF <- as.data.frame(x=poisson)
+poisson_df <- as_tibble(poisson)
 
-ggplot(poissonDF, aes(x=poisson)) + 
+ggplot(poisson_df, aes(value)) +
   geom_histogram(bins = 100)
 
-#lambda = 5
+# lambda 5
 poisson <- rpois(n = 10000, lambda = 5)
-poissonDF <- as.data.frame(x=poisson)
+poisson_df <- as_tibble(poisson)
 
-ggplot(poissonDF, aes(x=poisson)) + 
+ggplot(poisson_df, aes(value)) +
   geom_histogram(bins = 100)
 
-#lambda = 10
+# lambda 10
 poisson <- rpois(n = 10000, lambda = 10)
-poissonDF <- as.data.frame(x=poisson)
+poisson_df <- as_tibble(poisson)
 
-ggplot(poissonDF, aes(x=poisson)) + 
+ggplot(poisson_df, aes(value)) +
   geom_histogram(bins = 100)
-
 ```
 
 ```{r, echo=FALSE}
-rm(poisson, poissonDF)
-
+rm(poisson, poisson_df)
 ```
 
 
@@ -63,43 +63,40 @@ rm(poisson, poissonDF)
 Lets create data and train a model. 
 
 ```{r PoissonGlm, echo=TRUE, results='markup'}
-
 set.seed(1)
 simdata <- simulate_poisson(N = 10000, weights = c(.5, 1))
 
-#Response looks similar to above histograms
-ggplot(simdata, aes(x=Y)) + 
+# Response looks similar to above histograms
+ggplot(simdata, aes(Y)) +
   geom_histogram(bins = 100)
 
-glmPoisson <- glm(Y ~ X1 + X2, data = simdata, family = poisson(link = "log"))
-summary(glmPoisson)
-
+glm_poisson <- glm(Y ~ X1 + X2, data = simdata, family = poisson(link = "log"))
+summary(glm_poisson)
 ```
 
 The estimated weights are close the the weights argument in simulate_poisson. The model estimates are accurate.
 
 ```{r, echo=FALSE}
-rm(simdata, glmPoisson)
+rm(simdata, glm_poisson)
 ```
 
 ## Poisson mean variance relationship
 One important characteristic of the Poisson family is $\mu$ equals $\sigma^2$. We see the sample statistics are nearly equal for different values of lambda.
 
 ```{r PoissonMuSigma, echo=TRUE, results='markup'}
-
 set.seed(1)
 
-#lambda = 1
+# lambda 1
 poisson <- rpois(n = 10000, lambda = 1)
 mean(poisson)
 var(poisson)
 
-#lambda = 5
+# lambda 5
 poisson <- rpois(n = 10000, lambda = 5)
 mean(poisson)
 var(poisson)
 
-#lambda = 10
+# lambda 10
 poisson <- rpois(n = 10000, lambda = 10)
 mean(poisson)
 var(poisson)
@@ -121,21 +118,20 @@ When $\theta$ is large, $\mu + \mu^2/\theta$ is roughly equal to $\mu$ . Therefo
 set.seed(1)
 
 poisson <- rpois(n = 10000, lambda = 1)
-poissonDF <- as.data.frame(x=poisson)
+poisson_df <- as_tibble(poisson)
 
-ggplot(poissonDF, aes(x=poisson)) + 
+ggplot(poisson_df, aes(value)) +
   geom_histogram(bins = 100)
 
-negBin <- rnegbin(n = 10000, mu = 1, theta = 1000)
-negBinDF <- as.data.frame(x=negBin)
+neg_bin_rv <- rnegbin(n = 10000, mu = 1, theta = 1000)
+neg_bin_df <- as_tibble(neg_bin_rv)
 
-ggplot(negBinDF, aes(x=negBin)) + 
+ggplot(neg_bin_df, aes(value)) +
   geom_histogram(bins = 100)
-
 ```
 
 ```{r, echo=FALSE}
-rm(poisson, poissonDF, negBin, negBinDF)
+rm(poisson, poisson_df, neg_bin_rv, neg_bin_df)
 ```
 
 
@@ -146,44 +142,45 @@ If $\theta$ is small, $\mu + \mu^2/\theta$ does not approximately equal $\mu$. T
 set.seed(1)
 
 poisson <- rpois(n = 10000, lambda = 1)
-poissonDF <- as.data.frame(x=poisson)
+poisson_df <- as_tibble(poisson)
 
-ggplot(poissonDF, aes(x=poisson)) + 
+ggplot(poisson_df, aes(value)) +
   geom_histogram(bins = 100)
 
-negBin <- rnegbin(n = 10000, mu = 1, theta = 1)
-negBinDF <- as.data.frame(x=negBin)
+neg_bin_rv <- rnegbin(n = 10000, mu = 1, theta = 1)
+neg_bin_df <- as_tibble(neg_bin_rv)
 
-ggplot(negBinDF, aes(x=negBin)) + 
+ggplot(neg_bin_df, aes(value)) +
   geom_histogram(bins = 100)
 ```
 
 ```{r, echo=FALSE}
-rm(poisson, poissonDF, negBin, negBinDF)
+rm(poisson, poisson_df, neg_bin_rv, neg_bin_df)
 ```
 
 ## GLM Negative Binomial
 Lets create data where the flexibility of the negative binomial is needed and compare the Poisson estimates to the negative binomial estimates. 
 
 ```{r NegativeBinomialGlm, echo=TRUE, results='markup'}
-
 set.seed(1)
-simdata <- simulate_negative_binomial(N = 10000, weights = c(.5, 1), ancillary = 5) #ancillary is theta.
+simdata <- simulate_negative_binomial(
+  N = 10000, weights = c(.5, 1),
+  ancillary = 5
+) # ancillary is theta.
 
-#Response looks like a negative binomial distribution.
-ggplot(simdata, aes(x=Y)) + 
+# Response looks like a negative binomial distribution.
+ggplot(simdata, aes(Y)) +
   geom_histogram(bins = 200)
 
-glmPoisson <- glm(Y ~ X1 + X2, data = simdata, family = poisson(link = "log"))
-glmNB <- glm.nb(Y ~ X1 + X2, data = simdata, link = "log")
+glm_poisson <- glm(Y ~ X1 + X2, data = simdata, family = poisson(link = "log"))
+glm_nb <- glm.nb(Y ~ X1 + X2, data = simdata, link = "log")
 
 
-summary(glmPoisson)
-summary(glmNB)
-
+summary(glm_poisson)
+summary(glm_nb)
 ```
 
 ```{r, echo=FALSE}
-rm(simdata, glmPoisson, glmNB)
+rm(simdata, glm_poisson, glm_nb)
 ```
 The estimated slopes are very similar. However, the standard errors are not. The fact $\mu$ does not equal $\sigma^2$ has caused a major under estimation of standard errors for the Poisson GLM. For Poisson models, it is important to look at residual deviance divided by the degrees of freedom. When this quotient is larger than 1, the negative binomial should be considered. In the above the quotient was 6.33 (63327 / 9997) for the Poisson glm. For these data, the negative binomial model is more appropriate.

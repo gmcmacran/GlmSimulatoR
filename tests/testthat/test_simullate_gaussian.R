@@ -66,13 +66,17 @@ test_that("Returns the correct number of unrelated variables.", {
 })
 
 test_that("All links execute", {
-  expect_true(all(class(simulate_gaussian(link = "identity")) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_gaussian(link = "log")) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_gaussian(link = "inverse")) == c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_gaussian(link = "identity")) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_gaussian(link = "log")) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_gaussian(link = "inverse")) ==
+    c("tbl_df", "tbl", "data.frame")))
 })
 
 test_that("Ancillary parameter works as expected", {
-  expect_true(simulate_gaussian()$Y %>% sd() < simulate_gaussian(ancillary = 5)$Y %>% sd())
+  expect_true(simulate_gaussian()$Y %>% sd() <
+    simulate_gaussian(ancillary = 5)$Y %>% sd())
 })
 
 ###############################################

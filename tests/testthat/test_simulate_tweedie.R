@@ -46,12 +46,30 @@ test_that("Returns the correct range for x.", {
   expect_true(min(simulate_tweedie(weights = .02, xrange = 2)[, 2]) >= 1)
   expect_true(max(simulate_tweedie(weights = .02, xrange = 3)[, 2]) <= 4)
   expect_true(min(simulate_tweedie(weights = .02, xrange = 3)[, 2]) >= 1)
-  expect_true(max(simulate_tweedie(weights = c(.01, .01), xrange = 0)[, 3]) <= 1)
-  expect_true(min(simulate_tweedie(weights = c(.02, .01), xrange = 0)[, 3]) >= 1)
-  expect_true(max(simulate_tweedie(weights = c(.02, .01), xrange = 2)[, 3]) <= 3)
-  expect_true(min(simulate_tweedie(weights = c(.02, .01), xrange = 2)[, 3]) >= 1)
-  expect_true(max(simulate_tweedie(weights = c(.02, .01), xrange = 3)[, 3]) <= 4)
-  expect_true(min(simulate_tweedie(weights = c(.02, .01), xrange = 3)[, 3]) >= 1)
+  expect_true(max(simulate_tweedie(
+    weights =
+      c(.01, .01), xrange = 0
+  )[, 3]) <= 1)
+  expect_true(min(simulate_tweedie(
+    weights =
+      c(.02, .01), xrange = 0
+  )[, 3]) >= 1)
+  expect_true(max(simulate_tweedie(
+    weights =
+      c(.02, .01), xrange = 2
+  )[, 3]) <= 3)
+  expect_true(min(simulate_tweedie(
+    weights =
+      c(.02, .01), xrange = 2
+  )[, 3]) >= 1)
+  expect_true(max(simulate_tweedie(
+    weights =
+      c(.02, .01), xrange = 3
+  )[, 3]) <= 4)
+  expect_true(min(simulate_tweedie(
+    weights =
+      c(.02, .01), xrange = 3
+  )[, 3]) >= 1)
 })
 
 test_that("Returns the correct number of unrelated variables.", {
@@ -67,10 +85,14 @@ test_that("Returns the correct number of unrelated variables.", {
 })
 
 test_that("All links execute", {
-  expect_true(all(class(simulate_tweedie(link = "log")) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_tweedie(link = "identity")) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_tweedie(link = "sqrt")) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_tweedie(link = "inverse")) == c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_tweedie(link = "log")) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_tweedie(link = "identity")) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_tweedie(link = "sqrt")) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_tweedie(link = "inverse")) ==
+    c("tbl_df", "tbl", "data.frame")))
 })
 
 test_that("Ancillary parameter function works if ancillary is provided", {

@@ -6,7 +6,6 @@
 \alias{GlmSimulatoR-package}
 \title{GlmSimulatoR: Creates Ideal Data for Generalized Linear Models}
 \description{
-Creates ideal data for all distributions in the generalized
-    linear model framework.
+Creates ideal data for all distributions in the generalized linear model framework.
 }
 \keyword{internal}
