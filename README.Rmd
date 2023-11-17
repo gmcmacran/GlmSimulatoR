@@ -16,8 +16,8 @@ knitr::opts_chunk$set(
  
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/GlmSimulatoR)](https://cran.r-project.org/package=GlmSimulatoR)
-[![R build status](https://github.com/gmcmacran/GlmSimulatoR/workflows/R-CMD-check/badge.svg)](https://github.com/gmcmacran/GlmSimulatoR/actions)
-[![Codecov test coverage](https://codecov.io/gh/gmcmacran/GlmSimulatoR/branch/master/graph/badge.svg)](https://app.codecov.io/gh/gmcmacran/GlmSimulatoR?branch=master)
+[![R-CMD-check](https://github.com/gmcmacran/GlmSimulatoR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/gmcmacran/GlmSimulatoR/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/gmcmacran/GlmSimulatoR/branch/main/graph/badge.svg)](https://app.codecov.io/gh/gmcmacran/GlmSimulatoR?branch=main)
 <!-- badges: end -->
 
 Often the first problem in understanding statistical models is finding good data. This package alleviates this by creating data perfect for generalized linear models. 
@@ -37,9 +37,8 @@ simdata <- simulate_gaussian(N = 200, weights = c(1, 2, 3))
 
 model <- lm(Y ~ X1 + X2 + X3, data = simdata)
 summary(model)$coefficients
-
 ```
 
-The estimates are close to the weights argument. The mathematics behind the generalized linear model worked well.
+The estimates are close to the weights argument. The mathematics behind the linear model worked well.
 
 See vignettes for more examples.
