@@ -136,8 +136,10 @@ library(MASS)
 set.seed(1)
 simdata <- simulate_gaussian()
 linear_model <- lm(Y ~ X1 + X2 + X3, data = simdata)
-glm_model <- glm(Y ~ X1 + X2 + X3, data = simdata,
-                  family = gaussian(link = "identity"))
+glm_model <- glm(Y ~ X1 + X2 + X3,
+  data = simdata,
+  family = gaussian(link = "identity")
+)
 summary(linear_model)
 summary(glm_model)
 rm(linear_model, glm_model, simdata)
@@ -155,10 +157,14 @@ rm(simdata)
 # on seed!
 set.seed(1)
 simdata <- simulate_gaussian(N = 10000, link = "inverse", weights = 1)
-glm_correct_link <- glm(Y ~ X1, data = simdata,
-                      family = gaussian(link = "inverse"))
-glm_wrong_link <- glm(Y ~ X1, data = simdata,
-                    family = gaussian(link = "identity"))
+glm_correct_link <- glm(Y ~ X1,
+  data = simdata,
+  family = gaussian(link = "inverse")
+)
+glm_wrong_link <- glm(Y ~ X1,
+  data = simdata,
+  family = gaussian(link = "identity")
+)
 summary(glm_correct_link)$aic
 summary(glm_wrong_link)$aic
 rm(simdata, glm_correct_link, glm_wrong_link)
@@ -167,19 +173,23 @@ rm(simdata, glm_correct_link, glm_wrong_link)
 # Does a stepwise search find the correct model for logistic regression? Yes
 # 3 related variables. 3 unrelated variables.
 set.seed(1)
-simdata <- simulate_binomial(N = 10000, link = "logit",
-weights = c(.3, .4, .5), unrelated = 3)
+simdata <- simulate_binomial(
+  N = 10000, link = "logit",
+  weights = c(.3, .4, .5), unrelated = 3
+)
 
-scope_arg  <- list(
+scope_arg <- list(
   lower = Y ~ 1,
   upper = Y ~ X1 + X2 + X3 + Unrelated1 + Unrelated2 + Unrelated3
 )
 
-starting_model <- glm(Y ~ 1, data = simdata,
-                    family = binomial(link = "logit"))
-glm_model <- stepAIC(starting_model, scope_arg )
+starting_model <- glm(Y ~ 1,
+  data = simdata,
+  family = binomial(link = "logit")
+)
+glm_model <- stepAIC(starting_model, scope_arg)
 summary(glm_model)
-rm(simdata, scope_arg , starting_model, glm_model)
+rm(simdata, scope_arg, starting_model, glm_model)
 
 # When the resposne is a gamma distribution, what does a scatter plot between
 # X and Y look like?
