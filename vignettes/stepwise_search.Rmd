@@ -2,7 +2,7 @@
 title: "Stepwise Search"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Stepwise_Search}
+  %\VignetteIndexEntry{Stepwise Search}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -2,7 +2,7 @@
 title: "Exploring Links for the Gaussian Distribution"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Exploring_Links}
+  %\VignetteIndexEntry{Exploring Links for the Gaussian Distribution}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
