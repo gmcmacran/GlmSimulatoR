@@ -3,7 +3,7 @@
 #' @param N Sample size. (Default: 10000)
 #' @param link Link function. See \code{\link[stats]{family}} for details.
 #' @param weights Betas in glm model.
-#' @param xrange range of x variables.
+#' @param x_range range of x variables.
 #' @param unrelated Number of unrelated features to return. (Default: 0)
 #' @param ancillary Ancillary parameter for continuous families and negative
 #' binomial. See details.
@@ -118,79 +118,79 @@
 #' rm(simdata)
 #' @export
 simulate_gaussian <- make_simulating_function(
-  validLinks = c("identity", "log", "inverse"),
-  defaultLink = "identity",
-  defaultWeights = 1:3,
-  defaultRange = 1,
+  valid_links = c("identity", "log", "inverse"),
+  default_link = "identity",
+  default_weights = 1:3,
+  default_range = 1,
   make_response = create_gaussian,
-  defaultAncillary = 1
+  default_ancillary = 1
 )
 
 #' @rdname simulate_gaussian
 #' @export
 simulate_binomial <- make_simulating_function(
-  validLinks = c(
+  valid_links = c(
     "logit", "probit", "cauchit", "log", "cloglog", "loglog",
     "logc", "identity"
   ),
-  defaultLink = "logit",
-  defaultWeights = c(.1, .2),
-  defaultRange = 1,
+  default_link = "logit",
+  default_weights = c(.1, .2),
+  default_range = 1,
   make_response = GlmSimulatoR:::create_binomial,
-  defaultAncillary = NULL
+  default_ancillary = NULL
 )
 
 #' @rdname simulate_gaussian
 #' @export
 simulate_gamma <- make_simulating_function(
-  validLinks = c("inverse", "identity", "log"),
-  defaultLink = "inverse",
-  defaultWeights = 1:3,
-  defaultRange = 1,
+  valid_links = c("inverse", "identity", "log"),
+  default_link = "inverse",
+  default_weights = 1:3,
+  default_range = 1,
   make_response = GlmSimulatoR:::create_gamma,
-  defaultAncillary = .05
+  default_ancillary = .05
 )
 
 #' @rdname simulate_gaussian
 #' @export
 simulate_poisson <- make_simulating_function(
-  validLinks = c("log", "identity", "sqrt"),
-  defaultLink = "log",
-  defaultWeights = c(.5, 1),
-  defaultRange = 1,
+  valid_links = c("log", "identity", "sqrt"),
+  default_link = "log",
+  default_weights = c(.5, 1),
+  default_range = 1,
   make_response = GlmSimulatoR:::create_poisson,
-  defaultAncillary = NULL
+  default_ancillary = NULL
 )
 
 #' @rdname simulate_gaussian
 #' @export
 simulate_inverse_gaussian <- make_simulating_function(
-  validLinks = c("1/mu^2", "inverse", "identity", "log"),
-  defaultLink = "1/mu^2",
-  defaultWeights = 1:3,
-  defaultRange = 1,
+  valid_links = c("1/mu^2", "inverse", "identity", "log"),
+  default_link = "1/mu^2",
+  default_weights = 1:3,
+  default_range = 1,
   make_response = GlmSimulatoR:::create_inverse_gaussian,
-  defaultAncillary = .3333
+  default_ancillary = .3333
 )
 
 #' @rdname simulate_gaussian
 #' @export
 simulate_negative_binomial <- make_simulating_function(
-  validLinks = c("log", "identity", "sqrt"),
-  defaultLink = "log",
-  defaultWeights = c(.5, 1),
-  defaultRange = 1,
+  valid_links = c("log", "identity", "sqrt"),
+  default_link = "log",
+  default_weights = c(.5, 1),
+  default_range = 1,
   make_response = GlmSimulatoR:::create_negative_binomial,
-  defaultAncillary = 1
+  default_ancillary = 1
 )
 
 #' @rdname simulate_gaussian
 #' @export
 simulate_tweedie <- make_simulating_function(
-  validLinks = c("log", "identity", "sqrt", "inverse"),
-  defaultLink = "log",
-  defaultWeights = c(.02),
-  defaultRange = 1,
+  valid_links = c("log", "identity", "sqrt", "inverse"),
+  default_link = "log",
+  default_weights = c(.02),
+  default_range = 1,
   make_response = GlmSimulatoR:::create_tweedie,
-  defaultAncillary = 1.15
+  default_ancillary = 1.15
 )
