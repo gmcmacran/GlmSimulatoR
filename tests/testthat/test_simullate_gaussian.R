@@ -39,18 +39,18 @@ test_that("Returns the correct number of predictors.", {
 })
 
 test_that("Returns the correct range for x.", {
-  expect_true(max(simulate_gaussian(weights = 1, xrange = 0)[, 2]) <= 1)
-  expect_true(min(simulate_gaussian(weights = 1, xrange = 0)[, 2]) >= 1)
-  expect_true(max(simulate_gaussian(weights = 1, xrange = 2)[, 2]) <= 3)
-  expect_true(min(simulate_gaussian(weights = 1, xrange = 2)[, 2]) >= 1)
-  expect_true(max(simulate_gaussian(weights = 1, xrange = 3)[, 2]) <= 4)
-  expect_true(min(simulate_gaussian(weights = 1, xrange = 3)[, 2]) >= 1)
-  expect_true(max(simulate_gaussian(weights = c(1, 2), xrange = 0)[, 3]) <= 1)
-  expect_true(min(simulate_gaussian(weights = c(1, 2), xrange = 0)[, 3]) >= 1)
-  expect_true(max(simulate_gaussian(weights = c(1, 2), xrange = 2)[, 3]) <= 3)
-  expect_true(min(simulate_gaussian(weights = c(1, 2), xrange = 2)[, 3]) >= 1)
-  expect_true(max(simulate_gaussian(weights = c(1, 2), xrange = 3)[, 3]) <= 4)
-  expect_true(min(simulate_gaussian(weights = c(1, 2), xrange = 3)[, 3]) >= 1)
+  expect_true(max(simulate_gaussian(weights = 1, x_range = 0)[, 2]) <= 1)
+  expect_true(min(simulate_gaussian(weights = 1, x_range = 0)[, 2]) >= 1)
+  expect_true(max(simulate_gaussian(weights = 1, x_range = 2)[, 2]) <= 3)
+  expect_true(min(simulate_gaussian(weights = 1, x_range = 2)[, 2]) >= 1)
+  expect_true(max(simulate_gaussian(weights = 1, x_range = 3)[, 2]) <= 4)
+  expect_true(min(simulate_gaussian(weights = 1, x_range = 3)[, 2]) >= 1)
+  expect_true(max(simulate_gaussian(weights = c(1, 2), x_range = 0)[, 3]) <= 1)
+  expect_true(min(simulate_gaussian(weights = c(1, 2), x_range = 0)[, 3]) >= 1)
+  expect_true(max(simulate_gaussian(weights = c(1, 2), x_range = 2)[, 3]) <= 3)
+  expect_true(min(simulate_gaussian(weights = c(1, 2), x_range = 2)[, 3]) >= 1)
+  expect_true(max(simulate_gaussian(weights = c(1, 2), x_range = 3)[, 3]) <= 4)
+  expect_true(min(simulate_gaussian(weights = c(1, 2), x_range = 3)[, 3]) >= 1)
 })
 
 test_that("Returns the correct number of unrelated variables.", {
@@ -66,13 +66,17 @@ test_that("Returns the correct number of unrelated variables.", {
 })
 
 test_that("All links execute", {
-  expect_true(all(class(simulate_gaussian(link = "identity")) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_gaussian(link = "log")) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_gaussian(link = "inverse")) == c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_gaussian(link = "identity")) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_gaussian(link = "log")) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_gaussian(link = "inverse")) ==
+    c("tbl_df", "tbl", "data.frame")))
 })
 
 test_that("Ancillary parameter works as expected", {
-  expect_true(simulate_gaussian()$Y %>% sd() < simulate_gaussian(ancillary = 5)$Y %>% sd())
+  expect_true(simulate_gaussian()$Y %>% sd() <
+    simulate_gaussian(ancillary = 5)$Y %>% sd())
 })
 
 ###############################################
@@ -83,10 +87,10 @@ test_that("Confirm input checing works.", {
   expect_error(simulate_gaussian(N = c(100, 200)), NULL)
   expect_error(simulate_gaussian(link = "sqrt"), NULL)
   expect_error(simulate_gaussian(weights = c()), NULL)
-  expect_error(simulate_gaussian(xrange = "asdf"), NULL)
-  expect_error(simulate_gaussian(xrange = c()), NULL)
-  expect_error(simulate_gaussian(xrange = c(1, 2)), NULL)
-  expect_error(simulate_gaussian(xrange = -1), NULL)
+  expect_error(simulate_gaussian(x_range = "asdf"), NULL)
+  expect_error(simulate_gaussian(x_range = c()), NULL)
+  expect_error(simulate_gaussian(x_range = c(1, 2)), NULL)
+  expect_error(simulate_gaussian(x_range = -1), NULL)
   expect_error(simulate_gaussian(unrelated = -1), NULL)
   expect_error(simulate_gaussian(unrelated = c(10, 20)), NULL)
   expect_error(simulate_gaussian(ancillary = -1), NULL)

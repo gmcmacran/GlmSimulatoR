@@ -7,10 +7,9 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/GlmSimulatoR)](https://cran.r-project.org/package=GlmSimulatoR)
-[![R build
-status](https://github.com/gmcmacran/GlmSimulatoR/workflows/R-CMD-check/badge.svg)](https://github.com/gmcmacran/GlmSimulatoR/actions)
+[![R-CMD-check](https://github.com/gmcmacran/GlmSimulatoR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/gmcmacran/GlmSimulatoR/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/gmcmacran/GlmSimulatoR/branch/master/graph/badge.svg)](https://app.codecov.io/gh/gmcmacran/GlmSimulatoR?branch=master)
+coverage](https://codecov.io/gh/gmcmacran/GlmSimulatoR/branch/main/graph/badge.svg)](https://app.codecov.io/gh/gmcmacran/GlmSimulatoR?branch=main)
 <!-- badges: end -->
 
 Often the first problem in understanding statistical models is finding
@@ -48,6 +47,6 @@ summary(model)$coefficients
 ```
 
 The estimates are close to the weights argument. The mathematics behind
-the generalized linear model worked well.
+the linear model worked well.
 
 See vignettes for more examples.

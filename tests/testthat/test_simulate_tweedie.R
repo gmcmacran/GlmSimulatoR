@@ -40,18 +40,36 @@ test_that("Returns the correct number of predictors.", {
 })
 
 test_that("Returns the correct range for x.", {
-  expect_true(max(simulate_tweedie(weights = .02, xrange = 0)[, 2]) <= 1)
-  expect_true(min(simulate_tweedie(weights = .02, xrange = 0)[, 2]) >= 1)
-  expect_true(max(simulate_tweedie(weights = .02, xrange = 2)[, 2]) <= 3)
-  expect_true(min(simulate_tweedie(weights = .02, xrange = 2)[, 2]) >= 1)
-  expect_true(max(simulate_tweedie(weights = .02, xrange = 3)[, 2]) <= 4)
-  expect_true(min(simulate_tweedie(weights = .02, xrange = 3)[, 2]) >= 1)
-  expect_true(max(simulate_tweedie(weights = c(.01, .01), xrange = 0)[, 3]) <= 1)
-  expect_true(min(simulate_tweedie(weights = c(.02, .01), xrange = 0)[, 3]) >= 1)
-  expect_true(max(simulate_tweedie(weights = c(.02, .01), xrange = 2)[, 3]) <= 3)
-  expect_true(min(simulate_tweedie(weights = c(.02, .01), xrange = 2)[, 3]) >= 1)
-  expect_true(max(simulate_tweedie(weights = c(.02, .01), xrange = 3)[, 3]) <= 4)
-  expect_true(min(simulate_tweedie(weights = c(.02, .01), xrange = 3)[, 3]) >= 1)
+  expect_true(max(simulate_tweedie(weights = .02, x_range = 0)[, 2]) <= 1)
+  expect_true(min(simulate_tweedie(weights = .02, x_range = 0)[, 2]) >= 1)
+  expect_true(max(simulate_tweedie(weights = .02, x_range = 2)[, 2]) <= 3)
+  expect_true(min(simulate_tweedie(weights = .02, x_range = 2)[, 2]) >= 1)
+  expect_true(max(simulate_tweedie(weights = .02, x_range = 3)[, 2]) <= 4)
+  expect_true(min(simulate_tweedie(weights = .02, x_range = 3)[, 2]) >= 1)
+  expect_true(max(simulate_tweedie(
+    weights =
+      c(.01, .01), x_range = 0
+  )[, 3]) <= 1)
+  expect_true(min(simulate_tweedie(
+    weights =
+      c(.02, .01), x_range = 0
+  )[, 3]) >= 1)
+  expect_true(max(simulate_tweedie(
+    weights =
+      c(.02, .01), x_range = 2
+  )[, 3]) <= 3)
+  expect_true(min(simulate_tweedie(
+    weights =
+      c(.02, .01), x_range = 2
+  )[, 3]) >= 1)
+  expect_true(max(simulate_tweedie(
+    weights =
+      c(.02, .01), x_range = 3
+  )[, 3]) <= 4)
+  expect_true(min(simulate_tweedie(
+    weights =
+      c(.02, .01), x_range = 3
+  )[, 3]) >= 1)
 })
 
 test_that("Returns the correct number of unrelated variables.", {
@@ -67,10 +85,14 @@ test_that("Returns the correct number of unrelated variables.", {
 })
 
 test_that("All links execute", {
-  expect_true(all(class(simulate_tweedie(link = "log")) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_tweedie(link = "identity")) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_tweedie(link = "sqrt")) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_tweedie(link = "inverse")) == c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_tweedie(link = "log")) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_tweedie(link = "identity")) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_tweedie(link = "sqrt")) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_tweedie(link = "inverse")) ==
+    c("tbl_df", "tbl", "data.frame")))
 })
 
 test_that("Ancillary parameter function works if ancillary is provided", {
@@ -87,10 +109,10 @@ test_that("Confirm input checing works.", {
   expect_error(simulate_tweedie(N = c(100, 200)), NULL)
   expect_error(simulate_tweedie(link = "1/mu^2"), NULL)
   expect_error(simulate_tweedie(weights = c()), NULL)
-  expect_error(simulate_tweedie(xrange = "asdf"), NULL)
-  expect_error(simulate_tweedie(xrange = c()), NULL)
-  expect_error(simulate_tweedie(xrange = c(1, 2)), NULL)
-  expect_error(simulate_tweedie(xrange = -1), NULL)
+  expect_error(simulate_tweedie(x_range = "asdf"), NULL)
+  expect_error(simulate_tweedie(x_range = c()), NULL)
+  expect_error(simulate_tweedie(x_range = c(1, 2)), NULL)
+  expect_error(simulate_tweedie(x_range = -1), NULL)
   expect_error(simulate_tweedie(unrelated = -1), NULL)
   expect_error(simulate_tweedie(unrelated = c(10, 20)), NULL)
   expect_error(simulate_tweedie(ancillary = .9), NULL)

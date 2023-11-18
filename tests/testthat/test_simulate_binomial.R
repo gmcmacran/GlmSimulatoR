@@ -43,18 +43,24 @@ test_that("Returns the correct number of predictors.", {
 })
 
 test_that("Returns the correct range for x.", {
-  expect_true(max(simulate_binomial(weights = .1, xrange = 0)[, 2]) <= 1)
-  expect_true(min(simulate_binomial(weights = .1, xrange = 0)[, 2]) >= 1)
-  expect_true(max(simulate_binomial(weights = .1, xrange = 2)[, 2]) <= 3)
-  expect_true(min(simulate_binomial(weights = .1, xrange = 2)[, 2]) >= 1)
-  expect_true(max(simulate_binomial(weights = .1, xrange = 3)[, 2]) <= 4)
-  expect_true(min(simulate_binomial(weights = .1, xrange = 3)[, 2]) >= 1)
-  expect_true(max(simulate_binomial(weights = c(.1, .2), xrange = 0)[, 3]) <= 1)
-  expect_true(min(simulate_binomial(weights = c(.1, .2), xrange = 0)[, 3]) >= 1)
-  expect_true(max(simulate_binomial(weights = c(.1, .2), xrange = 2)[, 3]) <= 3)
-  expect_true(min(simulate_binomial(weights = c(.1, .2), xrange = 2)[, 3]) >= 1)
-  expect_true(max(simulate_binomial(weights = c(.1, .2), xrange = 3)[, 3]) <= 4)
-  expect_true(min(simulate_binomial(weights = c(.1, .2), xrange = 3)[, 3]) >= 1)
+  expect_true(max(simulate_binomial(weights = .1, x_range = 0)[, 2]) <= 1)
+  expect_true(min(simulate_binomial(weights = .1, x_range = 0)[, 2]) >= 1)
+  expect_true(max(simulate_binomial(weights = .1, x_range = 2)[, 2]) <= 3)
+  expect_true(min(simulate_binomial(weights = .1, x_range = 2)[, 2]) >= 1)
+  expect_true(max(simulate_binomial(weights = .1, x_range = 3)[, 2]) <= 4)
+  expect_true(min(simulate_binomial(weights = .1, x_range = 3)[, 2]) >= 1)
+  expect_true(max(simulate_binomial(weights = c(.1, .2), x_range = 0)[, 3]) <=
+    1)
+  expect_true(min(simulate_binomial(weights = c(.1, .2), x_range = 0)[, 3]) >=
+    1)
+  expect_true(max(simulate_binomial(weights = c(.1, .2), x_range = 2)[, 3]) <=
+    3)
+  expect_true(min(simulate_binomial(weights = c(.1, .2), x_range = 2)[, 3]) >=
+    1)
+  expect_true(max(simulate_binomial(weights = c(.1, .2), x_range = 3)[, 3]) <=
+    4)
+  expect_true(min(simulate_binomial(weights = c(.1, .2), x_range = 3)[, 3]) >=
+    1)
 })
 
 test_that("Returns the correct number of unrelated variables.", {
@@ -70,14 +76,22 @@ test_that("Returns the correct number of unrelated variables.", {
 })
 
 test_that("All links execute", {
-  expect_true(all(class(simulate_binomial(link = "logit")) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_binomial(link = "probit")) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_binomial(link = "cauchit")) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_binomial(link = "log", weights = -.01)) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_binomial(link = "cloglog", weights = .1)) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_binomial(link = "loglog", weights = .1)) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_binomial(link = "logc", weights = -.1)) == c("tbl_df", "tbl", "data.frame")))
-  expect_true(all(class(simulate_binomial(link = "identity", weights = .1)) == c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_binomial(link = "logit")) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_binomial(link = "probit")) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_binomial(link = "cauchit")) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_binomial(link = "log", weights = -.01)) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_binomial(link = "cloglog", weights = .1)) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_binomial(link = "loglog", weights = .1)) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_binomial(link = "logc", weights = -.1)) ==
+    c("tbl_df", "tbl", "data.frame")))
+  expect_true(all(class(simulate_binomial(link = "identity", weights = .1)) ==
+    c("tbl_df", "tbl", "data.frame")))
 })
 
 ###############################################
@@ -88,10 +102,10 @@ test_that("Confirm input checing works.", {
   expect_error(simulate_binomial(N = c(100, 200)), NULL)
   expect_error(simulate_binomial(link = "sqrt"), NULL)
   expect_error(simulate_binomial(weights = c()), NULL)
-  expect_error(simulate_binomial(xrange = "asdf"), NULL)
-  expect_error(simulate_binomial(xrange = c()), NULL)
-  expect_error(simulate_binomial(xrange = c(1, 2)), NULL)
-  expect_error(simulate_binomial(xrange = -1), NULL)
+  expect_error(simulate_binomial(x_range = "asdf"), NULL)
+  expect_error(simulate_binomial(x_range = c()), NULL)
+  expect_error(simulate_binomial(x_range = c(1, 2)), NULL)
+  expect_error(simulate_binomial(x_range = -1), NULL)
   expect_error(simulate_binomial(unrelated = -1), NULL)
   expect_error(simulate_binomial(unrelated = c(10, 20)), NULL)
 })

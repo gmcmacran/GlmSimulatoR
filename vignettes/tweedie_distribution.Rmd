@@ -2,7 +2,7 @@
 title: "Tweedie Distribution"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Tweedie_Distribution}
+  %\VignetteIndexEntry{Tweedie Distribution}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -38,16 +38,15 @@ set.seed(1)
 
 simdata <- simulate_tweedie(weight = .2, ancillary = 1.15, link = "log")
 
-ggplot(simdata, aes(x = Y)) + 
+ggplot(simdata, aes(x = Y)) +
   geom_histogram(bins = 30)
 ```
 
 The response variable is usually zero, but sometimes it is positive. This is what makes the tweedie distribution unique.
 
 ```{r model2, echo=TRUE}
-glmModel <- cpglm(Y ~ X1, data =simdata, link = "log")
-summary(glmModel)
-
+glm_model <- cpglm(Y ~ X1, data = simdata, link = "log")
+summary(glm_model)
 ```
 
 The estimated index parameter is very close to $\rho$ (the ancillary argument), and the estimated weights are close to $\beta$ (the weight argument). Overall the function worked well.

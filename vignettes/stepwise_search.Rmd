@@ -2,7 +2,7 @@
 title: "Stepwise Search"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Stepwise_Search}
+  %\VignetteIndexEntry{Stepwise Search}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -35,101 +35,121 @@ How well does stepwise search work when there are unrelated variables? Is a larg
 library(GlmSimulatoR)
 library(MASS)
 
-#Creating data to work with
+# Creating data to work with
 set.seed(1)
-simdata <- simulate_inverse_gaussian(N = 100000, link = "1/mu^2", 
-                                     weights = c(1, 2, 3), unrelated = 3)
+simdata <- simulate_inverse_gaussian(
+  N = 100000, link = "1/mu^2",
+  weights = c(1, 2, 3), unrelated = 3
+)
 
-#Setting the simplest model and the most complex model.
-scopeArg <- list(
+# Setting the simplest model and the most complex model.
+scope_arg <- list(
   lower = Y ~ 1,
   upper = Y ~ X1 + X2 + X3 + Unrelated1 + Unrelated2 + Unrelated3
 )
 
-#Run search
-startingModel <- glm(Y ~ 1, data = simdata, family = inverse.gaussian(link = "1/mu^2"))
-glmSearch <- stepAIC(startingModel, scopeArg, trace = 0)
+# Run search
+starting_model <- glm(Y ~ 1,
+  data = simdata,
+  family = inverse.gaussian(link = "1/mu^2")
+)
+glm_search <- stepAIC(starting_model, scope_arg, trace = 0)
 
-summary(glmSearch)
+summary(glm_search)
 
-rm(simdata, scopeArg, glmSearch, startingModel)
-
-
+rm(simdata, scope_arg, glm_search, starting_model)
 ```
 
 Looking at the summary, the correct model was found. Stepwise search worked perfectly!
 
 ### Medium Problem: Large N and most variables are unrelated
 ```{r}
-#Creating data to work with
+# Creating data to work with
 set.seed(2)
-simdata <- simulate_inverse_gaussian(N = 100000, link = "1/mu^2", 
-                                     weights = c(1, 2, 3), unrelated = 20)
-#Setting the simplest model and the most complex model.
-scopeArg <- list(
+simdata <- simulate_inverse_gaussian(
+  N = 100000, link = "1/mu^2",
+  weights = c(1, 2, 3), unrelated = 20
+)
+# Setting the simplest model and the most complex model.
+scope_arg <- list(
   lower = Y ~ 1,
-  upper = Y ~ X1 + X2 + X3 + Unrelated1 + Unrelated2 + Unrelated3 + Unrelated3 + 
-    Unrelated4 + Unrelated5 + Unrelated6 + Unrelated7 + Unrelated8 + Unrelated9 + 
-    Unrelated10 + Unrelated11 + Unrelated12 + Unrelated13 + Unrelated14 + Unrelated15 + 
-    Unrelated16 + Unrelated17 + Unrelated18 + Unrelated19 + Unrelated20
+  upper = Y ~ X1 + X2 + X3 + Unrelated1 + Unrelated2 + Unrelated3 +
+    Unrelated3 + Unrelated4 + Unrelated5 + Unrelated6 + Unrelated7 +
+    Unrelated8 + Unrelated9 + Unrelated10 + Unrelated11 + Unrelated12 +
+    Unrelated13 + Unrelated14 + Unrelated15 + Unrelated16 + Unrelated17 +
+    Unrelated18 + Unrelated19 + Unrelated20
 )
 
-#Run search
-startingModel <- glm(Y ~ 1, data = simdata, family = inverse.gaussian(link = "1/mu^2"))
-glmSearch <- stepAIC(startingModel, scopeArg, trace = 0)
+# Run search
+starting_model <- glm(Y ~ 1,
+  data = simdata,
+  family = inverse.gaussian(link = "1/mu^2")
+)
+glm_search <- stepAIC(starting_model, scope_arg, trace = 0)
 
-summary(glmSearch)
+summary(glm_search)
 
-rm(simdata, scopeArg, glmSearch, startingModel)
+rm(simdata, scope_arg, glm_search, starting_model)
 ```
 
 Some unrelated variables made it into the final model. At least all related features are in the model. 
 
 ### Hard Problem: Small N and half the variables are unrelated
 ```{r}
-#Creating data to work with
+# Creating data to work with
 set.seed(3)
-simdata <- simulate_inverse_gaussian(N = 1000, link = "1/mu^2", 
-                                     weights = c(1, 2, 3), unrelated = 3)
-#Setting the simplest model and the most complex model.
-scopeArg <- list(
+simdata <- simulate_inverse_gaussian(
+  N = 1000, link = "1/mu^2",
+  weights = c(1, 2, 3), unrelated = 3
+)
+# Setting the simplest model and the most complex model.
+scope_arg <- list(
   lower = Y ~ 1,
   upper = Y ~ X1 + X2 + X3 + Unrelated1 + Unrelated2 + Unrelated3
 )
 
-#Run search
-startingModel <- glm(Y ~ 1, data = simdata, family = inverse.gaussian(link = "1/mu^2"))
-glmSearch <- stepAIC(startingModel, scopeArg, trace = 0)
+# Run search
+starting_model <- glm(Y ~ 1,
+  data = simdata,
+  family = inverse.gaussian(link = "1/mu^2")
+)
+glm_search <- stepAIC(starting_model, scope_arg, trace = 0)
 
-summary(glmSearch)
+summary(glm_search)
 
-rm(simdata, scopeArg, glmSearch, startingModel)
+rm(simdata, scope_arg, glm_search, starting_model)
 ```
 
 The correct model was found. Again, stepwise search worked perfectly!
 
 ### Very Hard Problem: Small N and most variables are unrelated
 ```{r}
-#Creating data to work with
+# Creating data to work with
 set.seed(4)
-simdata <- simulate_inverse_gaussian(N = 1000, link = "1/mu^2", 
-                                     weights = c(1, 2, 3), unrelated = 20)
-#Setting the simplest model and the most complex model.
-scopeArg <- list(
+simdata <- simulate_inverse_gaussian(
+  N = 1000, link = "1/mu^2",
+  weights = c(1, 2, 3), unrelated = 20
+)
+# Setting the simplest model and the most complex model.
+scope_arg <- list(
   lower = Y ~ 1,
-  upper = Y ~ X1 + X2 + X3 + Unrelated1 + Unrelated2 + Unrelated3 + Unrelated3 + 
-    Unrelated4 + Unrelated5 + Unrelated6 + Unrelated7 + Unrelated8 + Unrelated9 + 
-    Unrelated10 + Unrelated11 + Unrelated12 + Unrelated13 + Unrelated14 + Unrelated15 + 
-    Unrelated16 + Unrelated17 + Unrelated18 + Unrelated19 + Unrelated20
+  upper = Y ~ X1 + X2 + X3 + Unrelated1 + Unrelated2 + Unrelated3 + Unrelated3 +
+    Unrelated4 + Unrelated5 + Unrelated6 + Unrelated7 + Unrelated8 +
+    Unrelated9 + Unrelated10 + Unrelated11 + Unrelated12 + Unrelated13 +
+    Unrelated14 + Unrelated15 + Unrelated16 + Unrelated17 + Unrelated18 +
+    Unrelated19 + Unrelated20
 )
 
-#Run search
-startingModel <- glm(Y ~ 1, data = simdata, family = inverse.gaussian(link = "1/mu^2"))
-glmSearch <- stepAIC(startingModel, scopeArg, trace = 0)
+# Run search
+starting_model <- glm(Y ~ 1,
+  data = simdata, family =
+    inverse.gaussian(link = "1/mu^2")
+)
+glm_search <- stepAIC(starting_model, scope_arg, trace = 0)
 
-summary(glmSearch)
+summary(glm_search)
 
-rm(simdata, scopeArg, glmSearch, startingModel)
+rm(simdata, scope_arg, glm_search, starting_model)
 ```
 
 A few unrelated features made it into the model, but at least all true predictors were selected.
