@@ -5,36 +5,36 @@ set.seed(1)
 # Test make_simulating_function
 ###############################################
 temp <- GlmSimulatoR:::make_simulating_function(
-  validLinks = c("identity", "log", "inverse"),
-  defaultLink = "identity",
-  defaultWeights = 1:3,
-  defaultRange = 1,
+  valid_links = c("identity", "log", "inverse"),
+  default_link = "identity",
+  default_weights = 1:3,
+  default_range = 1,
   make_response = identity,
-  defaultAncillary = 1
+  default_ancillary = 1
 )
 
 test_that("Confirm function has correct structure", {
   expect_true(class(temp) == "function")
   expect_true(all(names(formals(temp)) ==
     c(
-      "N", "link", "weights", "xrange", "unrelated",
+      "N", "link", "weights", "x_range", "unrelated",
       "ancillary"
     )))
 })
 
 temp <- GlmSimulatoR:::make_simulating_function(
-  validLinks = c("identity", "log", "inverse"),
-  defaultLink = "identity",
-  defaultWeights = 1:3,
-  defaultRange = 1,
+  valid_links = c("identity", "log", "inverse"),
+  default_link = "identity",
+  default_weights = 1:3,
+  default_range = 1,
   make_response = identity,
-  defaultAncillary = NULL
+  default_ancillary = NULL
 )
 
 test_that("Confirm function has correct structure", {
   expect_true(class(temp) == "function")
   expect_true(all(names(formals(temp)) ==
-    c("N", "link", "weights", "xrange", "unrelated")))
+    c("N", "link", "weights", "x_range", "unrelated")))
 })
 
 ###############################################

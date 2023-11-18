@@ -14,7 +14,7 @@ simulate_gaussian(
   N = 10000,
   link = "identity",
   weights = 1:3,
-  xrange = 1,
+  x_range = 1,
   unrelated = 0,
   ancillary = 1
 )
@@ -23,7 +23,7 @@ simulate_binomial(
   N = 10000,
   link = "logit",
   weights = c(0.1, 0.2),
-  xrange = 1,
+  x_range = 1,
   unrelated = 0
 )
 
@@ -31,7 +31,7 @@ simulate_gamma(
   N = 10000,
   link = "inverse",
   weights = 1:3,
-  xrange = 1,
+  x_range = 1,
   unrelated = 0,
   ancillary = 0.05
 )
@@ -40,7 +40,7 @@ simulate_poisson(
   N = 10000,
   link = "log",
   weights = c(0.5, 1),
-  xrange = 1,
+  x_range = 1,
   unrelated = 0
 )
 
@@ -48,7 +48,7 @@ simulate_inverse_gaussian(
   N = 10000,
   link = "1/mu^2",
   weights = 1:3,
-  xrange = 1,
+  x_range = 1,
   unrelated = 0,
   ancillary = 0.3333
 )
@@ -57,7 +57,7 @@ simulate_negative_binomial(
   N = 10000,
   link = "log",
   weights = c(0.5, 1),
-  xrange = 1,
+  x_range = 1,
   unrelated = 0,
   ancillary = 1
 )
@@ -66,7 +66,7 @@ simulate_tweedie(
   N = 10000,
   link = "log",
   weights = 0.02,
-  xrange = 1,
+  x_range = 1,
   unrelated = 0,
   ancillary = 1.15
 )
@@ -78,7 +78,7 @@ simulate_tweedie(
 
 \item{weights}{Betas in glm model.}
 
-\item{xrange}{range of x variables.}
+\item{x_range}{range of x variables.}
 
 \item{unrelated}{Number of unrelated features to return. (Default: 0)}
 
