@@ -97,6 +97,43 @@ make_simulating_function <- function(valid_links, default_link, default_weights,
   force(make_response)
   force(default_ancillary)
 
+  assertthat::assert_that(assertthat::is.string(default_link))
+  assertthat::assert_that(default_link %in% valid_links,
+    msg = "Argument default_link was not a valid_links."
+  )
+
+  assertthat::assert_that(is.numeric(default_weights))
+  assertthat::assert_that(length(default_weights) > 0)
+
+  assertthat::assert_that(assertthat::is.number(default_range))
+  assertthat::assert_that(default_range >= 0)
+
+  assertthat::assert_that(is.function(make_response),
+    msg = "Argument make_response must be a function."
+  )
+  args <- names(formals(make_response))
+  assertthat::assert_that(args[1] == "mu",
+    msg = "First argument to function must be mu."
+  )
+  assertthat::assert_that(args[2] == "n",
+    msg = "Second argument to function must be n."
+  )
+  assertthat::assert_that(args[3] == "ancillary" || args[3] == "unused",
+    msg = "Third argument to function must be ancillary
+                          or unused."
+  )
+
+  assertthat::assert_that(
+    (is.numeric(default_ancillary) &&
+      assertthat::is.scalar(default_ancillary)) ||
+      is.null(default_ancillary),
+    msg = "Argument default_ancillary must be a numeric scalar or NULL."
+  )
+  assertthat::assert_that(default_ancillary > 0 || is.null(default_ancillary),
+    msg = "Argument default_ancillary must be greater
+                          than 0 or NULL."
+  )
+
   # ancillary is only meaningful for some glm famalies
   # For poisson and binomial it is not needed from a math perspective
   # Code still accepts the parameter and just does nothing with it.
