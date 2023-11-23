@@ -10,4 +10,5 @@
 
 ## Updates
   Improving vignettes
-  Improving coverage
+  Linting
+  Function factory argument checks
