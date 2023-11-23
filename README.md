@@ -12,22 +12,13 @@ status](https://www.r-pkg.org/badges/version/GlmSimulatoR)](https://cran.r-proje
 coverage](https://codecov.io/gh/gmcmacran/GlmSimulatoR/branch/main/graph/badge.svg)](https://app.codecov.io/gh/gmcmacran/GlmSimulatoR?branch=main)
 <!-- badges: end -->
 
-Often the first problem in understanding statistical models is finding
-good data. This package alleviates this by creating data perfect for
-generalized linear models.
+## Overview
 
-With data in hand, you can focus on questions about models instead of
-questions about data. Are the estimated weights close to the true
-values? Does step wise search pick the correct variables? At what n does
-the sampling distribution of weights normalize?
-
-## Package Overview
-
-All functions return a tibble. The only thing that changes is the
-distribution of Y. In simulate_gaussian, Y follows a Gaussian
-distribution. In simulate_gamma, Y follows a gamma distribution. Common
-and novel distributions are implemented. For each distribution, all
-links are implemented.
+Understating statistical models is difficult. Experimentation on
+**models** should be a part of the learning process. This package
+provides functions that generate ideal data for generalized linear
+models. Model parameters, link functions, sample size, and more are
+adjustable. With data controlled, models can be experimented on.
 
 ## Is a sample size of 200 enough to get close estimates of the true weights?
 
@@ -49,4 +40,10 @@ summary(model)$coefficients
 The estimates are close to the weights argument. The mathematics behind
 the linear model worked well.
 
-See vignettes for more examples.
+## Addititional Examples in Vignettes
+
+- Count data and over dispersion
+- Dealing with right skewed data
+- Exploring links for the Gaussian distribution
+- Stepwise Search
+- Tweedie distribution.
