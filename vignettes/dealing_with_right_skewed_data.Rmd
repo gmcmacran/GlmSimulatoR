@@ -25,7 +25,7 @@ The critical step is being able to spot a gamma distribution when you see one. T
 ```{r setup}
 library(GlmSimulatoR)
 library(ggplot2)
-library(dplyr)
+library(dplyr, warn.conflicts = FALSE)
 library(stats)
 
 set.seed(1)
@@ -35,26 +35,8 @@ temp <- tibble(gamma = gamma_rv)
 ggplot(temp, aes(x = gamma)) +
   geom_histogram(bins = 30)
 
-# Very right skewed and spread out more. Skewness 2
-gamma_rv <- rgamma(1000, shape = 1, scale = 5)
-temp <- tibble(gamma = gamma_rv)
-ggplot(temp, aes(x = gamma)) +
-  geom_histogram(bins = 30)
-
-# Hump moves slightly towards the middle. Skewness 1.414214
-gamma_rv <- rgamma(1000, shape = 2, scale = 1)
-temp <- tibble(gamma = gamma_rv)
-ggplot(temp, aes(x = gamma)) +
-  geom_histogram(bins = 30)
-
 # Hump moves slightly more towards the middle. Skewness 1.154701
 gamma_rv <- rgamma(1000, shape = 3, scale = 1)
-temp <- tibble(gamma = gamma_rv)
-ggplot(temp, aes(x = gamma)) +
-  geom_histogram(bins = 30)
-
-# Hump moves slightly more towards the middle. Skewness 0.8944272
-gamma_rv <- rgamma(1000, shape = 5, scale = 1)
 temp <- tibble(gamma = gamma_rv)
 ggplot(temp, aes(x = gamma)) +
   geom_histogram(bins = 30)
@@ -72,7 +54,7 @@ rm(gamma_rv, temp)
 
 
 # Building models with very skewed data
-To show the generalized linear model can handle skewness, lets make some data and train a model and calculate mean squared error.
+To show the generalized linear model can handle skewness, lets make data and train a model and calculate mean squared error.
 
 ```{r}
 # Make data

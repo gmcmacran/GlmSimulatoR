@@ -64,7 +64,7 @@ Lets create data and train a model.
 
 ```{r PoissonGlm, echo=TRUE, results='markup'}
 set.seed(1)
-simdata <- simulate_poisson(N = 10000, weights = c(.5, 1))
+simdata <- simulate_poisson(N = 10000, weights = c(.5, 1), link = "log")
 
 # Response looks similar to above histograms
 ggplot(simdata, aes(Y)) +
@@ -80,36 +80,8 @@ The estimated weights are close the the weights argument in simulate_poisson. Th
 rm(simdata, glm_poisson)
 ```
 
-## Poisson mean variance relationship
-One important characteristic of the Poisson family is $\mu$ equals $\sigma^2$. We see the sample statistics are nearly equal for different values of lambda.
-
-```{r PoissonMuSigma, echo=TRUE, results='markup'}
-set.seed(1)
-
-# lambda 1
-poisson <- rpois(n = 10000, lambda = 1)
-mean(poisson)
-var(poisson)
-
-# lambda 5
-poisson <- rpois(n = 10000, lambda = 5)
-mean(poisson)
-var(poisson)
-
-# lambda 10
-poisson <- rpois(n = 10000, lambda = 10)
-mean(poisson)
-var(poisson)
-```
-
-```{r, echo=FALSE}
-rm(poisson)
-```
-
 ## Poisson vs Negative Binomial
-For modeling, the main difference between Poisson and the negative binomial is the extra parameter. The mean variance relationship is $\sigma^2$ equals $\mu + \mu^2/\theta$ for the negative binomial. Through $\theta$ many relationships are possible. 
-
-When the response variable is a count, but $\mu$ does not equal $\sigma^2$, the Poisson distribution is not applicable. Over dispersion can be detected by dividing the residual deviance by the degrees of freedom. If this quotient is much greater than one, the negative binomial distribution should be used. There is no hard cut off of "much larger than one", but a rule of thumb is 1.10 or greater is considered large.
+For modeling, the main difference between Poisson and the negative binomial is the extra parameter. For the Poisson distribution, the mean-variance relationship is $\sigma^2 =\mu$. For the negative binomial  distribution, the mean-variance relationship is $\sigma^2 = \mu + \mu^2/\theta$.  Through $\theta$, a more flexible relationships is possible.
 
 ## Getting familiar with the negative binomial family
 When $\theta$ is large, $\mu + \mu^2/\theta$ is roughly equal to $\mu$ . Therefore the negative binomial will be similar to Poisson distribution.
@@ -165,7 +137,7 @@ Lets create data where the flexibility of the negative binomial is needed and co
 set.seed(1)
 simdata <- simulate_negative_binomial(
   N = 10000, weights = c(.5, 1),
-  ancillary = 5
+  ancillary = 5, link = "log"
 ) # ancillary is theta.
 
 # Response looks like a negative binomial distribution.
@@ -175,7 +147,6 @@ ggplot(simdata, aes(Y)) +
 glm_poisson <- glm(Y ~ X1 + X2, data = simdata, family = poisson(link = "log"))
 glm_nb <- glm.nb(Y ~ X1 + X2, data = simdata, link = "log")
 
-
 summary(glm_poisson)
 summary(glm_nb)
 ```
@@ -183,4 +154,6 @@ summary(glm_nb)
 ```{r, echo=FALSE}
 rm(simdata, glm_poisson, glm_nb)
 ```
-The estimated slopes are very similar. However, the standard errors are not. The fact $\mu$ does not equal $\sigma^2$ has caused a major under estimation of standard errors for the Poisson GLM. For Poisson models, it is important to look at residual deviance divided by the degrees of freedom. When this quotient is larger than 1, the negative binomial should be considered. In the above the quotient was 6.33 (63327 / 9997) for the Poisson glm. For these data, the negative binomial model is more appropriate.
+The estimated slopes are very similar. However, the standard errors are not. The fact $\mu$ does not equal $\sigma^2$ has caused a major under estimation of standard errors for the Poisson GLM.
+
+For Poisson models, it is important to look at residual deviance divided by the degrees of freedom. When this quotient is larger than 1, the negative binomial should be considered. In the above the quotient was 6.33 (63327 / 9997) for the Poisson glm.
