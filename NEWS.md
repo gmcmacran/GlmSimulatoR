@@ -1,3 +1,9 @@
+# GlmSimulatoR v 1.0.0
+  Linting
+  Function factory has argument checks and associated tests
+  Variable name changes
+  Improving vignettes
+  
 # GlmSimulatoR v 0.2.5
   Improving vignettes
   Improving test coverage

@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 ### Mathematical Background
 A common problem in building statistical models is determining which features to include in a model. Mathematical publications provide some suggestions, but there is no consensus. Some examples are the lasso or simply trying all possible combinations of predictors. Another option is stepwise search.
 
-The more parameters a model has, the better it will fit the data. If the model is too complex, the worse it will perform on unseen data. AIC strikes a balance between fitting the training data well and keeping the model simple. 
+The more parameters a model has, the better it will fit the data. If the model is too complex, the worse it will perform on unseen data. AIC strikes a balance between fitting the training data well and keeping the model simple enough to perform well on unseen data.
 
 Using AIC, a search starts with no features. $$g(Y) = \beta_0$$
 Then each feature is considered. If there are 10 features, there are 10 models under consideration. For each model, AIC is calculated and the model with the lowest AIC is selected. In this case, X1 was selected. $$g(Y) = \beta_1X_1 + \beta_0$$
@@ -25,10 +25,10 @@ Then each feature is considered. If there are 10 features, there are 10 models u
 
 After the first feature is selected, all remaining 9 features are considered. Of the 9 features, the one with the lowest AIC is selected, creating a 2 feature model. In this round, X3 was selected.  $$g(Y) = \beta_3X_3 + \beta_1X_1 + \beta_0$$
 
-When adding more features does not improve AIC, the procedure stops.
+When adding more features does not lower AIC, the procedure stops.
 
 ### Simulation Setup
-How well does stepwise search work when there are unrelated variables? Is a large amount of data needed to find the correct variables? The below tests stepwise search in a variety of settings to answer these questions.
+How well does stepwise search work when there are unrelated variables? Is a large amount of data needed to find the correct model? The below tests stepwise search in two settings to answer these questions.
 
 ### Easy Problem: Large N and half the variables are unrelated
 ```{r setup}
@@ -60,69 +60,9 @@ summary(glm_search)
 rm(simdata, scope_arg, glm_search, starting_model)
 ```
 
-Looking at the summary, the correct model was found. Stepwise search worked perfectly!
+Looking at the summary, the correct model was found. Stepwise search worked perfectly.
 
-### Medium Problem: Large N and most variables are unrelated
-```{r}
-# Creating data to work with
-set.seed(2)
-simdata <- simulate_inverse_gaussian(
-  N = 100000, link = "1/mu^2",
-  weights = c(1, 2, 3), unrelated = 20
-)
-# Setting the simplest model and the most complex model.
-scope_arg <- list(
-  lower = Y ~ 1,
-  upper = Y ~ X1 + X2 + X3 + Unrelated1 + Unrelated2 + Unrelated3 +
-    Unrelated3 + Unrelated4 + Unrelated5 + Unrelated6 + Unrelated7 +
-    Unrelated8 + Unrelated9 + Unrelated10 + Unrelated11 + Unrelated12 +
-    Unrelated13 + Unrelated14 + Unrelated15 + Unrelated16 + Unrelated17 +
-    Unrelated18 + Unrelated19 + Unrelated20
-)
-
-# Run search
-starting_model <- glm(Y ~ 1,
-  data = simdata,
-  family = inverse.gaussian(link = "1/mu^2")
-)
-glm_search <- stepAIC(starting_model, scope_arg, trace = 0)
-
-summary(glm_search)
-
-rm(simdata, scope_arg, glm_search, starting_model)
-```
-
-Some unrelated variables made it into the final model. At least all related features are in the model. 
-
-### Hard Problem: Small N and half the variables are unrelated
-```{r}
-# Creating data to work with
-set.seed(3)
-simdata <- simulate_inverse_gaussian(
-  N = 1000, link = "1/mu^2",
-  weights = c(1, 2, 3), unrelated = 3
-)
-# Setting the simplest model and the most complex model.
-scope_arg <- list(
-  lower = Y ~ 1,
-  upper = Y ~ X1 + X2 + X3 + Unrelated1 + Unrelated2 + Unrelated3
-)
-
-# Run search
-starting_model <- glm(Y ~ 1,
-  data = simdata,
-  family = inverse.gaussian(link = "1/mu^2")
-)
-glm_search <- stepAIC(starting_model, scope_arg, trace = 0)
-
-summary(glm_search)
-
-rm(simdata, scope_arg, glm_search, starting_model)
-```
-
-The correct model was found. Again, stepwise search worked perfectly!
-
-### Very Hard Problem: Small N and most variables are unrelated
+### Hard Problem: Small N and most variables are unrelated
 ```{r}
 # Creating data to work with
 set.seed(4)
@@ -133,7 +73,7 @@ simdata <- simulate_inverse_gaussian(
 # Setting the simplest model and the most complex model.
 scope_arg <- list(
   lower = Y ~ 1,
-  upper = Y ~ X1 + X2 + X3 + Unrelated1 + Unrelated2 + Unrelated3 + Unrelated3 +
+  upper = Y ~ X1 + X2 + X3 + Unrelated1 + Unrelated2 + Unrelated3 +
     Unrelated4 + Unrelated5 + Unrelated6 + Unrelated7 + Unrelated8 +
     Unrelated9 + Unrelated10 + Unrelated11 + Unrelated12 + Unrelated13 +
     Unrelated14 + Unrelated15 + Unrelated16 + Unrelated17 + Unrelated18 +
@@ -152,7 +92,4 @@ summary(glm_search)
 rm(simdata, scope_arg, glm_search, starting_model)
 ```
 
-A few unrelated features made it into the model, but at least all true predictors were selected.
-
-### Simulation Summary
-Stepwise search provides a computationally fast way to select features. When half the features were unrelated, the search found the correct model for both small and large n. When the majority of features were unrelated, stepwise found all related features and erroneously selected a few unrelated variables.
+All predictive features and a few unrelated features were selected. Considering the number of features and the low sample size, the search worked well.
