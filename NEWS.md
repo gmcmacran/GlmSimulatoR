@@ -1,4 +1,7 @@
 # GlmSimulatoR v 1.0.0
+  Update actions.
+  
+# GlmSimulatoR v 1.0.0
   Linting
   Function factory has argument checks and associated tests
   Variable name changes
