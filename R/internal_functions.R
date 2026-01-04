@@ -243,7 +243,6 @@ make_simulating_function <- function(valid_links, default_link, default_weights,
     # log, identity, and sqrt are in gaussian and poisson
 
 
-
     ####################
     # Create predictors
     ####################
