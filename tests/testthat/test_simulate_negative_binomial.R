@@ -114,8 +114,8 @@ test_that("All links execute", {
 })
 
 test_that("Ancillary parameter works as expected", {
-  expect_true(simulate_negative_binomial()$Y %>% sd() >
-    simulate_negative_binomial(ancillary = 5)$Y %>% sd())
+  expect_true(simulate_negative_binomial()$Y |> sd() >
+    simulate_negative_binomial(ancillary = 5)$Y |> sd())
 })
 
 ###############################################

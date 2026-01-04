@@ -84,8 +84,8 @@ test_that("All links execute", {
 })
 
 test_that("Ancillary parameter works as expected", {
-  expect_true(simulate_gamma(ancillary = .25)$Y %>% sd() <
-    simulate_gamma(ancillary = 1)$Y %>% sd())
+  expect_true(simulate_gamma(ancillary = .25)$Y |> sd() <
+    simulate_gamma(ancillary = 1)$Y |> sd())
 })
 
 ###############################################

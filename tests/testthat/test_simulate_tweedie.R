@@ -96,9 +96,9 @@ test_that("All links execute", {
 })
 
 test_that("Ancillary parameter function works if ancillary is provided", {
-  expect_true(simulate_tweedie(ancillary = 1) %>% nrow() > 0)
-  expect_true(simulate_tweedie(ancillary = 1.5) %>% nrow() > 0)
-  expect_true(simulate_tweedie(ancillary = 2) %>% nrow() > 0)
+  expect_true(simulate_tweedie(ancillary = 1) |> nrow() > 0)
+  expect_true(simulate_tweedie(ancillary = 1.5) |> nrow() > 0)
+  expect_true(simulate_tweedie(ancillary = 2) |> nrow() > 0)
 })
 
 ###############################################
