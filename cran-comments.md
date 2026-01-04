@@ -12,3 +12,4 @@
   Improving vignettes
   Linting
   Function factory argument checks
+  Update R check github action
