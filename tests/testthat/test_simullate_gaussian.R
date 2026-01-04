@@ -75,8 +75,8 @@ test_that("All links execute", {
 })
 
 test_that("Ancillary parameter works as expected", {
-  expect_true(simulate_gaussian()$Y %>% sd() <
-    simulate_gaussian(ancillary = 5)$Y %>% sd())
+  expect_true(simulate_gaussian()$Y |> sd() <
+    simulate_gaussian(ancillary = 5)$Y |> sd())
 })
 
 ###############################################

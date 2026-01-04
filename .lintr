@@ -1,6 +1,7 @@
 linters: linters_with_defaults(
  indentation_linter = NULL,
  object_usage_linter = NULL,
+ return_linter = NULL,
  object_name_linter = object_name_linter(styles = c("snake_case", "UPPERCASE")),
  cyclocomp_linter = cyclocomp_linter(complexity_limit = 22L)
  ) # see vignette("lintr")
